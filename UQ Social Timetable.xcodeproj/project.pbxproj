@@ -7,18 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		116C9E9B295CD879007EFFFE /* UQ_Social_TimetableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9E9A295CD879007EFFFE /* UQ_Social_TimetableApp.swift */; };
-		116C9E9D295CD879007EFFFE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9E9C295CD879007EFFFE /* ContentView.swift */; };
+		116C9E9B295CD879007EFFFE /* SocialTimetableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */; };
 		116C9E9F295CD87A007EFFFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 116C9E9E295CD87A007EFFFE /* Assets.xcassets */; };
 		116C9EA2295CD87A007EFFFE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EA1295CD87A007EFFFE /* Preview Assets.xcassets */; };
+		116C9EAB295CE062007EFFFE /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAA295CE062007EFFFE /* MonthView.swift */; };
+		116C9EAD295CE0BF007EFFFE /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAC295CE0BF007EFFFE /* EventDetailView.swift */; };
+		116C9EAF295CE0DC007EFFFE /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAE295CE0DC007EFFFE /* Event.swift */; };
+		116C9EB1295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */; };
+		116C9EB3295CE680007EFFFE /* calendar.ics in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EB2295CE680007EFFFE /* calendar.ics */; };
+		11D8D6072961ADE900F20463 /* DayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D8D6062961ADE900F20463 /* DayGridView.swift */; };
+		11FBC7D7295F2DBB00D4588A /* YearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FBC7D6295F2DBB00D4588A /* YearView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		116C9E97295CD879007EFFFE /* UQ Social Timetable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UQ Social Timetable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		116C9E9A295CD879007EFFFE /* UQ_Social_TimetableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UQ_Social_TimetableApp.swift; sourceTree = "<group>"; };
-		116C9E9C295CD879007EFFFE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialTimetableApp.swift; sourceTree = "<group>"; };
 		116C9E9E295CD87A007EFFFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		116C9EA1295CD87A007EFFFE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		116C9EAA295CE062007EFFFE /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
+		116C9EAC295CE0BF007EFFFE /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
+		116C9EAE295CE0DC007EFFFE /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics"; sourceTree = "<group>"; };
+		116C9EB2295CE680007EFFFE /* calendar.ics */ = {isa = PBXFileReference; lastKnownFileType = text; path = calendar.ics; sourceTree = "<group>"; };
+		11D8D6062961ADE900F20463 /* DayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayGridView.swift; sourceTree = "<group>"; };
+		11FBC7D6295F2DBB00D4588A /* YearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,10 +63,16 @@
 		116C9E99295CD879007EFFFE /* UQ Social Timetable */ = {
 			isa = PBXGroup;
 			children = (
-				116C9E9A295CD879007EFFFE /* UQ_Social_TimetableApp.swift */,
-				116C9E9C295CD879007EFFFE /* ContentView.swift */,
+				116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */,
+				116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */,
 				116C9E9E295CD87A007EFFFE /* Assets.xcassets */,
 				116C9EA0295CD87A007EFFFE /* Preview Content */,
+				116C9EAA295CE062007EFFFE /* MonthView.swift */,
+				116C9EAC295CE0BF007EFFFE /* EventDetailView.swift */,
+				116C9EAE295CE0DC007EFFFE /* Event.swift */,
+				116C9EB2295CE680007EFFFE /* calendar.ics */,
+				11FBC7D6295F2DBB00D4588A /* YearView.swift */,
+				11D8D6062961ADE900F20463 /* DayGridView.swift */,
 			);
 			path = "UQ Social Timetable";
 			sourceTree = "<group>";
@@ -125,8 +143,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				116C9EB1295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics in Resources */,
 				116C9EA2295CD87A007EFFFE /* Preview Assets.xcassets in Resources */,
 				116C9E9F295CD87A007EFFFE /* Assets.xcassets in Resources */,
+				116C9EB3295CE680007EFFFE /* calendar.ics in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +157,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				116C9E9D295CD879007EFFFE /* ContentView.swift in Sources */,
-				116C9E9B295CD879007EFFFE /* UQ_Social_TimetableApp.swift in Sources */,
+				116C9EAD295CE0BF007EFFFE /* EventDetailView.swift in Sources */,
+				11FBC7D7295F2DBB00D4588A /* YearView.swift in Sources */,
+				11D8D6072961ADE900F20463 /* DayGridView.swift in Sources */,
+				116C9E9B295CD879007EFFFE /* SocialTimetableApp.swift in Sources */,
+				116C9EAB295CE062007EFFFE /* MonthView.swift in Sources */,
+				116C9EAF295CE0DC007EFFFE /* Event.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,8 +297,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,8 +328,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
