@@ -9,9 +9,8 @@ import SwiftUI
 
 struct YearView: View {
     let calendar = Calendar.current
-    
-    @State var presenting = false
-    @State var date: Date
+    @Binding var date: Date
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         let dateFormatter = DateFormatter()
@@ -25,21 +24,18 @@ struct YearView: View {
                         ForEach(0..<3, id: \.self) { col in
                             Button(action: {
                                 date = getDate(month: row * 3 + col + 1)
-                                presenting = true
+                                dismiss()
                             } ) {
                                 VStack {
                                     Text(dateFormatter.string(from: getDate(month: row * 3 + col + 1)))
                                         .foregroundColor(.red)
                                     DayGridView(date: .constant(getDate(month: row * 3 + col + 1)), fullscreen: false)
                                 }
+                                .frame(minHeight: 180, alignment: .top)
                             }
-                            .fullScreenCover(isPresented: $presenting) {
-                                MonthView(date: $date)
-                            }
-                            Spacer()
                         }
+                        Spacer()
                     }
-                    Spacer()
                 }
             }
         }
@@ -63,6 +59,6 @@ struct YearView: View {
 
 struct YearView_Previews: PreviewProvider {
     static var previews: some View {
-        YearView(date: .now)
+        YearView(date: .constant(.now))
     }
 }

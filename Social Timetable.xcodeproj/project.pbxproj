@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1156CFC62965EDB200FF9732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1156CFC52965EDB200FF9732 /* ContentView.swift */; };
+		115FAE4629656EEA00F2738A /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115FAE4529656EEA00F2738A /* AuthView.swift */; };
 		116C9E9B295CD879007EFFFE /* SocialTimetableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */; };
 		116C9E9F295CD87A007EFFFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 116C9E9E295CD87A007EFFFE /* Assets.xcassets */; };
 		116C9EA2295CD87A007EFFFE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EA1295CD87A007EFFFE /* Preview Assets.xcassets */; };
@@ -15,12 +17,16 @@
 		116C9EAF295CE0DC007EFFFE /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAE295CE0DC007EFFFE /* Event.swift */; };
 		116C9EB1295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */; };
 		116C9EB3295CE680007EFFFE /* calendar.ics in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EB2295CE680007EFFFE /* calendar.ics */; };
+		11C1E33E2965DE35002DDD44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */; };
 		11D8D6072961ADE900F20463 /* DayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D8D6062961ADE900F20463 /* DayGridView.swift */; };
 		11FBC7D7295F2DBB00D4588A /* YearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FBC7D6295F2DBB00D4588A /* YearView.swift */; };
+		A4AC6A66521DC5BD9FD5D5B1 /* Pods_Social_Timetable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20DCC08494CD2432147FD784 /* Pods_Social_Timetable.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		116C9E97295CD879007EFFFE /* UQ Social Timetable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UQ Social Timetable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1156CFC52965EDB200FF9732 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		115FAE4529656EEA00F2738A /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		116C9E97295CD879007EFFFE /* Social Timetable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Timetable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialTimetableApp.swift; sourceTree = "<group>"; };
 		116C9E9E295CD87A007EFFFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		116C9EA1295CD87A007EFFFE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -29,8 +35,12 @@
 		116C9EAE295CE0DC007EFFFE /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics"; sourceTree = "<group>"; };
 		116C9EB2295CE680007EFFFE /* calendar.ics */ = {isa = PBXFileReference; lastKnownFileType = text; path = calendar.ics; sourceTree = "<group>"; };
+		11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		11D8D6062961ADE900F20463 /* DayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayGridView.swift; sourceTree = "<group>"; };
 		11FBC7D6295F2DBB00D4588A /* YearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearView.swift; sourceTree = "<group>"; };
+		20DCC08494CD2432147FD784 /* Pods_Social_Timetable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Social_Timetable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A37AD2143B519C4BD9C6894E /* Pods-Social Timetable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Social Timetable.debug.xcconfig"; path = "Target Support Files/Pods-Social Timetable/Pods-Social Timetable.debug.xcconfig"; sourceTree = "<group>"; };
+		B3E8217265C92A58D47A798B /* Pods-Social Timetable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Social Timetable.release.xcconfig"; path = "Target Support Files/Pods-Social Timetable/Pods-Social Timetable.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4AC6A66521DC5BD9FD5D5B1 /* Pods_Social_Timetable.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,22 +58,25 @@
 		116C9E8E295CD879007EFFFE = {
 			isa = PBXGroup;
 			children = (
-				116C9E99295CD879007EFFFE /* UQ Social Timetable */,
+				116C9E99295CD879007EFFFE /* Social Timetable */,
 				116C9E98295CD879007EFFFE /* Products */,
+				F97A2C6493C0096D2C65A797 /* Pods */,
+				B9087F35C04022FE28D15321 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		116C9E98295CD879007EFFFE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				116C9E97295CD879007EFFFE /* UQ Social Timetable.app */,
+				116C9E97295CD879007EFFFE /* Social Timetable.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		116C9E99295CD879007EFFFE /* UQ Social Timetable */ = {
+		116C9E99295CD879007EFFFE /* Social Timetable */ = {
 			isa = PBXGroup;
 			children = (
+				11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */,
 				116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */,
 				116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */,
 				116C9E9E295CD87A007EFFFE /* Assets.xcassets */,
@@ -73,8 +87,10 @@
 				116C9EB2295CE680007EFFFE /* calendar.ics */,
 				11FBC7D6295F2DBB00D4588A /* YearView.swift */,
 				11D8D6062961ADE900F20463 /* DayGridView.swift */,
+				115FAE4529656EEA00F2738A /* AuthView.swift */,
+				1156CFC52965EDB200FF9732 /* ContentView.swift */,
 			);
-			path = "UQ Social Timetable";
+			path = "Social Timetable";
 			sourceTree = "<group>";
 		};
 		116C9EA0295CD87A007EFFFE /* Preview Content */ = {
@@ -85,24 +101,43 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		B9087F35C04022FE28D15321 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				20DCC08494CD2432147FD784 /* Pods_Social_Timetable.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F97A2C6493C0096D2C65A797 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A37AD2143B519C4BD9C6894E /* Pods-Social Timetable.debug.xcconfig */,
+				B3E8217265C92A58D47A798B /* Pods-Social Timetable.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		116C9E96295CD879007EFFFE /* UQ Social Timetable */ = {
+		116C9E96295CD879007EFFFE /* Social Timetable */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 116C9EA5295CD87A007EFFFE /* Build configuration list for PBXNativeTarget "UQ Social Timetable" */;
+			buildConfigurationList = 116C9EA5295CD87A007EFFFE /* Build configuration list for PBXNativeTarget "Social Timetable" */;
 			buildPhases = (
+				DF8C8E57B033A02740BC02E5 /* [CP] Check Pods Manifest.lock */,
 				116C9E93295CD879007EFFFE /* Sources */,
 				116C9E94295CD879007EFFFE /* Frameworks */,
 				116C9E95295CD879007EFFFE /* Resources */,
+				FF51235AF9FDC2A99D5423A5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "UQ Social Timetable";
+			name = "Social Timetable";
 			productName = "UQ Social Timetable";
-			productReference = 116C9E97295CD879007EFFFE /* UQ Social Timetable.app */;
+			productReference = 116C9E97295CD879007EFFFE /* Social Timetable.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -120,8 +155,8 @@
 					};
 				};
 			};
-			buildConfigurationList = 116C9E92295CD879007EFFFE /* Build configuration list for PBXProject "UQ Social Timetable" */;
-			compatibilityVersion = "Xcode 14.0";
+			buildConfigurationList = 116C9E92295CD879007EFFFE /* Build configuration list for PBXProject "Social Timetable" */;
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -133,7 +168,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				116C9E96295CD879007EFFFE /* UQ Social Timetable */,
+				116C9E96295CD879007EFFFE /* Social Timetable */,
 			);
 		};
 /* End PBXProject section */
@@ -145,6 +180,7 @@
 			files = (
 				116C9EB1295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics in Resources */,
 				116C9EA2295CD87A007EFFFE /* Preview Assets.xcassets in Resources */,
+				11C1E33E2965DE35002DDD44 /* GoogleService-Info.plist in Resources */,
 				116C9E9F295CD87A007EFFFE /* Assets.xcassets in Resources */,
 				116C9EB3295CE680007EFFFE /* calendar.ics in Resources */,
 			);
@@ -152,12 +188,56 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DF8C8E57B033A02740BC02E5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Social Timetable-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF51235AF9FDC2A99D5423A5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Social Timetable/Pods-Social Timetable-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Social Timetable/Pods-Social Timetable-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Social Timetable/Pods-Social Timetable-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		116C9E93295CD879007EFFFE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				116C9EAD295CE0BF007EFFFE /* EventDetailView.swift in Sources */,
+				115FAE4629656EEA00F2738A /* AuthView.swift in Sources */,
+				1156CFC62965EDB200FF9732 /* ContentView.swift in Sources */,
 				11FBC7D7295F2DBB00D4588A /* YearView.swift in Sources */,
 				11D8D6072961ADE900F20463 /* DayGridView.swift in Sources */,
 				116C9E9B295CD879007EFFFE /* SocialTimetableApp.swift in Sources */,
@@ -219,7 +299,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -273,7 +353,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -285,15 +365,17 @@
 		};
 		116C9EA6295CD87A007EFFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A37AD2143B519C4BD9C6894E /* Pods-Social Timetable.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"UQ Social Timetable/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Social Timetable/Preview Content\"";
 				DEVELOPMENT_TEAM = YCX9JB227S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Social Timetable";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -306,7 +388,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hughdrummond.UQ-Social-Timetable";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hughdrummond.Social-Timetable";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -316,15 +398,17 @@
 		};
 		116C9EA7295CD87A007EFFFE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3E8217265C92A58D47A798B /* Pods-Social Timetable.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"UQ Social Timetable/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Social Timetable/Preview Content\"";
 				DEVELOPMENT_TEAM = YCX9JB227S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Social Timetable";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -337,7 +421,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hughdrummond.UQ-Social-Timetable";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hughdrummond.Social-Timetable";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -348,7 +432,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		116C9E92295CD879007EFFFE /* Build configuration list for PBXProject "UQ Social Timetable" */ = {
+		116C9E92295CD879007EFFFE /* Build configuration list for PBXProject "Social Timetable" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				116C9EA3295CD87A007EFFFE /* Debug */,
@@ -357,7 +441,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		116C9EA5295CD87A007EFFFE /* Build configuration list for PBXNativeTarget "UQ Social Timetable" */ = {
+		116C9EA5295CD87A007EFFFE /* Build configuration list for PBXNativeTarget "Social Timetable" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				116C9EA6295CD87A007EFFFE /* Debug */,

@@ -9,9 +9,11 @@ import SwiftUI
 
 struct MonthView: View {
     let weekdaySymbols: [String] = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
-    @Binding var date: Date
-    @Environment(\.dismiss) var dismiss
-    
+    @State var date: Date
+    @State var presenting = false
+
+    @EnvironmentObject var viewModel: AppViewModel
+
     var body: some View {
         NavigationStack {
             VStack() {
@@ -27,10 +29,12 @@ struct MonthView: View {
             }
             .toolbar {
                 ToolbarItemGroup(placement: .principal) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        MonthYearText(date: $date)
+                    HStack {
+                        Button(action: {
+                            presenting = true
+                        }) {
+                            MonthYearText(date: $date)
+                        }
                     }
                 }
                 ToolbarItemGroup(placement: .navigationBarLeading) {
@@ -47,6 +51,14 @@ struct MonthView: View {
                         Image(systemName: "chevron.right")
                     }
                 }
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Button(action: {
+                        viewModel.signOut()
+                    }) {
+                        Text("Sign Out")
+                    }
+                }
+
             }
         }
         .gesture(DragGesture(minimumDistance: 10, coordinateSpace: .global)
@@ -67,6 +79,9 @@ struct MonthView: View {
                 }
             })
         )
+        .fullScreenCover(isPresented: $presenting) {
+            YearView(date: $date)
+        }
     }
     
     func previousMonth() {
@@ -98,6 +113,6 @@ struct MonthYearText: View {
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        MonthView(date: .constant(.now))
+        MonthView(date: .now)
     }
 }

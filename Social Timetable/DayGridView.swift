@@ -14,6 +14,7 @@ struct DayGridView: View {
     
     var body: some View {
         VStack {
+            Divider()
             ForEach(0..<getRows(), id: \.self) { row in
                 HStack {
                     ForEach(0..<7, id: \.self) { col in
@@ -23,6 +24,7 @@ struct DayGridView: View {
                             }
                         } else {
                             DayText(day: getDay(row: row, col:col))
+                                .padding(.horizontal, -2)
                         }
                     }
                 }
@@ -78,12 +80,11 @@ struct DayGridView: View {
         if (currentDay) {
             textColor = .red
         }
-        
         return Text(dayOfMonth.description)
-            .font(.system(size: fullscreen ? 20 : 7))
+            .font(.system(size: fullscreen ? 20 : 10))
             .foregroundColor(textColor)
             .bold(currentDay)
-            .frame(width: fullscreen ? 45 : 11, height: fullscreen ? 60 : 7)
+            .frame(width: fullscreen ? 45 : 13, height: fullscreen ? 60 : 7)
     }
 }
 
@@ -107,6 +108,6 @@ extension Date {
 
 struct DayGridView_Previews: PreviewProvider {
     static var previews: some View {
-        DayGridView(date: .constant(Date.now))
+        DayGridView(date: .constant(Date.now), fullscreen: false)
     }
 }
