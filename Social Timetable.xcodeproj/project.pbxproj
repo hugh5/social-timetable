@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1156CFC62965EDB200FF9732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1156CFC52965EDB200FF9732 /* ContentView.swift */; };
+		114B6A00296813E30020692C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B69FF296813E30020692C /* LoginView.swift */; };
+		114B6A0229682D380020692C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B6A0129682D380020692C /* ContentView.swift */; };
+		114B6A042968331C0020692C /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B6A032968331C0020692C /* TodayView.swift */; };
+		114B6A06296845C40020692C /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B6A05296845C40020692C /* AccountView.swift */; };
+		1156CFC62965EDB200FF9732 /* OpenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1156CFC52965EDB200FF9732 /* OpenView.swift */; };
 		115FAE4629656EEA00F2738A /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115FAE4529656EEA00F2738A /* AuthView.swift */; };
 		116C9E9B295CD879007EFFFE /* SocialTimetableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */; };
 		116C9E9F295CD87A007EFFFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 116C9E9E295CD87A007EFFFE /* Assets.xcassets */; };
@@ -24,7 +28,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1156CFC52965EDB200FF9732 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		114B69FF296813E30020692C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		114B6A0129682D380020692C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		114B6A032968331C0020692C /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		114B6A05296845C40020692C /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		1156CFC52965EDB200FF9732 /* OpenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenView.swift; sourceTree = "<group>"; };
 		115FAE4529656EEA00F2738A /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		116C9E97295CD879007EFFFE /* Social Timetable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Timetable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialTimetableApp.swift; sourceTree = "<group>"; };
@@ -88,7 +96,11 @@
 				11FBC7D6295F2DBB00D4588A /* YearView.swift */,
 				11D8D6062961ADE900F20463 /* DayGridView.swift */,
 				115FAE4529656EEA00F2738A /* AuthView.swift */,
-				1156CFC52965EDB200FF9732 /* ContentView.swift */,
+				1156CFC52965EDB200FF9732 /* OpenView.swift */,
+				114B69FF296813E30020692C /* LoginView.swift */,
+				114B6A0129682D380020692C /* ContentView.swift */,
+				114B6A032968331C0020692C /* TodayView.swift */,
+				114B6A05296845C40020692C /* AccountView.swift */,
 			);
 			path = "Social Timetable";
 			sourceTree = "<group>";
@@ -235,11 +247,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				114B6A06296845C40020692C /* AccountView.swift in Sources */,
 				116C9EAD295CE0BF007EFFFE /* EventDetailView.swift in Sources */,
 				115FAE4629656EEA00F2738A /* AuthView.swift in Sources */,
-				1156CFC62965EDB200FF9732 /* ContentView.swift in Sources */,
+				1156CFC62965EDB200FF9732 /* OpenView.swift in Sources */,
+				114B6A00296813E30020692C /* LoginView.swift in Sources */,
+				114B6A042968331C0020692C /* TodayView.swift in Sources */,
 				11FBC7D7295F2DBB00D4588A /* YearView.swift in Sources */,
 				11D8D6072961ADE900F20463 /* DayGridView.swift in Sources */,
+				114B6A0229682D380020692C /* ContentView.swift in Sources */,
 				116C9E9B295CD879007EFFFE /* SocialTimetableApp.swift in Sources */,
 				116C9EAB295CE062007EFFFE /* MonthView.swift in Sources */,
 				116C9EAF295CE0DC007EFFFE /* Event.swift in Sources */,
@@ -380,8 +396,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -413,8 +428,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

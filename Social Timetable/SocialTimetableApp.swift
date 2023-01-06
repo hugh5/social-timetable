@@ -23,7 +23,7 @@ struct SocialTimetableApp: App {
     var body: some Scene {
         WindowGroup {
             let viewModel = AppViewModel()
-            ContentView()
+            OpenView()
                 .environmentObject(viewModel)
         }
     }
