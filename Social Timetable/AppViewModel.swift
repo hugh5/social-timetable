@@ -53,7 +53,6 @@ class AppViewModel: ObservableObject {
                     completion(.success(true))
                     self?.signedIn = true
                 }
-                self?.getUserData()
             }
         }
     }
@@ -81,6 +80,7 @@ class AppViewModel: ObservableObject {
         isLoading = false
         try? auth.signOut()
         self.user = nil
+        self.users = []
         withAnimation(.default) {
             self.signedIn = false
         }
@@ -118,10 +118,6 @@ class AppViewModel: ObservableObject {
         }
     }
     
-    func completionHandler(_ user: User) {
-        users.append(user)
-    }
-    
     func getUsers() {
         if let user = user {
             users.append(user)
@@ -131,7 +127,7 @@ class AppViewModel: ObservableObject {
                 docRef.getDocument(as: User.self) { result in
                     switch result {
                     case .success(let data):
-                        self.completionHandler(data)
+                        self.users.append(data)
                     case .failure(let error):
                         print("Error getting user data: \(error.localizedDescription)")
                     }
