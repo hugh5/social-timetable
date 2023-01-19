@@ -34,6 +34,7 @@ extension User {
         var user = User(email: "s4697741@student.uq.edu.au")
         user.events[11] = Event.sampleData
         user.friends = ["s1234567@student.uq.edu.au", "s7654321@student.uq.edu.au"]
+        user.courses = ["S1":["CSSE2310", "COMP3506"]]
         return user
     }()
 }

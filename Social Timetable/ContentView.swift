@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @Binding var user: User?
-    let date = convertStringToDate(string: "TZID=Australia/Brisbane:20221017T100000")
+    let date = convertStringToDate(string: "TZID=Australia/Brisbane:20221022T100000")
 //    let date: Date = .now
     
     var body: some View {
@@ -24,7 +24,7 @@ struct ContentView: View {
                     Text("Timetable")
                     Image(systemName: "calendar")
                 }
-            Text("Course Chats")
+            CourseChatsView(user: user)
                 .tabItem {
                     Text("Course Chats")
                     Image(systemName: "message")
@@ -41,5 +41,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(user: .constant(User.sampleData))
+            .environmentObject(AppViewModel.sampleData)
     }
 }

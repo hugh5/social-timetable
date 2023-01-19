@@ -29,6 +29,7 @@
 		11CD221B296D257F00CDB2F3 /* FrameReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD221A296D257F00CDB2F3 /* FrameReader.swift */; };
 		11D8D6072961ADE900F20463 /* DayGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D8D6062961ADE900F20463 /* DayGridView.swift */; };
 		11F0A313296D347200B35ABE /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0A312296D347200B35ABE /* DayView.swift */; };
+		11F5A4FC29795AED009D87C2 /* CourseChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A4FB29795AED009D87C2 /* CourseChatsView.swift */; };
 		11FBC7D7295F2DBB00D4588A /* YearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FBC7D6295F2DBB00D4588A /* YearView.swift */; };
 		A4AC6A66521DC5BD9FD5D5B1 /* Pods_Social_Timetable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20DCC08494CD2432147FD784 /* Pods_Social_Timetable.framework */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		11CD221A296D257F00CDB2F3 /* FrameReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameReader.swift; sourceTree = "<group>"; };
 		11D8D6062961ADE900F20463 /* DayGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayGridView.swift; sourceTree = "<group>"; };
 		11F0A312296D347200B35ABE /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
+		11F5A4FB29795AED009D87C2 /* CourseChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseChatsView.swift; sourceTree = "<group>"; };
 		11FBC7D6295F2DBB00D4588A /* YearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearView.swift; sourceTree = "<group>"; };
 		20DCC08494CD2432147FD784 /* Pods_Social_Timetable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Social_Timetable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A37AD2143B519C4BD9C6894E /* Pods-Social Timetable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Social Timetable.debug.xcconfig"; path = "Target Support Files/Pods-Social Timetable/Pods-Social Timetable.debug.xcconfig"; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				11CD2218296D251600CDB2F3 /* ScrollSlidingTabBar.swift */,
 				11CD221A296D257F00CDB2F3 /* FrameReader.swift */,
 				11F0A312296D347200B35ABE /* DayView.swift */,
+				11F5A4FB29795AED009D87C2 /* CourseChatsView.swift */,
 			);
 			path = "Social Timetable";
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				119B366129686FFB00038389 /* AccountSettingsView.swift in Sources */,
 				110DD5C8296B1AE500DAB549 /* User.swift in Sources */,
 				11CD2219296D251600CDB2F3 /* ScrollSlidingTabBar.swift in Sources */,
+				11F5A4FC29795AED009D87C2 /* CourseChatsView.swift in Sources */,
 				11014C9B296868C700DC9ECF /* UploadTimetableView.swift in Sources */,
 				11D8D6072961ADE900F20463 /* DayGridView.swift in Sources */,
 				11F0A313296D347200B35ABE /* DayView.swift in Sources */,

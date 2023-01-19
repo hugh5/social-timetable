@@ -22,6 +22,27 @@ struct WeekView: View {
     
     var body: some View {
         VStack {
+            HStack {
+                Button(action: {
+                    withAnimation {
+                        date = calendar.date(byAdding: .day, value: -7, to: date) ?? date
+                    }
+                }, label: {
+                    Image(systemName: "chevron.left")
+                })
+                .padding()
+                Spacer()
+                Text("\(getDate(dayOfWeek:selection + 2).formatted(date: .abbreviated, time: .omitted))")
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        date = calendar.date(byAdding: .day, value: 7, to: date) ?? date
+                    }
+                }, label: {
+                    Image(systemName: "chevron.right")
+                })
+                .padding()
+            }
             NavigationView {
                 VStack(alignment: .leading) {
                     ScrollSlidingTabBar(selection: $selection, tabs: daysOfWeek)
@@ -31,15 +52,14 @@ struct WeekView: View {
                                 .tag(day)
                         }
                     }
-                    .navigationTitle("\(getDate(dayOfWeek:selection + 2).formatted(date: .abbreviated, time: .omitted))")
-                    .navigationBarTitleDisplayMode(.inline)
                     .tabViewStyle(.page(indexDisplayMode: .never))
                     .animation(.default, value: selection)
                 }
             }
             .onAppear {
                 selection = calendar.component(.weekday, from: date) - 2
-                selection = selection < 0 || selection > 4 ? 0 : selection
+                selection = selection < 0 ? 0 : selection
+                selection = selection > 4 ? 4 : selection
             }
             ScrollView(.horizontal) {
                 HStack {

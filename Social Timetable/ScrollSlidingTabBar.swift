@@ -49,6 +49,11 @@ public struct ScrollSlidingTabBar: View {
                 }
                 .coordinateSpace(name: containerSpace)
             }
+            .onAppear {
+                withAnimation {
+                    proxy.scrollTo(selection)
+                }
+            }
             .onChange(of: selection) { newValue in
                 withAnimation {
                     proxy.scrollTo(newValue, anchor: .center)

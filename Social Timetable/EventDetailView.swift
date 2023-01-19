@@ -21,10 +21,12 @@ struct EventDetailView: View {
                     .bold()
                 Text("-")
                 Text(event.activity)
-                
             }
-            Text(event.location.components(separatedBy: " ")[0])
-            //            Text("(\((event.endTime.timeIntervalSince(event.startTime) / 3600).description) hrs)")
+            HStack {
+                Text(event.location.components(separatedBy: " ")[0])
+                Text("\((event.endTime.timeIntervalSince(event.startTime) / 3600).description) hrs")
+            }
+            .font(.subheadline)
             Text(name)
         }
     }
