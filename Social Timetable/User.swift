@@ -37,3 +37,17 @@ extension User {
         return user
     }()
 }
+
+struct UserEvent: Identifiable {
+
+    var id: UUID
+    let user: User
+    let event: Event
+    
+    init(user: User, event: Event) {
+        self.id = event.id
+        self.user = user
+        self.event = event
+    }
+    
+}

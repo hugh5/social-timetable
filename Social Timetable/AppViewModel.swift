@@ -72,6 +72,7 @@ class AppViewModel: ObservableObject {
                 }
                 self?.createUser()
                 self?.setUserData()
+                self?.getUsers()
             }
         }
     }
@@ -102,9 +103,7 @@ class AppViewModel: ObservableObject {
         }
         if let id = email {
             let docRef = db.collection("users").document(id)
-            
             print("getUserData()")
-
             docRef.getDocument(as: User.self) { result in
                 switch result {
                 case .success(let user):

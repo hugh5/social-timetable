@@ -27,7 +27,7 @@ struct WeekView: View {
                     ScrollSlidingTabBar(selection: $selection, tabs: daysOfWeek)
                     TabView(selection: $selection) {
                         ForEach(0..<5) { day in
-                            DayView(user: $user, events: getEvents(dayOfWeek: day + 2))
+                            DayView(events: getEvents(dayOfWeek: day + 2))
                                 .tag(day)
                         }
                     }
@@ -63,16 +63,18 @@ struct WeekView: View {
         return dateOfWeek ?? date
     }
     
-    func getEvents(dayOfWeek: Int) -> [Int:[Event]] {
+    func getEvents(dayOfWeek: Int) -> [Int:[UserEvent]] {
         let dateOfWeek = getDate(dayOfWeek: dayOfWeek)
-        var events: [Int:[Event]] = [:]
+        var events: [Int:[UserEvent]] = [:]
         if let day = calendar.ordinality(of: .day, in: .year, for: dateOfWeek) {
-            user?.events[day]?.forEach { event in
-                let i = calendar.component(.hour, from: event.startTime)
-                if events[i] == nil {
-                    events[i] = [event]
-                } else {
-                    events[i]?.append(event)
+            for account in viewModel.users {
+                account.events[day]?.forEach { event in
+                    let i = calendar.component(.hour, from: event.startTime)
+                    if events[i] == nil {
+                        events[i] = [UserEvent(user: account, event: event)]
+                    } else {
+                        events[i]?.append(UserEvent(user: account, event: event))
+                    }
                 }
             }
         }

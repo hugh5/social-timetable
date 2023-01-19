@@ -10,8 +10,7 @@ import SwiftUI
 struct DayView: View {
     
     let calendar = Calendar.current
-    @Binding var user: User?
-    var events: [Int:[Event]]
+    var events: [Int:[UserEvent]]
         
     var body: some View {
         List {
@@ -21,17 +20,17 @@ struct DayView: View {
                         .frame(height: 80)
                     ScrollView(.horizontal) {
                         HStack {
-                            ForEach(events[calendar.component(.hour, from: time)] ?? []) { event in
+                            ForEach(events[calendar.component(.hour, from: time)] ?? []) { userEvent in
                                 Button(action: {
                                     
                                 }) {
-                                    EventDetailView(name: user?.displayName ?? "", event: event)
+                                    EventDetailView(name: userEvent.user.displayName, event: userEvent.event)
                                         .padding(5)
                                         .frame(width: 140)
                                 }
                                 .buttonStyle(.plain)
-                                .foregroundColor(Color(user?.color ?? 0).isDarkColor ? .white : .black)
-                                .background(Color(user?.color ?? 0xffffff))
+                                .foregroundColor(Color(userEvent.user.color).isDarkColor ? .white : .black)
+                                .background(Color(userEvent.user.color))
                                 .containerShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
@@ -106,6 +105,6 @@ extension Color {
 
 struct DayView_Previews: PreviewProvider {
     static var previews: some View {
-        DayView(user: .constant(User.sampleData), events: [8:Event.sampleData])
+        DayView(events: [8:[UserEvent(user: User.sampleData,event: Event.sampleData[0])]])
     }
 }

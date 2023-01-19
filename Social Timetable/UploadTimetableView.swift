@@ -66,6 +66,7 @@ struct UploadTimetableView: View {
                     viewModel.user?.events = events
                     viewModel.user?.courses = courses
                     viewModel.setUserData()
+                    viewModel.getUserData()
                 }
                 presentationMode.wrappedValue.dismiss()
             }
