@@ -7,114 +7,188 @@
 
 import Foundation
 
-struct Event: Identifiable {
+struct Event: Identifiable, Codable {
     let id: UUID
-    let title: String
-    let startTime: Date
-    let endTime: Date
-    let description: String
+    var course: String
+    var courseCode: String
+    var semester: String
+    var classType: String
+    var activity: String
+    var location: String
+    var startTime: Date
+    var endTime: Date
     
-    init(id: UUID = UUID(), title: String, startTime: Date, endTime: Date, description: String) {
+    init(id: UUID = UUID(), course: String, courseCode: String, semester: String, classType: String, activity: String, location: String, startTime: Date, endTime: Date) {
         self.id = id
-        self.title = title
+        self.course = course
+        self.courseCode = courseCode
+        self.semester = semester
+        self.classType = classType
+        self.activity = activity
+        self.location = location
         self.startTime = startTime
         self.endTime = endTime
-        self.description = description
     }
 }
 
 extension Event {
     static let sampleData: [Event] =
     [
-        Event(title: "Event 1", startTime: Date.now, endTime: Date.now.advanced(by: 100), description: "First Event"),
-        Event(title: "Event 2", startTime: Date.now, endTime: Date.now.advanced(by: 200), description: "Second Event"),
+        Event(course: "Algorithms & Data Structures", courseCode: "COMP3506", semester: "S2", classType: "LEC1", activity: "01", location: "49-200 - Advanced Engineering Building\\, Learning Theatre (GHD Auditorium)", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221010T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221010T120000")),
+        Event(course: "Introduction to Electrical Systems", courseCode: "ENGG1300", semester: "S2", classType: "LEC1", activity: "01", location: "23-101 - Abel Smith Lecture Theatre\\, Learning Theatre", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T120000"))
     ]
 }
 
-func parseICSEvents(fromFile fileName: String) -> [Event] {
-    // Load the .ics file
-    let fileUrl = Bundle.main.url(forResource: fileName, withExtension: nil)!
-    let fileContent = try! String(contentsOf: fileUrl)
+func convertICSToEvents(from url: URL) async -> ([Int: [Event]], [String:Set<String>]) {
+    // Parse the .ics file
+    
+    let contents: String = await loadURLContents(url: url)
+    
+    let lines = contents.components(separatedBy: "\n")
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
-    // Split the file into lines
-    let lines = fileContent.components(separatedBy: .newlines)
-
-    // Initialize variables to store the current event data
-    var eventTitle: String?
+    // Initialize variables for creating events
+    var courses: [String:Set<String>] = [:]
+    
+    var events: [Int: [Event]] = [:]
+    var event: Event
+    var eventCourse: String?
+    var eventCode: String?
+    var eventSemester: String?
+    var eventClass: String?
+    var eventActivity: String?
     var eventLocation: String?
     var eventStartTime: Date?
     var eventEndTime: Date?
-    var eventDescription: String?
 
-    // Initialize an array to store the parsed events
-    var events: [Event] = []
-
-    // Iterate through the lines of the file
+    // Loop through each line in the .ics file
     for line in lines {
-        // Check the line type
-        if line.hasPrefix("SUMMARY:") {
-            // This is the event title
-            eventTitle = line.replacingOccurrences(of: "SUMMARY:", with: "")
-            print("Title: \(eventTitle!)")
-        } else if line.hasPrefix("LOCATION:") {
-            // This is the event title
-            eventLocation = line.replacingOccurrences(of: "LOCATION:", with: "")
-            print("Location: \(eventLocation!)")
-        } else if line.hasPrefix("DTSTART;") {
-            // This is the event start time
-            let startTimeString = line.replacingOccurrences(of: "DTSTART;", with: "")
-            eventStartTime = date(from: startTimeString)
-            print("Start Time: \(eventStartTime!)")
-        } else if line.hasPrefix("DTEND;") {
-            // This is the event end time
-            let endTimeString = line.replacingOccurrences(of: "DTEND;", with: "")
-            eventEndTime = date(from: endTimeString)
-            print("End Time: \(eventEndTime!)")
-        } else if line.hasPrefix("DESCRIPTION:") {
-            // This is the event description
-            eventDescription = line.replacingOccurrences(of: "DESCRIPTION:", with: "")
-            print("Description: \(eventDescription!)")
-        } else if line == "END:VEVENT" {
-            // This marks the end of the current event
-            // Check if all the required event data is present
-            guard let title = eventTitle, let startTime = eventStartTime, let endTime = eventEndTime else {
+        
+        // Split the line into key-value pairs
+        let components = line.contains(";") ? line.components(separatedBy: ";") : line.components(separatedBy: ":")
+        if components.count < 2 {
             continue
-            }
-            // Create a new event object with the parsed data
-            let event = Event(title: title, startTime: startTime, endTime: endTime, description: eventDescription ?? "")
-            // Add the event to the array
-            events.append(event)
-            // Reset the event data variables
-            eventTitle = nil
-            eventStartTime = nil
-            eventEndTime = nil
-            eventDescription = nil
         }
+        if !line.contains(";") {
+            let key = components[0]
+            let value = components[1].replacing("\r", with: "")
+
+            switch key {
+            case "BEGIN":
+                if value.contains("VEVENT") {
+                    eventCourse = nil
+                    eventCode = nil
+                    eventSemester = nil
+                    eventClass = nil
+                    eventActivity = nil
+                    eventLocation = nil
+                    eventStartTime = nil
+                    eventEndTime = nil
+                }
+            case "END":
+                if value.contains("VEVENT") {
+                    guard let course = eventCourse, let code = eventCode, let semester = eventSemester, let classType = eventClass, let activity = eventActivity, let location = eventLocation, let startTime = eventStartTime, let endTime = eventEndTime else {
+                        continue
+                    }
+                    event = Event(course: course, courseCode: code, semester: semester, classType: classType, activity: activity, location: location, startTime: startTime, endTime: endTime)
+                    if (courses[semester] == nil) {
+                        courses[semester] = Set()
+                    }
+                    courses[semester]?.insert(code)
+                    let dayOfYear = getDayOfYear(date: event.startTime)
+                    if events[dayOfYear] == nil {
+                        events[dayOfYear] = [event]
+                    } else {
+                        events[dayOfYear]?.append(event)
+                    }
+                }
+            case "SUMMARY":
+                // Set the title of the event
+                let summaryComponents = value.components(separatedBy: "\\, ")
+                if (summaryComponents.count == 2) {
+                    eventCourse = summaryComponents[0]
+                    eventClass = summaryComponents[1]
+                }
+            case "LOCATION":
+                // Set the location of the event
+                eventLocation = value
+            case "DESCRIPTION":
+                let descriptionComponents = value.components(separatedBy: "\\, ")
+                if (descriptionComponents.count >= 3) {
+                    let courseComponents = descriptionComponents[0].components(separatedBy: "_")
+                    if (courseComponents.count >= 2) {
+                        eventCode = courseComponents[0]
+                        eventSemester = courseComponents[1]
+                    }
+                    eventActivity = descriptionComponents[2].prefix(while: {
+                        $0.isNumber
+                    }).description
+                    
+                }
+            default:
+                break
+            }
+        } else {
+            let key = components[0]
+            let value = components[1].replacing("\r", with: "")
+                    
+            switch key {
+            case "DTSTART":
+                eventStartTime = convertStringToDate(string: value)
+            case "DTEND":
+                eventEndTime = convertStringToDate(string: value)
+            default:
+                break
+            }
+        }
+
     }
-    return events
+
+    return (events, courses)
 }
 
-// Helper function to parse a date string in the .ics format
-func date(from dateString: String) -> Date? {
-    // Split the date string into parts
-    let parts = dateString.components(separatedBy: ":")
-    if parts.count < 2 {
-        return nil
-    }
-    // The second part is the actual date string
-    let dateString = parts[1]
-    
-    let timeZoneParts = parts[0].components(separatedBy: "=")
-    if timeZoneParts.count < 2 {
-        return nil
-    }
-    let timeZone = timeZoneParts[1]
-
-    // Initialize a date formatter to parse the date string
+func convertStringToDate(string: String) -> Date {
     let dateFormatter = DateFormatter()
-    dateFormatter.timeZone = TimeZone(identifier: timeZone)
     dateFormatter.dateFormat = "yyyyMMdd'T'HHmmss"
 
-    // Parse the date
-    return dateFormatter.date(from: dateString)
+    let components = string.components(separatedBy: ":")
+    if components.count == 2 {
+        let timeZoneString = components[0]
+        let dateString = components[1]
+
+        // Extract the time zone identifier from the time zone string
+        let timeZoneComponents = timeZoneString.components(separatedBy: "=")
+        if timeZoneComponents.count == 2 {
+            let timeZoneIdentifier = timeZoneComponents[1]
+            dateFormatter.timeZone = TimeZone(identifier: timeZoneIdentifier)
+        }
+
+        let date = dateFormatter.date(from: dateString)!
+        return date
+    } else {
+        return Date()
+    }
+}
+
+func getDayOfYear(date: Date) -> Int {
+    let calendar = Calendar.current
+    return calendar.ordinality(of: .day, in: .year, for: date)!
+}
+
+func loadURLContents(url: URL) async -> String {
+    do {
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            return ""
+        }
+        guard let contents = String(data: data, encoding: .utf8) else {
+            return ""
+        }
+        return contents
+    } catch {
+        return ""
+    }
+
 }

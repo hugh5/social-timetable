@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @Binding var user: User?
+    let date = convertStringToDate(string: "TZID=Australia/Brisbane:20221017T100000")
+//    let date: Date = .now
+    
     var body: some View {
         TabView {
-            Text("Today")
+            WeekView(user: $user, date: date)
                 .tabItem {
-                    Label("Today", systemImage: "rectangle.grid.1x2")
+                    Label("Week", systemImage: "rectangle.grid.1x2")
                 }
             Text("Home")
                 .tabItem {
@@ -24,10 +29,10 @@ struct ContentView: View {
                     Text("Course Chats")
                     Image(systemName: "message")
                 }
-            AccountView()
+            SettingsView(user: $user)
                 .tabItem {
-                    Text("Account")
-                    Image(systemName: "person")
+                    Text("Settings")
+                    Image(systemName: "gearshape")
                 }
         }
     }
@@ -35,6 +40,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(user: .constant(User.sampleData))
     }
 }

@@ -8,22 +8,32 @@
 import SwiftUI
 
 struct EventDetailView: View {
-  var event: Event
+    var name: String
+    var event: Event
 
-  var body: some View {
-    VStack(alignment: .leading) {
-      Text(event.title)
-        .font(.title)
-        Text("Date: \(event.startTime.description) to: \(event.endTime.description)")
-      Text(event.description)
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(event.courseCode)
+                .font(.title3)
+                .lineLimit(1)
+            HStack {
+                Text(event.classType)
+                    .bold()
+                Text("-")
+                Text(event.activity)
+                
+            }
+            Text(event.location.components(separatedBy: " ")[0])
+            //            Text("(\((event.endTime.timeIntervalSince(event.startTime) / 3600).description) hrs)")
+            Text(name)
+        }
     }
-    .padding()
-  }
 }
+
 
 
 struct EventDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        EventDetailView(event: Event.sampleData[0])
+        EventDetailView(name: User.sampleData.displayName, event: Event.sampleData[0])
     }
 }

@@ -8,5 +8,7 @@ target 'Social Timetable' do
   # Pods for Social Timetable
   pod "Firebase/Core"
   pod "Firebase/Auth"
+  pod "Firebase/Firestore"
+  pod "FirebaseFirestoreSwift"
 
 end

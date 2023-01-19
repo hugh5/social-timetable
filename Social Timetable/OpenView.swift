@@ -14,12 +14,14 @@ struct OpenView: View {
     var body: some View {
         NavigationView {
             if (viewModel.signedIn) {
-                MonthView(date: .now)
+                ContentView(user: $viewModel.user)
+                    .onAppear {
+                        viewModel.getUserData()
+                    }
             } else {
-                AuthView()
+                LoginView()
             }
         }
-        .environmentObject(viewModel)
         .onAppear {
             viewModel.signedIn = viewModel.isSignedIn
         }
@@ -28,6 +30,7 @@ struct OpenView: View {
 
 struct OpenView_Previews: PreviewProvider {
     static var previews: some View {
-        AuthView()
+        LoginView()
+            .environmentObject(AppViewModel())
     }
 }
