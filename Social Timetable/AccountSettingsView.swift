@@ -10,12 +10,29 @@ import SwiftUI
 struct AccountSettingsView: View {
     @EnvironmentObject var viewModel: AppViewModel
     @Binding var user: User?
+    @State var displayName: String = ""
     @State var color: Color = .accentColor
 
     var body: some View {
         List {
             if let user = user {
-                Label(user.displayName, systemImage: "person")
+                Label(user.email, systemImage: "envelope")
+                Label(title: {
+                    TextField("Username", text: $displayName)
+                        .padding(5)
+                        .background(.tertiary)
+                        .containerShape(RoundedRectangle(cornerRadius: 5))
+                        .onDisappear() {
+                            if !displayName.isEmpty {
+                                if user.displayName != displayName {
+                                    user.displayName = displayName
+                                    viewModel.setDisplayName(name: displayName)
+                                }
+                            }
+                        }
+                }, icon: {
+                    Image(systemName: "person")
+                })
                 HStack {
                     Label(title: {
                         Text("Colour")
@@ -23,22 +40,24 @@ struct AccountSettingsView: View {
                         ColorPicker("", selection: $color, supportsOpacity: false)
                             .padding(.leading, -10)
 
-                            .onDisappear {
+                            .onDisappear() {
                                 if let hex = color.hex() {
-                                    user.color = hex
-                                    viewModel.setUserColor(hex: hex)
+                                    if user.color != hex {
+                                        user.color = hex
+                                        viewModel.setUserColor(hex: hex)
+                                    }
                                 }
                             }
                     })
                 }
                 .onAppear() {
+                    displayName = user.displayName
                     color = Color(user.color)
                 }
-
-                Label(user.email, systemImage: "envelope")
-                Label("Friends", systemImage: "person.3")
-                ForEach(user.friends, id: \.self) { friend in
-                    Label(friend, systemImage: "person")
+                NavigationLink {
+                    FriendsView(user: $user)
+                } label: {
+                    Label("Friends", systemImage: "person.3")
                 }
             }
             Button(action: {

@@ -148,6 +148,16 @@ class AppViewModel: ObservableObject {
         }
     }
     
+    func setDisplayName(name: String) {
+        if let user = self.user {
+            if let id = user.id {
+                let docRef = db.collection("users").document(id)
+                print("setDisplayName(\(name)")
+                docRef.updateData(["displayName": name])
+            }
+        }
+    }
+    
     func setUserColor(hex: Int) {
         if let user = self.user {
             if let id = user.id {
@@ -163,6 +173,7 @@ extension AppViewModel {
     static let sampleData: AppViewModel = {
         let viewModel = AppViewModel()
         viewModel.user = User.sampleData
+        viewModel.users = [User.sampleData]
         return viewModel
     }()
 }

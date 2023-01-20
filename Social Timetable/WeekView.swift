@@ -15,10 +15,10 @@ struct WeekView: View {
     @State var date: Date
     @State private var dragOffset = CGSize.zero
     @EnvironmentObject var viewModel: AppViewModel
-    
+        
     let daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     
-    @State private var selection: Int = 0
+    @State var selection: Int
     
     var body: some View {
         VStack {
@@ -55,11 +55,6 @@ struct WeekView: View {
                     .tabViewStyle(.page(indexDisplayMode: .never))
                     .animation(.default, value: selection)
                 }
-            }
-            .onAppear {
-                selection = calendar.component(.weekday, from: date) - 2
-                selection = selection < 0 ? 0 : selection
-                selection = selection > 4 ? 4 : selection
             }
             ScrollView(.horizontal) {
                 HStack {
@@ -106,7 +101,7 @@ struct WeekView: View {
 
 struct WeekView_Previews: PreviewProvider {
     static var previews: some View {
-        WeekView(user: .constant(User.sampleData), date: .now)
+        WeekView(user: .constant(User.sampleData), date: .now, selection: 0)
             .environmentObject(AppViewModel.sampleData)
     }
 }

@@ -15,7 +15,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            WeekView(user: $user, date: date)
+            WeekView(user: $user, date: date, selection: getSelection())
                 .tabItem {
                     Label("Week", systemImage: "rectangle.grid.1x2")
                 }
@@ -35,6 +35,13 @@ struct ContentView: View {
                     Image(systemName: "gearshape")
                 }
         }
+    }
+    
+    func getSelection() -> Int {
+        var selection = Calendar.current.component(.weekday, from: date) - 2
+        selection = selection < 0 ? 0 : selection
+        selection = selection > 4 ? 4 : selection
+        return selection
     }
 }
 

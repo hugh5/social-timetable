@@ -1,41 +1,77 @@
 //
 //  EventDetailView.swift
-//  UQ Social Timetable
+//  Social Timetable
 //
-//  Created by Hugh Drummond on 29/12/2022.
+//  Created by Hugh Drummond on 20/1/2023.
 //
 
 import SwiftUI
 
 struct EventDetailView: View {
-    var name: String
-    var event: Event
-
+    
+    @Binding var userEvent: UserEvent?
+    
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(event.courseCode)
-                .font(.title3)
-                .lineLimit(1)
-            HStack {
-                Text(event.classType)
-                    .bold()
-                Text("-")
-                Text(event.activity)
+        if let event = userEvent?.event, let user = userEvent?.user {
+            VStack {
+                List {
+                    HStack {
+                        Text("Student")
+                            .frame(width: 70)
+                        Text(user.displayName)
+                            .bold()
+                            .padding(6)
+                            .foregroundColor(Color(user.color).isDarkColor ? .white : .black)
+                            .background(Color(user.color))
+                            .containerShape(RoundedRectangle(cornerRadius: 5))
+                    }
+                    HStack {
+                        Text("Course:")
+                            .frame(width: 70)
+                        Text(event.courseCode + " - " + event.semester)
+                            .bold()
+                    }
+                    HStack {
+                        Text("Name:")
+                            .frame(width: 70)
+                        Text(event.course)
+                            .bold()
+                    }
+                    HStack {
+                        Text("Activity:")
+                            .frame(width: 70)
+                        Text(event.classType + " - " + event.activity)
+                            .bold()
+                    }
+                    HStack {
+                        Text("Location")
+                            .frame(width: 70)
+                        Text(event.location)
+                            .font(.subheadline)
+                            .bold()
+                    }
+                    HStack {
+                        Text("Time")
+                            .frame(width: 70)
+                        Text(event.startTime.formatted() + " - " + event.endTime.formatted(date: .omitted, time: .shortened))
+                            .font(.subheadline)
+                            .bold()
+                    }
+                    HStack {
+                        Text("Duration")
+                            .frame(width: 70)
+                        Text(event.getDuration())
+                            .font(.subheadline)
+                            .bold()
+                    }
+                }
             }
-            HStack {
-                Text(event.location.components(separatedBy: " ")[0])
-                Text("\((event.endTime.timeIntervalSince(event.startTime) / 3600).description) hrs")
-            }
-            .font(.subheadline)
-            Text(name)
         }
     }
-}
-
-
+    }
 
 struct EventDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        EventDetailView(name: User.sampleData.displayName, event: Event.sampleData[0])
+        EventDetailView(userEvent: .constant(UserEvent(user: User.sampleData, event: Event.sampleData[0])))
     }
 }

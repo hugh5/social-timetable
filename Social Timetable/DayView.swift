@@ -11,6 +11,8 @@ struct DayView: View {
     
     let calendar = Calendar.current
     var events: [Int:[UserEvent]]
+    @State var presenting = false
+    @State var selected: UserEvent? = nil
         
     var body: some View {
         List {
@@ -22,9 +24,10 @@ struct DayView: View {
                         HStack {
                             ForEach(events[calendar.component(.hour, from: time)] ?? []) { userEvent in
                                 Button(action: {
-                                    
+                                    selected = userEvent
+                                    presenting.toggle()
                                 }) {
-                                    EventDetailView(name: userEvent.user.displayName, event: userEvent.event)
+                                    EventCardView(name: userEvent.user.displayName, event: userEvent.event)
                                         .padding(5)
                                         .frame(width: 140)
                                 }
@@ -37,6 +40,10 @@ struct DayView: View {
                     }
                 }
             }
+        }
+        .sheet(isPresented: $presenting) {
+            EventDetailView(userEvent: $selected)
+                .presentationDetents([.medium])
         }
     }
     

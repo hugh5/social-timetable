@@ -19,11 +19,13 @@
 		116C9E9F295CD87A007EFFFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 116C9E9E295CD87A007EFFFE /* Assets.xcassets */; };
 		116C9EA2295CD87A007EFFFE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EA1295CD87A007EFFFE /* Preview Assets.xcassets */; };
 		116C9EAB295CE062007EFFFE /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAA295CE062007EFFFE /* MonthView.swift */; };
-		116C9EAD295CE0BF007EFFFE /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAC295CE0BF007EFFFE /* EventDetailView.swift */; };
+		116C9EAD295CE0BF007EFFFE /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAC295CE0BF007EFFFE /* EventCardView.swift */; };
 		116C9EAF295CE0DC007EFFFE /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAE295CE0DC007EFFFE /* Event.swift */; };
 		116C9EB1295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */; };
 		116C9EB3295CE680007EFFFE /* calendar.ics in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EB2295CE680007EFFFE /* calendar.ics */; };
 		119B366129686FFB00038389 /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119B366029686FFB00038389 /* AccountSettingsView.swift */; };
+		11A7572C297A623900F8787B /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A7572B297A623900F8787B /* EventDetailView.swift */; };
+		11A7572E297A918B00F8787B /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A7572D297A918B00F8787B /* FriendsView.swift */; };
 		11C1E33E2965DE35002DDD44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */; };
 		11CD2219296D251600CDB2F3 /* ScrollSlidingTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD2218296D251600CDB2F3 /* ScrollSlidingTabBar.swift */; };
 		11CD221B296D257F00CDB2F3 /* FrameReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD221A296D257F00CDB2F3 /* FrameReader.swift */; };
@@ -48,11 +50,13 @@
 		116C9E9E295CD87A007EFFFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		116C9EA1295CD87A007EFFFE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		116C9EAA295CE062007EFFFE /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
-		116C9EAC295CE0BF007EFFFE /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
+		116C9EAC295CE0BF007EFFFE /* EventCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardView.swift; sourceTree = "<group>"; };
 		116C9EAE295CE0DC007EFFFE /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics"; sourceTree = "<group>"; };
 		116C9EB2295CE680007EFFFE /* calendar.ics */ = {isa = PBXFileReference; lastKnownFileType = text; path = calendar.ics; sourceTree = "<group>"; };
 		119B366029686FFB00038389 /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
+		11A7572B297A623900F8787B /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
+		11A7572D297A918B00F8787B /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		11CD2218296D251600CDB2F3 /* ScrollSlidingTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollSlidingTabBar.swift; sourceTree = "<group>"; };
 		11CD221A296D257F00CDB2F3 /* FrameReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameReader.swift; sourceTree = "<group>"; };
@@ -98,7 +102,7 @@
 		116C9E99295CD879007EFFFE /* Social Timetable */ = {
 			isa = PBXGroup;
 			children = (
-				116C9EAC295CE0BF007EFFFE /* EventDetailView.swift */,
+				116C9EAC295CE0BF007EFFFE /* EventCardView.swift */,
 				11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */,
 				116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */,
 				116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */,
@@ -122,6 +126,8 @@
 				11CD221A296D257F00CDB2F3 /* FrameReader.swift */,
 				11F0A312296D347200B35ABE /* DayView.swift */,
 				11F5A4FB29795AED009D87C2 /* CourseChatsView.swift */,
+				11A7572B297A623900F8787B /* EventDetailView.swift */,
+				11A7572D297A918B00F8787B /* FriendsView.swift */,
 			);
 			path = "Social Timetable";
 			sourceTree = "<group>";
@@ -268,8 +274,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11A7572E297A918B00F8787B /* FriendsView.swift in Sources */,
 				114B6A06296845C40020692C /* SettingsView.swift in Sources */,
-				116C9EAD295CE0BF007EFFFE /* EventDetailView.swift in Sources */,
+				116C9EAD295CE0BF007EFFFE /* EventCardView.swift in Sources */,
 				115FAE4629656EEA00F2738A /* AppViewModel.swift in Sources */,
 				1156CFC62965EDB200FF9732 /* OpenView.swift in Sources */,
 				114B6A00296813E30020692C /* LoginView.swift in Sources */,
@@ -284,6 +291,7 @@
 				11D8D6072961ADE900F20463 /* DayGridView.swift in Sources */,
 				11F0A313296D347200B35ABE /* DayView.swift in Sources */,
 				114B6A0229682D380020692C /* ContentView.swift in Sources */,
+				11A7572C297A623900F8787B /* EventDetailView.swift in Sources */,
 				116C9E9B295CD879007EFFFE /* SocialTimetableApp.swift in Sources */,
 				116C9EAB295CE062007EFFFE /* MonthView.swift in Sources */,
 				116C9EAF295CE0DC007EFFFE /* Event.swift in Sources */,

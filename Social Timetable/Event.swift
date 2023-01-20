@@ -29,13 +29,21 @@ struct Event: Identifiable, Codable {
         self.startTime = startTime
         self.endTime = endTime
     }
+    
+    public func getDuration() -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.zeroFormattingBehavior = .dropTrailing
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.unitsStyle = .abbreviated
+        return formatter.string(from: self.endTime.timeIntervalSince(self.startTime)) ?? "0h"
+    }
 }
 
 extension Event {
     static let sampleData: [Event] =
     [
-        Event(course: "Algorithms & Data Structures", courseCode: "COMP3506", semester: "S2", classType: "LEC1", activity: "01", location: "49-200 - Advanced Engineering Building\\, Learning Theatre (GHD Auditorium)", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221010T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221010T120000")),
-        Event(course: "Introduction to Electrical Systems", courseCode: "ENGG1300", semester: "S2", classType: "LEC1", activity: "01", location: "23-101 - Abel Smith Lecture Theatre\\, Learning Theatre", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T120000"))
+        Event(course: "Algorithms & Data Structures", courseCode: "COMP3506", semester: "S2", classType: "LEC1", activity: "01", location: "49-200 - Advanced Engineering Building, Learning Theatre (GHD Auditorium)", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221010T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221010T120000")),
+        Event(course: "Introduction to Electrical Systems", courseCode: "ENGG1300", semester: "S2", classType: "LEC1", activity: "01", location: "23-101 - Abel Smith Lecture Theatre, Learning Theatre", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T120000"))
     ]
 }
 
@@ -113,7 +121,7 @@ func convertICSToEvents(from url: URL) async -> ([Int: [Event]], [String:Set<Str
                 }
             case "LOCATION":
                 // Set the location of the event
-                eventLocation = value
+                eventLocation = value.replacingOccurrences(of: "\\", with: "")
             case "DESCRIPTION":
                 let descriptionComponents = value.components(separatedBy: "\\, ")
                 if (descriptionComponents.count >= 3) {
