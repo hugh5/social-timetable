@@ -60,9 +60,6 @@ struct LoginView: View {
                     .font(.caption)
                     .foregroundColor(.red)
             }
-            if fbError != nil {
-                
-            }
             if (viewModel.isLoading) {
                 ProgressView()
                     .progressViewStyle(.circular)

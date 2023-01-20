@@ -119,17 +119,35 @@ class AppViewModel: ObservableObject {
     
     func getUsers() {
         if let user = user {
-            users.append(user)
+            if (!users.contains(where: {$0.email == user.email})) {
+                users.append(user)
+            }
             for email in user.friends {
-                
-                let docRef = db.collection("users").document(email)
-                docRef.getDocument(as: User.self) { result in
-                    switch result {
-                    case .success(let data):
-                        self.users.append(data)
-                    case .failure(let error):
-                        print("Error getting user data: \(error.localizedDescription)")
+                if (!users.contains(where: {$0.email == email})) {
+                    let docRef = db.collection("users").document(email)
+                    docRef.getDocument(as: User.self) { result in
+                        switch result {
+                        case .success(let data):
+                            self.users.append(data)
+                        case .failure(let error):
+                            print("Error getting user data: \(error.localizedDescription)")
+                        }
                     }
+                }
+            }
+        }
+    }
+    
+    func userExists(email: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let docRef = db.collection("users").document(email)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                completion(.success(true))
+            } else {
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.failure(FBError.error("Unknown Error")))
                 }
             }
         }
@@ -154,6 +172,16 @@ class AppViewModel: ObservableObject {
                 let docRef = db.collection("users").document(id)
                 print("setDisplayName(\(name)")
                 docRef.updateData(["displayName": name])
+            }
+        }
+    }
+    
+    func setFriends() {
+        if let user = self.user {
+            if let id = user.id {
+                let docRef = db.collection("users").document(id)
+                print("setFriends(\(user.friends)")
+                docRef.updateData(["friends": user.friends])
             }
         }
     }
