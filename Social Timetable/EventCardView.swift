@@ -24,7 +24,9 @@ struct EventCardView: View {
             }
             HStack {
                 Text(event.location.components(separatedBy: " ")[0])
+                    .lineLimit(1, reservesSpace: true)
                 Text(event.getDuration())
+                    .lineLimit(1, reservesSpace: true)
             }
             .font(.subheadline)
             Text(name)

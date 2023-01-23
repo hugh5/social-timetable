@@ -26,7 +26,7 @@ struct SettingsView: View {
                     UploadTimetableView()
                         .navigationTitle("Upload Timetable")
                 } label: {
-                    Label("Upload Timetable", systemImage: "calendar.badge.plus")
+                    Label("Add Timetable", systemImage: "calendar.badge.plus")
                 }
             }
         }

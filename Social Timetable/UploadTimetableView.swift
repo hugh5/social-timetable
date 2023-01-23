@@ -18,7 +18,7 @@ struct UploadTimetableView: View {
     
     var body: some View {
         ScrollView {
-            Text("How to Upload Your UQ Timetable")
+            Text("How to Add Your UQ Timetable")
                 .font(.largeTitle)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()

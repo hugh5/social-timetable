@@ -16,7 +16,7 @@ struct WeekView: View {
     @State private var dragOffset = CGSize.zero
     @EnvironmentObject var viewModel: AppViewModel
         
-    let daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    let daysOfWeek = ["Mon", "Tue", "Wed", "Thur", "Fri"]
     
     @State var selection: Int
     
@@ -45,7 +45,26 @@ struct WeekView: View {
             }
             NavigationView {
                 VStack(alignment: .leading) {
-                    ScrollSlidingTabBar(selection: $selection, tabs: daysOfWeek)
+                    HStack {
+                        ForEach(Array(daysOfWeek.enumerated()), id:\.0) { (ind, dayOfWeek) in
+                            Button(action: {
+                                withAnimation {
+                                    selection = ind
+                                }
+                            }, label: {
+                                VStack {
+                                    Text(dayOfWeek)
+                                        .bold(selection == ind)
+                                        .foregroundColor(selection == ind ? .accentColor : .primary)
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .frame(height: 3)
+                                        .foregroundColor(selection == ind ? .accentColor : .clear)
+                                }
+                            })
+                        }
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity)
+                    }
                     TabView(selection: $selection) {
                         ForEach(0..<5) { day in
                             DayView(events: getEvents(dayOfWeek: day + 2))
