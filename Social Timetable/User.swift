@@ -8,7 +8,11 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-class User: Codable, Identifiable, ObservableObject {
+class User: Codable, Identifiable, ObservableObject, Equatable {
+    static func == (lhs: User, rhs: User) -> Bool {
+        return lhs.email == rhs.email
+    }
+    
         
     @DocumentID var id: String?
     var email: String

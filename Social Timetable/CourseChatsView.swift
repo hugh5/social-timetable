@@ -22,12 +22,13 @@ struct CourseChatsView: View {
                         }
                         ForEach(user.courses[semester]?.sorted {$0 < $1} ?? [], id:\.description) { course in
                             NavigationLink {
-                                Text("Coming Soon")
+                                ChatView(user: user, course: course + "_" + semester)
                                     .navigationTitle(course + "_" + semester)
+                                    .environmentObject(MessagesManager(channel: course + "_" + semester))
                             } label: {
                                 Text(course)
                             }
-                        }
+                        }   
                     }
                 }
             }
@@ -38,5 +39,6 @@ struct CourseChatsView: View {
 struct CourseChatsView_Previews: PreviewProvider {
     static var previews: some View {
         CourseChatsView(user: User.sampleData)
+            .environmentObject(MessagesManager.sampleData)
     }
 }

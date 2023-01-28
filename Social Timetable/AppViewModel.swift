@@ -87,6 +87,16 @@ class AppViewModel: ObservableObject {
         }
     }
     
+    func resetPassword(email: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        auth.sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(true))
+            }
+        }
+    }
+    
     var email: String? {
         auth.currentUser?.email
     }

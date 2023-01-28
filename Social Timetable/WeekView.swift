@@ -9,16 +9,15 @@ import SwiftUI
 
 struct WeekView: View {
 
-    
     let calendar = Calendar.current
+    let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri"]
+
     @Binding var user: User?
     @State var date: Date
-    @State private var dragOffset = CGSize.zero
-    @EnvironmentObject var viewModel: AppViewModel
-        
-    let daysOfWeek = ["Mon", "Tue", "Wed", "Thur", "Fri"]
-    
     @State var selection: Int
+    @State var hiddenUsers: [User] = []
+
+    @EnvironmentObject var viewModel: AppViewModel
     
     var body: some View {
         VStack {
@@ -49,6 +48,7 @@ struct WeekView: View {
                         ForEach(Array(daysOfWeek.enumerated()), id:\.0) { (ind, dayOfWeek) in
                             Button(action: {
                                 withAnimation {
+                                    date = calendar.date(byAdding: .day, value: ind - selection, to: date)!
                                     selection = ind
                                 }
                             }, label: {
@@ -78,12 +78,25 @@ struct WeekView: View {
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(viewModel.users) { account in
-                        Label(title: {
-                            Text(account.displayName)
-                        }, icon: {
-                            Image(systemName: "circle.fill")
-                                .foregroundColor(Color(account.color))
+                        Button(action: {
+                            withAnimation {
+                                if let ind = hiddenUsers.firstIndex(of: account) {
+                                    hiddenUsers.remove(at: ind)
+                                } else {
+                                    hiddenUsers.append(account)
+                                }
+                            }
+                        }, label: {
+                            Label(title: {
+                                Text(account.displayName)
+                                    .foregroundColor(.primary)
+                            }, icon: {
+                                Image(systemName: "circle.fill")
+                                    .foregroundColor(Color(account.color))
+                            })
+                            .opacity(hiddenUsers.contains(account) ? 0.45: 1.0)
                         })
+                        .buttonStyle(.bordered)
                     }
                 }
                 .padding()
@@ -102,6 +115,9 @@ struct WeekView: View {
         var events: [Int:[UserEvent]] = [:]
         if let day = calendar.ordinality(of: .day, in: .year, for: dateOfWeek) {
             for account in viewModel.users {
+                if hiddenUsers.contains(account) {
+                    continue
+                }
                 account.events[day]?.forEach { event in
                     let i = calendar.component(.hour, from: event.startTime)
                     if events[i] == nil {
@@ -113,9 +129,7 @@ struct WeekView: View {
             }
         }
         return events
-        
     }
-    
 }
 
 struct WeekView_Previews: PreviewProvider {

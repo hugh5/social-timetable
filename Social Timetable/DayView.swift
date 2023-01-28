@@ -19,7 +19,7 @@ struct DayView: View {
             ForEach(getTimes(), id: \.self) { time in
                 HStack {
                     Text(time.formatted(date: .omitted, time: .shortened))
-                        .frame(height: 80)
+                        .frame(height: 90)
                     ScrollView(.horizontal) {
                         HStack {
                             ForEach(events[calendar.component(.hour, from: time)] ?? []) { userEvent in
@@ -38,6 +38,7 @@ struct DayView: View {
                             }
                         }
                     }
+                    .frame(height: 90)
                 }
             }
         }

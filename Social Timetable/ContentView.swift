@@ -10,19 +10,14 @@ import SwiftUI
 struct ContentView: View {
     
     @Binding var user: User?
-//    let date = convertStringToDate(string: "TZID=Australia/Brisbane:20221022T100000")
-    let date: Date = .now
+    let date = convertStringToDate(string: "TZID=Australia/Brisbane:20221023T100000")
+//    let date: Date = .now
     
     var body: some View {
         TabView {
             WeekView(user: $user, date: date, selection: getSelection())
                 .tabItem {
                     Label("Week", systemImage: "rectangle.grid.1x2")
-                }
-            Text("Home")
-                .tabItem {
-                    Text("Timetable")
-                    Image(systemName: "calendar")
                 }
             CourseChatsView(user: user)
                 .tabItem {

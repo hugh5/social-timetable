@@ -17,6 +17,7 @@ struct LoginView: View {
     @State var idError: String? = nil
     @State var passwordError: String? = nil
     @State var fbError: String? = nil
+    @State var passwordResetInfo: String = ""
     
     var body: some View {
         VStack {
@@ -30,14 +31,16 @@ struct LoginView: View {
             }
             .pickerStyle(.segmented)
             .padding(.vertical, 30)
+            .animation(.easeIn, value: isSignIn)
             HStack {
-                Text("Student ID")
+                Text("Student Number")
                     .padding()
                 TextField("41234567", text: Binding(
                     get: { (studentID != nil) ? studentID!.description : ""},
                     set: { studentID = Int($0) ?? nil }
                 ))
                     .keyboardType(.numberPad)
+                    .textContentType(.username)
                     .autocorrectionDisabled(true)
                     .textInputAutocapitalization(.never)
                     .padding()
@@ -51,14 +54,42 @@ struct LoginView: View {
             }
             
             SecureField("Password", text: $password)
+                .textContentType(isSignIn ? UITextContentType.password : UITextContentType.newPassword)
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
                 .padding()
                 .background(.tertiary, in: RoundedRectangle(cornerRadius: 8))
+            
             if passwordError != nil {
                 Text(passwordError!)
                     .font(.caption)
                     .foregroundColor(.red)
+            }
+            if (isSignIn) {
+                Button(action: {
+                    if studentID?.description.count != 8 {
+                        passwordResetInfo = "Student ID ust be 8 digits"
+                        return
+                    }
+                    let email = "s" + (studentID! / 10 ).description + "@student.uq.edu.au"
+                    viewModel.resetPassword(email: email) { result in
+                        switch result {
+                        case .success(_):
+                            passwordResetInfo = "Password Reset Email Sent"
+                        case .failure(let error):
+                            passwordResetInfo = error.localizedDescription
+                        }
+                    }
+                }, label: {
+                    VStack {
+                        Text("Forgot Password")
+                            .font(.title3)
+                    }
+                })
+                .padding()
+                Text(passwordResetInfo)
+                    .foregroundColor(passwordResetInfo == "Password Reset Email Sent" ? .primary : .red)
+                    .font(.caption)
             }
             if (viewModel.isLoading) {
                 ProgressView()
@@ -128,7 +159,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(idError: "Student ID must be 8 digits", passwordError: "Password must be at least 6 characters in length")
+        LoginView(idError: "Student ID must be 8 digits", passwordError: "Password must be at least 6 characters in length", passwordResetInfo: "Password Reset Email Sent")
             .environmentObject(AppViewModel())
     }
 }
