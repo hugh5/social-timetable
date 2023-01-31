@@ -157,6 +157,34 @@ class AppViewModel: ObservableObject {
                 print("Error setting user data: \(error.localizedDescription)")
             }
         }
+        if let courses = user?.courses {
+            for semester in courses.keys {
+                courses[semester]?.forEach { course in
+                    var participants = [String]()
+                    let docRef = db.collection("chat").document(course + "_" + semester)
+                    
+                    docRef.getDocument() { result, error  in
+                        if let result = result {
+                            if let data = result.get("participants") {
+                                participants.append(contentsOf: data as! [String])
+                            }
+                            if let email = self.email {
+                                if (!participants.contains(where: {$0 == email})) {
+                                    participants.append(email)
+                                }
+                            }
+                            if result.exists {
+                                docRef.updateData(["participants":participants])
+                            } else {
+                                docRef.setData(["participants":participants])
+                            }
+                        } else {
+                            print(error ?? "")
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func userExists(email: String, completion: @escaping (Result<(email: String, name: String, color: Int), Error>) -> Void) {

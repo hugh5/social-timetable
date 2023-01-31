@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @Binding var user: User?
-    let date = convertStringToDate(string: "TZID=Australia/Brisbane:20221023T100000")
+    let date = convertStringToDate(string: "TZID=Australia/Brisbane:20221025T100000")
 //    let date: Date = .now
     
     var body: some View {

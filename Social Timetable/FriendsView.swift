@@ -1,6 +1,6 @@
 //
 //  FriendsView.swift
-//  Social Timetable
+//  Social Timetable 
 //
 //  Created by Hugh Drummond on 20/1/2023.
 //
@@ -106,7 +106,12 @@ struct FriendsView: View {
                     Button(action: {
                         if (studentID.count == 8) {
                             if let user = user {
-                                let email = "s" +  studentID.prefix(7) + "@student.uq.edu.au"
+                                var email = ""
+                                if studentID.hasPrefix("s") {
+                                    email = studentID + "@student.uq.edu.au"
+                                } else {
+                                    email = "s" +  studentID.prefix(7) + "@student.uq.edu.au"
+                                }
                                 studentID = ""
                                 if (user.email == email) {
                                     findFriendError = "Can't add yourself as a friend"

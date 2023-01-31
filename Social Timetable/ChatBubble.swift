@@ -10,7 +10,7 @@ import SwiftUI
 struct ChatBubble: View {
     
     @State var name = ""
-    @State var color: Int = (Color.gray.hex() ?? 0)
+    @State var color: Int? = nil
     var message: Message
     var sent: Bool
     
@@ -20,7 +20,7 @@ struct ChatBubble: View {
         VStack(alignment: .leading) {
             HStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(Color(color))
+                    .foregroundColor(color == nil ? .clear : Color(color!))
                     .frame(width: 5, height: 20)
                 Text(name)
                     .font(.subheadline)

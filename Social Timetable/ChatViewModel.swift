@@ -87,6 +87,17 @@ class MessagesManager: ObservableObject {
             print("Error adding message to Firestore: \(error)")
         }
     }
+    
+    func getParticipants(key: String, completion: @escaping ([String]) -> Void) {
+        let docRef = db.collection("chat").document(key)
+        docRef.getDocument() { result, error  in
+            if let result = result {
+                if let data = result.get("participants") {
+                    completion(data as! [String])
+                }
+            }
+        }
+    }
 }
 
 extension MessagesManager {
