@@ -108,9 +108,6 @@ class AppViewModel: ObservableObject {
     }
     
     func getUserData() {
-        if user != nil {
-            return
-        }
         if let id = email {
             let docRef = db.collection("users").document(id)
             print("getUserData()")
@@ -123,41 +120,27 @@ class AppViewModel: ObservableObject {
                     print("Error getting user data: \(error.localizedDescription)")
                 }
             }
-
         }
     }
     
     func getUsers() {
         if let user = user {
-            if (!users.contains(where: {$0.email == user.email})) {
-                users.append(user)
-            }
-            for email in user.friends {
-                if (!users.contains(where: {$0.email == email})) {
-                    let docRef = db.collection("users").document(email)
-                    docRef.getDocument(as: User.self) { result in
-                        switch result {
-                        case .success(let data):
+            users.removeAll()
+            users.append(user)
+            print("getUsers()")
+            for account in user.friends {
+                let docRef = db.collection("users").document(account)
+                docRef.getDocument(as: User.self) { result in
+                    switch result {
+                    case .success(let data):
+                        if let idx = self.users.firstIndex(where: {data.email < $0.email && $0.email != self.email}) {
+                            self.users.insert(data, at: idx)
+                        } else {
                             self.users.append(data)
-                        case .failure(let error):
-                            print("Error getting user data: \(error.localizedDescription)")
                         }
+                        case .failure(let error):
+                        print("Error getting user data: \(error.localizedDescription)")
                     }
-                }
-            }
-        }
-    }
-    
-    func userExists(email: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        let docRef = db.collection("users").document(email)
-        docRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                completion(.success(true))
-            } else {
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    completion(.failure(FBError.error("Unknown Error")))
                 }
             }
         }
@@ -176,6 +159,89 @@ class AppViewModel: ObservableObject {
         }
     }
     
+    func userExists(email: String, completion: @escaping (Result<(email: String, name: String, color: Int), Error>) -> Void) {
+        let docRef = db.collection("users").document(email)
+        docRef.getDocument(as: User.self) { result in
+            switch result {
+            case .success(let data):
+                completion(.success((data.email, data.displayName, data.color)))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func getFriendData(key: FriendKey, completion: @escaping (Result<(email: String, name: String), Error>) -> Void) {
+        if let user = self.user {
+            
+            var accounts: [String]
+            switch key {
+            case.friend:
+                accounts = user.friends
+            case .incomingFriend:
+                accounts = user.incomingFriendRequests
+            case .outgoingFriend:
+                accounts = user.outgoingFriendRequests
+            }
+            
+            for account in accounts {
+                let docRef = db.collection("users").document(account)
+                docRef.getDocument(as: User.self) { result in
+                    switch result {
+                    case .success(let data):
+                        completion(.success((data.email, data.displayName)))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+    
+    func setFriendData(key: FriendKey, _ friends: [String]) {
+        if let user = self.user {
+            
+            let diff: CollectionDifference<String> = {
+                switch key {
+                case .friend:
+                    return friends.difference(from: user.friends)
+                case .incomingFriend:
+                    return friends.difference(from: user.incomingFriendRequests)
+                case .outgoingFriend:
+                    return friends.difference(from: user.outgoingFriendRequests)
+                }
+            }()
+            let updateKey: FriendKey = {
+                switch key {
+                case .friend: return .friend
+                case .incomingFriend: return .outgoingFriend
+                case .outgoingFriend: return .incomingFriend
+                }
+            }()
+            for change in diff {
+                switch change {
+                case let .remove(_, element, _):
+                    print("remove(email:\(element), key:\(updateKey.description), toRemove:\(user.email)")
+                    removeFriendData(email: element, key: updateKey, toRemove: user.email)
+                case let .insert(_, element, _):
+                    print("insert(email:\(element), key:\(updateKey.description), toAdd:\(user.email)")
+                    addFriendData(email: element, key: updateKey, toAdd: user.email)
+                }
+            }
+            switch key {
+            case .friend: user.friends = friends
+            case .incomingFriend: user.incomingFriendRequests = friends
+            case .outgoingFriend: user.outgoingFriendRequests = friends
+            }
+            
+            if let id = user.id {
+                let docRef = db.collection("users").document(id)
+                print("update(email:\(user.email), key:\(key), newData:\(friends)")
+                docRef.updateData([key.description: friends])
+            }
+        }
+    }
+    
     func setDisplayName(name: String) {
         if let user = self.user {
             if let id = user.id {
@@ -186,16 +252,74 @@ class AppViewModel: ObservableObject {
         }
     }
     
-    func setFriends() {
-        if let user = self.user {
-            if let id = user.id {
-                let docRef = db.collection("users").document(id)
-                print("setFriends(\(user.friends)")
-                docRef.updateData(["friends": user.friends])
+    func removeFriendData(email: String, key: FriendKey, toRemove: String) {
+        let docRef = db.collection("users").document(email)
+        docRef.getDocument(as: User.self) { result in
+            switch result {
+            case .success(let data):
+                var arr = []
+                switch key {
+                case .friend:
+                    arr.append(contentsOf: data.friends)
+                    if let idx = data.friends.firstIndex(of: toRemove) {
+                        arr.remove(at: idx)
+                    }
+                case .incomingFriend:
+                    arr.append(contentsOf: data.incomingFriendRequests)
+                    if let idx = data.incomingFriendRequests.firstIndex(of: toRemove) {
+                        arr.remove(at: idx)
+                    }
+                case .outgoingFriend:
+                    arr.append(contentsOf: data.outgoingFriendRequests)
+                    if let idx = data.outgoingFriendRequests.firstIndex(of: toRemove) {
+                        arr.remove(at: idx)
+                    }
+                }
+                docRef.updateData([key.description: arr])
+            case .failure(let error):
+                print(error)
             }
         }
     }
     
+    func addFriendData(email: String, key: FriendKey, toAdd: String) {
+        let docRef = db.collection("users").document(email)
+        docRef.getDocument(as: User.self) { result in
+            switch result {
+            case .success(let data):
+                var arr: [String] = [toAdd]
+                switch key {
+                case .friend:
+                    arr.append(contentsOf: data.friends)
+                    docRef.updateData([key.description: arr])
+                case .incomingFriend:
+                    arr.append(contentsOf: data.incomingFriendRequests)
+                    docRef.updateData([key.description: arr])
+                case .outgoingFriend:
+                    arr.append(contentsOf: data.outgoingFriendRequests)
+                    docRef.updateData([key.description: arr])
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    
+    enum FriendKey {
+        case friend
+        case incomingFriend
+        case outgoingFriend
+        
+        var description: String {
+            switch self {
+            case .friend: return "friends"
+            case .incomingFriend: return "incomingFriendRequests"
+            case .outgoingFriend: return "outgoingFriendRequests"
+            }
+        }
+    }
+
     func setUserColor(hex: Int) {
         if let user = self.user {
             if let id = user.id {

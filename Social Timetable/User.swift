@@ -19,6 +19,9 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
     var displayName: String
     var color: Int // hex
     var friends: [String]
+    var incomingFriendRequests: [String]
+    var outgoingFriendRequests: [String]
+
     var events: [Int:[Event]]
     var courses: [String:Set<String>]
 
@@ -28,6 +31,8 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
         self.displayName = email.components(separatedBy: "@")[0]
         self.color = Int.random(in: 0..<Int(pow(2.0, 24)))
         self.friends = []
+        self.incomingFriendRequests = []
+        self.outgoingFriendRequests = []
         self.events = [:]
         self.courses = [:]
     }
@@ -37,7 +42,9 @@ extension User {
     static let sampleData: User = {
         var user = User(email: "s4697741@student.uq.edu.au")
         user.events[11] = Event.sampleData
-        user.friends = ["s1234567@student.uq.edu.au", "s7654321@student.uq.edu.au"]
+        user.friends = ["s1234567@student.uq.edu.au", "s2234567@student.uq.edu.au"]
+        user.incomingFriendRequests = ["s3234567@student.uq.edu.au", "s4234567@student.uq.edu.au"]
+        user.outgoingFriendRequests = ["s5234567@student.uq.edu.au", "s6234567@student.uq.edu.au"]
         user.courses = ["S1":["CSSE2310", "COMP3506"]]
         return user
     }()

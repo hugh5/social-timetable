@@ -56,11 +56,6 @@ struct AccountSettingsView: View {
                     displayName = user.displayName
                     color = Color(user.color)
                 }
-                NavigationLink {
-                    FriendsView(user: $user)
-                } label: {
-                    Label("Friends", systemImage: "person.3")
-                }
                 Button(action: {
                     viewModel.resetPassword(email: user.email) { result in
                         switch result {

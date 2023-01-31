@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CourseChatsView: View {
     
-    var user: User?
+    @Binding var user: User?
     let semesters: [String] = ["S1", "S2", "S3"]
     
     var body: some View {
@@ -31,6 +31,9 @@ struct CourseChatsView: View {
                         }   
                     }
                 }
+                if (user?.courses.keys.count == 0) {
+                    Text("Upload your timetable!")
+                }
             }
         }
     }
@@ -38,7 +41,7 @@ struct CourseChatsView: View {
 
 struct CourseChatsView_Previews: PreviewProvider {
     static var previews: some View {
-        CourseChatsView(user: User.sampleData)
+        CourseChatsView(user: .constant(User.sampleData))
             .environmentObject(MessagesManager.sampleData)
     }
 }

@@ -13,8 +13,6 @@ struct Message: Identifiable, Codable {
     var id: String
     var text: String
     var userid: String
-    var username: String
-    var usercolor: Int
     var timestamp: Date
 }
 
@@ -71,11 +69,8 @@ class MessagesManager: ObservableObject {
     
     // Add a message in Firestore
     func sendMessage(user: User, text: String) {
-
-            
-            
         // Create a new Message instance, with a unique ID, the text we passed, a received value set to false (since the user will always be the sender), and a timestamp
-        let newMessage = Message(id: UUID().uuidString, text: text, userid: user.email, username: user.displayName, usercolor: user.color, timestamp: Date())
+        let newMessage = Message(id: UUID().uuidString, text: text, userid: user.email, timestamp: Date())
         
         let courseRef = db.collection("chat").document(channel)
         courseRef.getDocument { (document, error) in
@@ -91,10 +86,6 @@ class MessagesManager: ObservableObject {
             // If we run into an error, print the error in the console
             print("Error adding message to Firestore: \(error)")
         }
-        // Create a new document in Firestore with the newMessage variable above, and use setData(from:) to convert the Message into Firestore data
-        // Note that setData(from:) is a function available only in FirebaseFirestoreSwift package - remember to import it at the top
-            
-        
     }
 }
 
@@ -103,13 +94,13 @@ extension MessagesManager {
         let mm = MessagesManager(channel: "CSSE2310_S1")
         let id = UUID().uuidString
         mm.messages = [
-            Message(id: UUID().uuidString, text: "Hello", userid: User.sampleData.email, username: User.sampleData.displayName, usercolor: User.sampleData.color, timestamp: convertStringToDate(string: "TZID=Australia/Brisbane:20221023T100000")),
-            Message(id: id, text: "Hello", userid: User.sampleData.email, username: User.sampleData.displayName, usercolor: User.sampleData.color, timestamp: .now)]
+            Message(id: UUID().uuidString, text: "Hello", userid: User.sampleData.email, timestamp: convertStringToDate(string: "TZID=Australia/Brisbane:20221023T100000")),
+            Message(id: id, text: "Hello", userid: User.sampleData.email, timestamp: .now)]
         mm.lastMessageId = id
         return mm
     }()
 }
 
 extension Message {
-    static let sampleData: Message = Message(id: UUID().uuidString, text: "UeVXtHUDQW LyQNErsjRp tnVBmyoiMH XjNcjWHGfe nESYUqrJDw jopLuuLFCc QjapuIcApw mnaxsvxpLo DsQuFemtrr IzplBpApsF", userid: User.sampleData.email, username: User.sampleData.displayName, usercolor: User.sampleData.color, timestamp: .now)
+    static let sampleData: Message = Message(id: UUID().uuidString, text: "UeVXtHUDQW LyQNErsjRp tnVBmyoiMH XjNcjWHGfe nESYUqrJDw jopLuuLFCc QjapuIcApw mnaxsvxpLo DsQuFemtrr IzplBpApsF", userid: User.sampleData.email, timestamp: .now)
 }

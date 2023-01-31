@@ -9,16 +9,20 @@ import SwiftUI
 
 struct ChatBubble: View {
     
+    @State var name = ""
+    @State var color: Int = (Color.gray.hex() ?? 0)
     var message: Message
     var sent: Bool
+    
+    @EnvironmentObject var viewModel: AppViewModel
         
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(Color(message.usercolor))
+                    .foregroundColor(Color(color))
                     .frame(width: 5, height: 20)
-                Text(message.username)
+                Text(name)
                     .font(.subheadline)
                 Spacer()
                 Text(getTime(date:message.timestamp))
@@ -53,6 +57,9 @@ struct ChatBubble: View {
             }
         }
         .padding(sent ? .leading : .trailing, 50)
+        .onAppear {
+            getUser(email: message.userid)
+        }
     }
     
     func getTime(date: Date) -> String {
@@ -62,10 +69,23 @@ struct ChatBubble: View {
         formatter.timeStyle = .short
         return formatter.string(from: date)
     }
+    
+    func getUser(email: String) {
+        viewModel.userExists(email: email) { result in
+            switch result {
+            case .success(let data):
+                name = data.name
+                color = data.color
+            case .failure(_):
+                name = email.prefix(while: {$0 != "@"}).description
+            }
+        }
+    }
 }
 
 struct ChatBubble_Previews: PreviewProvider {
     static var previews: some View {
         ChatBubble(message: Message.sampleData, sent: true)
+            .environmentObject(AppViewModel.sampleData)
     }
 }

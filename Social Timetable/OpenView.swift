@@ -15,9 +15,6 @@ struct OpenView: View {
         NavigationView {
             if (viewModel.signedIn) {
                 ContentView(user: $viewModel.user)
-                    .onAppear {
-                        viewModel.getUserData()
-                    }
             } else {
                 LoginView()
             }

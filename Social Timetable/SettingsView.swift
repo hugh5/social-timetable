@@ -19,7 +19,12 @@ struct SettingsView: View {
                     AccountSettingsView(user: $user)
                         .navigationTitle("Account Settings")
                 } label: {
-                    Label("Account Settings", systemImage: "person.crop.circle.fill")
+                    Label("Account Settings", systemImage: "person.crop.circle")
+                }
+                NavigationLink {
+                    FriendsView(user: $user)
+                } label: {
+                    Label("Friends", systemImage: "person.3")
                 }
                 
                 NavigationLink {
@@ -29,6 +34,7 @@ struct SettingsView: View {
                     Label("Add Timetable", systemImage: "calendar.badge.plus")
                 }
             }
+            .navigationTitle("Settings")
         }
     }
 }
@@ -36,5 +42,6 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView(user: .constant(User.sampleData))
+            .environmentObject(AppViewModel.sampleData)
     }
 }

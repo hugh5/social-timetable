@@ -19,7 +19,7 @@ struct ContentView: View {
                 .tabItem {
                     Label("Week", systemImage: "rectangle.grid.1x2")
                 }
-            CourseChatsView(user: user)
+            CourseChatsView(user: $user)
                 .tabItem {
                     Text("Course Chats")
                     Image(systemName: "message")

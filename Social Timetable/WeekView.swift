@@ -102,6 +102,9 @@ struct WeekView: View {
                 .padding()
             }
         }
+        .onAppear {
+            viewModel.getUserData()
+        }
     }
     
     func getDate(dayOfWeek: Int) -> Date {

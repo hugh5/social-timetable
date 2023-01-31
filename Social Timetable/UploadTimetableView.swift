@@ -63,12 +63,15 @@ struct UploadTimetableView: View {
             if let url = URL(string: timeTableLink) {
                 Task {
                     let (events, courses) = await convertICSToEvents(from: url)
+                    if events.isEmpty {
+                        return
+                    }
                     viewModel.user?.events = events
                     viewModel.user?.courses = courses
                     viewModel.setUserData()
                     viewModel.getUserData()
+                    presentationMode.wrappedValue.dismiss()
                 }
-                presentationMode.wrappedValue.dismiss()
             }
         }
     }
