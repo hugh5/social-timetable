@@ -65,7 +65,6 @@ struct ChatView: View {
                 }, label: {
                     Label("Participants", systemImage: "person.3")
                 })
-                .buttonStyle(.bordered)
                 .sheet(isPresented: $isPresenting, content: {
                     ParticipantListView(participants: $participants)
                         .presentationDetents([.medium])
@@ -116,9 +115,38 @@ struct PersonView: View {
             HStack {
                 Text(name)
                 Spacer()
-                Text(email.prefix(while: {$0 != "@"}).description)
-                    .font(.caption)
-                    .foregroundColor(.gray)
+                Label(title: {
+                    Text(email.prefix(while: {$0 != "@"}).description)
+                        .monospacedDigit()
+                }, icon: {
+                    if viewModel.email == email {
+                        Text("You")
+                            .foregroundColor(.gray)
+                    } else if (viewModel.user?.friends.contains(where: {$0 == email}) ?? false) {
+                        Image(systemName: "person")
+                            .foregroundColor(.gray)
+                    } else if (viewModel.user?.incomingFriendRequests.contains(where: {$0 == email}) ?? false) {
+                        Button(action: {
+                            
+                        }, label: {
+                            Text("Accept")
+                        })
+                        .buttonStyle(.plain)
+                        .foregroundColor(.accentColor)
+                    } else if (viewModel.user?.outgoingFriendRequests.contains(where: {$0 == email}) ?? false) {
+                        Text("Pending")
+                            .foregroundColor(.gray)
+                    } else {
+                        Button(action: {
+                            
+                        }, label: {
+                            Image(systemName: "plus")
+                        })
+                        .buttonStyle(.plain)
+                        .foregroundColor(.accentColor)
+                    }
+                })
+                .font(.caption)
             }
         }, icon: {
             Image(systemName: "circle.fill")
