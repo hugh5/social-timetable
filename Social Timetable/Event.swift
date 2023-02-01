@@ -47,10 +47,17 @@ extension Event {
     ]
 }
 
-func convertICSToEvents(from url: URL) async -> ([Int: [Event]], [String:Set<String>]) {
+func convertICSToEvents(from url: URL) async -> Result<([Int: [Event]], [String:Set<String>]), Error> {
     // Parse the .ics file
     
-    let contents: String = await loadURLContents(url: url)
+    let result: Result = await loadURLContents(url: url)
+    var contents: String
+    switch result {
+    case .failure(let error):
+        return .failure(error)
+    case .success(let data):
+        contents = data
+    }
     
     let lines = contents.components(separatedBy: "\n")
     
@@ -154,7 +161,7 @@ func convertICSToEvents(from url: URL) async -> ([Int: [Event]], [String:Set<Str
 
     }
 
-    return (events, courses)
+    return .success((events, courses))
 }
 
 func convertStringToDate(string: String) -> Date {
@@ -185,18 +192,18 @@ func getDayOfYear(date: Date) -> Int {
     return calendar.ordinality(of: .day, in: .year, for: date)!
 }
 
-func loadURLContents(url: URL) async -> String {
+func loadURLContents(url: URL) async -> Result<String, Error> {
     do {
         let (data, response) = try await URLSession.shared.data(from: url)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            return ""
+            return .failure(preconditionFailure("Got unsuccessful error code"))
         }
         guard let contents = String(data: data, encoding: .utf8) else {
-            return ""
+            return .failure(fatalError("Error decoding recieved data"))
         }
-        return contents
+        return .success(contents)
     } catch {
-        return ""
+        return .failure(error)
     }
 
 }

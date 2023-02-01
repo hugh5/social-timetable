@@ -35,23 +35,21 @@ struct AccountSettingsView: View {
                 }, icon: {
                     Image(systemName: "person")
                 })
-                HStack {
-                    Label(title: {
-                        Text("Colour")
-                    }, icon: {
-                        ColorPicker("", selection: $color, supportsOpacity: false)
-                            .padding(.leading, -10)
-
-                            .onDisappear() {
-                                if let hex = color.hex() {
-                                    if user.color != hex {
-                                        user.color = hex
-                                        viewModel.setUserColor(hex: hex)
-                                    }
+                Label(title: {
+                    ColorPicker("", selection: $color, supportsOpacity: false)
+                        .onDisappear() {
+                            if let hex = color.hex() {
+                                if user.color != hex {
+                                    user.color = hex
+                                    viewModel.setUserColor(hex: hex)
                                 }
                             }
-                    })
-                }
+                        }
+                        .frame(width: 0)
+                        .padding(.horizontal)
+                }, icon: {
+                    Image(systemName: "paintpalette")
+                })
                 .onAppear() {
                     displayName = user.displayName
                     color = Color(user.color)

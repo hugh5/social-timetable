@@ -11,6 +11,7 @@ import FirebaseFirestore
 struct UploadTimetableView: View {
     
     @State var timeTableLink: String = ""
+    @State var uploadError = " "
     @EnvironmentObject var viewModel: AppViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -42,15 +43,29 @@ struct UploadTimetableView: View {
                 .font(.title3)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
+            
+            if uploadError.isEmpty {
+                ProgressView()
+            } else {
+                Text(uploadError).foregroundColor(.red).font(.title3)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+            }
             HStack {
                 TextField("https://timetable.my.uq.edu.au/...", text: $timeTableLink)
                     .padding()
+                    .onSubmit {
+                        saveUser()
+                    }
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+                    .lineLimit(3)
                 Button(action: {
                     saveUser()
                 }) {
                     Text("Save")
                 }
-                .padding()
+                .padding(.horizontal)
                 .buttonStyle(.borderedProminent)
             }
             .background(.tertiary, in: RoundedRectangle(cornerRadius: 8))
@@ -59,27 +74,37 @@ struct UploadTimetableView: View {
     }
     
     func saveUser() {
+        uploadError.removeAll()
         if (!timeTableLink.isEmpty) {
             if let url = URL(string: timeTableLink) {
+                timeTableLink = ""
                 Task {
-                    let (events, courses) = await convertICSToEvents(from: url)
-                    if events.isEmpty {
-                        return
+                    let result = await convertICSToEvents(from: url)
+                    switch result {
+                    case .failure(let error):
+                        uploadError = error.localizedDescription
+                    case .success(let (events, courses)):
+                        if events.isEmpty {
+                            uploadError = "This URL contains no content"
+                        } else {
+                            presentationMode.wrappedValue.dismiss()
+                            viewModel.user?.events = events
+                            viewModel.user?.courses = courses
+                            viewModel.setUserData()
+                            viewModel.getUserData()
+                        }
                     }
-                    viewModel.user?.events = events
-                    viewModel.user?.courses = courses
-                    viewModel.setUserData()
-                    viewModel.getUserData()
-                    presentationMode.wrappedValue.dismiss()
                 }
             }
+        } else {
+            uploadError = " "
         }
     }
 }
 
 struct UploadTimetableView_Previews: PreviewProvider {
     static var previews: some View {
-        UploadTimetableView()
+        UploadTimetableView(uploadError: "")
             .environmentObject(AppViewModel())
     }
 }

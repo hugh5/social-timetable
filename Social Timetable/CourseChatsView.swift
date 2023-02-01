@@ -45,6 +45,7 @@ struct CourseChatsView: View {
                     }
                 }
             }
+            .listStyle(.sidebar)
         }
     }
 }
