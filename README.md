@@ -2,7 +2,7 @@
 Social Timetable app for iOS written using SwiftUI<br>
 Used Firebase Auth for user authentication and Firebase Firestore for storing user data and chat messages
 
-<img src="https://user-images.githubusercontent.com/110031011/215694209-4420a08c-8277-45a3-9996-9c448a24e4ba.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/215694456-e576b9f9-dc64-496a-ac30-7055c2b7b106.jpg" width="400">
+<img src="https://user-images.githubusercontent.com/110031011/215694209-4420a08c-8277-45a3-9996-9c448a24e4ba.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/215981770-691c4abd-8934-45cc-8abc-f80090626a1b.jpg" width="400">
 
 <img src="https://user-images.githubusercontent.com/110031011/215695695-0e55c691-c489-4bc7-8f73-60ef58571599.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/215696459-77258810-b2f7-4869-b987-d125a59193b3.jpg" width="400">
 
