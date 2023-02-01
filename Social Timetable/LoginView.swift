@@ -59,6 +59,9 @@ struct LoginView: View {
                 .textInputAutocapitalization(.never)
                 .padding()
                 .background(.tertiary, in: RoundedRectangle(cornerRadius: 8))
+                .onSubmit {
+                    signIn()
+                }
             
             if passwordError != nil {
                 Text(passwordError!)
@@ -102,49 +105,8 @@ struct LoginView: View {
                     .padding(30)
             }
                            
-            Button(action : {
-                if (!isSignIn) {
-                    withAnimation(.default) {
-                        idError = studentID?.description.count != 8 ? "Student ID must be 8 digits" : nil
-                    }
-                    withAnimation(.default) {
-                        passwordError = password.count < 6 ? "Password must be at least 6 characters in length" : nil
-                    }
-                } else {
-                    // sign in
-                    withAnimation(.default) {
-                        idError = studentID == nil ? "Required Field" : nil
-                    }
-                    withAnimation(.default) {
-                        passwordError = password.isEmpty ? "Required Field" : nil
-                    }
-                }
-                
-                if idError != nil || passwordError != nil {
-                    return
-                }
-
-                let email = "s" + (studentID! / 10 ).description + "@student.uq.edu.au"
-                fbError = nil
-                if (!isSignIn) {
-                    viewModel.signUp(email: email, password: password) { result in
-                        switch result {
-                        case .success(_):
-                            fbError = nil
-                        case .failure(let error):
-                            fbError = error.localizedDescription
-                        }
-                    }
-                } else {
-                    viewModel.signIn(email: email, password: password) { result in
-                        switch result {
-                        case .success(_):
-                            fbError = nil
-                        case .failure(let error):
-                            fbError = error.localizedDescription
-                        }
-                    }
-                }
+            Button(action: {
+                signIn()
             }) {
                 Text(isSignIn ? "Sign In" : "Create Account")
                     .frame(width: 200, height: 40)
@@ -154,6 +116,51 @@ struct LoginView: View {
         }
         .padding()
         .navigationTitle(isSignIn ? "Sign In" : "Create Account")
+    }
+    
+    func signIn() {
+        if (!isSignIn) {
+            withAnimation(.default) {
+                idError = studentID?.description.count != 8 ? "Student ID must be 8 digits" : nil
+            }
+            withAnimation(.default) {
+                passwordError = password.count < 6 ? "Password must be at least 6 characters in length" : nil
+            }
+        } else {
+            // sign in
+            withAnimation(.default) {
+                idError = studentID == nil ? "Required Field" : nil
+            }
+            withAnimation(.default) {
+                passwordError = password.isEmpty ? "Required Field" : nil
+            }
+        }
+        
+        if idError != nil || passwordError != nil {
+            return
+        }
+
+        let email = "s" + (studentID! / 10 ).description + "@student.uq.edu.au"
+        fbError = nil
+        if (!isSignIn) {
+            viewModel.signUp(email: email, password: password) { result in
+                switch result {
+                case .success(_):
+                    fbError = nil
+                case .failure(let error):
+                    fbError = error.localizedDescription
+                }
+            }
+        } else {
+            viewModel.signIn(email: email, password: password) { result in
+                switch result {
+                case .success(_):
+                    fbError = nil
+                case .failure(let error):
+                    fbError = error.localizedDescription
+                }
+            }
+        }
     }
 }
 
