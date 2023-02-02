@@ -92,11 +92,20 @@ struct ChatView: View {
 
 struct ParticipantListView: View {
     @Binding var participants: [String]
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        List {
-            ForEach(participants, id:\.description) { account in
-                PersonView(email: account)
+        VStack {
+            Button(action: {
+                dismiss()
+            }, label: {
+                Image(systemName: "chevron.down")
+            })
+            .padding()
+            List {
+                ForEach(participants, id:\.description) { account in
+                    PersonView(email: account)
+                }
             }
         }
     }

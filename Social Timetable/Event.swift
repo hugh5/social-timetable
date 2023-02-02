@@ -31,18 +31,15 @@ struct Event: Identifiable, Codable {
     }
     
     public func getDuration() -> String {
-        let formatter = DateComponentsFormatter()
-        formatter.zeroFormattingBehavior = .dropTrailing
-        formatter.allowedUnits = [.hour, .minute]
-        formatter.unitsStyle = .abbreviated
-        return formatter.string(from: self.endTime.timeIntervalSince(self.startTime)) ?? "0h"
+        let components = Calendar.current.dateComponents([.hour, .minute], from: startTime, to: endTime)
+        return String(format: "%dh", components.hour ?? 0).appending(components.minute ?? 0 != 0 ? String(format: " %dm", components.minute ?? 0) : "")
     }
 }
 
 extension Event {
     static let sampleData: [Event] =
     [
-        Event(course: "Algorithms & Data Structures", courseCode: "COMP3506", semester: "S2", classType: "LEC1", activity: "01", location: "49-200 - Advanced Engineering Building, Learning Theatre (GHD Auditorium)", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221010T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221010T120000")),
+        Event(course: "Algorithms & Data Structures", courseCode: "COMP3506", semester: "S2", classType: "LEC1", activity: "01", location: "49-200 - Advanced Engineering Building, Learning Theatre (GHD Auditorium)", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221010T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221010T133000")),
         Event(course: "Introduction to Electrical Systems", courseCode: "ENGG1300", semester: "S2", classType: "LEC1", activity: "01", location: "23-101 - Abel Smith Lecture Theatre, Learning Theatre", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T120000"))
     ]
 }
@@ -196,10 +193,10 @@ func loadURLContents(url: URL) async -> Result<String, Error> {
     do {
         let (data, response) = try await URLSession.shared.data(from: url)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            return .failure(preconditionFailure("Got unsuccessful error code"))
+            return .failure(NSError())
         }
         guard let contents = String(data: data, encoding: .utf8) else {
-            return .failure(fatalError("Error decoding recieved data"))
+            return .failure(NSError())
         }
         return .success(contents)
     } catch {

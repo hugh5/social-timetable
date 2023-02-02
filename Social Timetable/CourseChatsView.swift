@@ -47,6 +47,7 @@ struct CourseChatsView: View {
             }
             .listStyle(.sidebar)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

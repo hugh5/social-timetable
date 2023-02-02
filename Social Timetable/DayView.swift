@@ -20,6 +20,7 @@ struct DayView: View {
                 HStack {
                     Text(time.formatted(date: .omitted, time: .shortened))
                         .frame(width: 75, height: 90)
+                        .padding(.leading, -15)
                     ScrollView(.horizontal) {
                         HStack {
                             ForEach(events[calendar.component(.hour, from: time)] ?? []) { userEvent in
@@ -28,8 +29,9 @@ struct DayView: View {
                                     presenting.toggle()
                                 }) {
                                     EventCardView(name: userEvent.user.displayName, event: userEvent.event)
-                                        .padding(5)
-                                        .frame(width: 140)
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 5)
+                                        .frame(minWidth: 135, alignment: .leading)
                                 }
                                 .buttonStyle(.plain)
                                 .foregroundColor(Color(userEvent.user.color).isDarkColor ? .white : .black)

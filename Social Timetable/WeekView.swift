@@ -75,6 +75,7 @@ struct WeekView: View {
                     .animation(.default, value: selection)
                 }
             }
+            .navigationViewStyle(StackNavigationViewStyle())
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(viewModel.users) { account in

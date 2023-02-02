@@ -10,10 +10,17 @@ import SwiftUI
 struct EventDetailView: View {
     
     @Binding var userEvent: UserEvent?
-    
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
         if let event = userEvent?.event, let user = userEvent?.user {
             VStack {
+                Button(action: {
+                    dismiss()
+                }, label: {
+                    Image(systemName: "chevron.down")
+                })
+                .padding(.top)
                 List {
                     HStack {
                         Text("Student")
@@ -26,19 +33,19 @@ struct EventDetailView: View {
                             .containerShape(RoundedRectangle(cornerRadius: 5))
                     }
                     HStack {
-                        Text("Course:")
+                        Text("Course")
                             .frame(width: 70)
                         Text(event.courseCode + " - " + event.semester)
                             .bold()
                     }
                     HStack {
-                        Text("Name:")
+                        Text("Name")
                             .frame(width: 70)
                         Text(event.course)
                             .bold()
                     }
                     HStack {
-                        Text("Activity:")
+                        Text("Activity")
                             .frame(width: 70)
                         Text(event.classType + " - " + event.activity)
                             .bold()

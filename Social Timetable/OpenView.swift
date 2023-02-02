@@ -22,6 +22,7 @@ struct OpenView: View {
         .onAppear {
             viewModel.signedIn = viewModel.isSignedIn
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
