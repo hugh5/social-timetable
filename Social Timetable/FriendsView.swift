@@ -14,7 +14,7 @@ struct FriendsView: View {
     @State var incomingFriends = [String:String]()
     @State var outgoingFriends = [String:String]()
 
-    @State var studentID: String = ""
+    @State var email: String = ""
     @State var findFriendError: String? = nil
     @State var loading = false
     
@@ -26,12 +26,7 @@ struct FriendsView: View {
                 Section("Friends") {
                     ForEach(Array(friends.keys.sorted()), id:\.self) { key in
                         Label(title: {
-                            HStack {
-                                Text(friends[key]!)
-                                Spacer()
-                                Text(key.prefix(while: {$0 != "@"}))
-                                    .foregroundColor(.gray)
-                            }
+                            Text(friends[key]!)
                         }, icon: {
                             Image(systemName: "person")
                         })
@@ -50,12 +45,7 @@ struct FriendsView: View {
                 Section("Friend Requests") {
                     ForEach(Array(incomingFriends.keys.sorted()), id:\.self) { key in
                         Label(title: {
-                            HStack {
-                                Text(incomingFriends[key]!)
-                                Spacer()
-                                Text(key.prefix(while: {$0 != "@"}))
-                                    .foregroundColor(.gray)
-                            }
+                            Text(incomingFriends[key]!)
                         }, icon: {
                             Image(systemName: "person")
                         })
@@ -83,12 +73,7 @@ struct FriendsView: View {
                 Section("Outgoing Requests") {
                     ForEach(Array(outgoingFriends.keys.sorted()), id:\.self) { key in
                         Label(title: {
-                            HStack {
-                                Text(outgoingFriends[key]!)
-                                Spacer()
-                                Text("Pending")
-                                    .foregroundColor(.gray)
-                            }
+                            Text(outgoingFriends[key]!)
                         }, icon: {
                             Image(systemName: "person")
                         })
@@ -104,44 +89,39 @@ struct FriendsView: View {
                             }
                     }
                     Button(action: {
-                        if (studentID.count == 8) {
-                            if let user = user {
-                                var email = ""
-                                if studentID.hasPrefix("s") {
-                                    email = studentID + "@student.uq.edu.au"
-                                } else {
-                                    email = "s" +  studentID.prefix(7) + "@student.uq.edu.au"
-                                }
-                                studentID = ""
-                                if (user.email == email) {
-                                    findFriendError = "Can't add yourself as a friend"
-                                } else if (user.friends.contains(email)) {
-                                    findFriendError = "Already friends with this user"
-                                } else {
-                                    viewModel.userExists(email: email) { result in
-                                        switch result {
-                                        case .success(let data):
-                                            findFriendError = nil
-                                            outgoingFriends[data.0] = data.1
-                                            viewModel.setFriendData(key: .outgoingFriend, Array(outgoingFriends.keys))
-                                        case .failure(let error):
-                                            findFriendError = "User Not Found\n" + error.localizedDescription
-                                        }
+                        if (email.isEmpty) {
+                            return
+                        }
+                        let temp = email
+                        email = ""
+                        if let user = user {
+                            if (user.email == temp) {
+                                findFriendError = "Can't add yourself as a friend"
+                            } else if (user.friends.contains(temp)) {
+                                findFriendError = "Already friends with this user"
+                            } else {
+                                viewModel.userExists(email: temp) { result in
+                                    switch result {
+                                    case .success(let data):
+                                        findFriendError = nil
+                                        outgoingFriends[data.0] = data.1
+                                        viewModel.setFriendData(key: .outgoingFriend, Array(outgoingFriends.keys))
+                                    case .failure(let error):
+                                        findFriendError = "User Not Found\n" + error.localizedDescription
                                     }
                                 }
                             }
-                            
                         }
                     }, label: {
                         Label(title: {
                             HStack {
-                                TextField("41234567", text: $studentID)
-                                    .foregroundColor(studentID.count == 8 ? .primary : .secondary)
-                                    .keyboardType(.numberPad)
+                                TextField("friend@gmail.com", text: $email)
+                                    .autocorrectionDisabled(true)
+                                    .autocapitalization(.none)
                             }
                         },icon: {
                             Image(systemName: "plus")
-                                .foregroundColor(studentID.count == 8 ? .accentColor : .secondary)
+                                .foregroundColor(email.isEmpty ? .gray : .accentColor)
                         })
                     })
                     if findFriendError != nil {

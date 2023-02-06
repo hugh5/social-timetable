@@ -10,5 +10,8 @@ target 'Social Timetable' do
   pod "Firebase/Auth"
   pod "Firebase/Firestore"
   pod "FirebaseFirestoreSwift"
+  pod 'GoogleSignIn'
+  pod 'GoogleSignInSwiftSupport'
+
 
 end

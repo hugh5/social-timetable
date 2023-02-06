@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GoogleSignInSwift
 
 struct OpenView: View {
     
@@ -16,7 +17,7 @@ struct OpenView: View {
             if (viewModel.signedIn) {
                 ContentView(user: $viewModel.user)
             } else {
-                LoginView()
+                SignInView()
             }
         }
         .onAppear {
@@ -26,9 +27,39 @@ struct OpenView: View {
     }
 }
 
+struct SignInView: View {
+    
+    @EnvironmentObject var viewModel: AppViewModel
+    @Environment(\.colorScheme) var colorScheme
+    
+    var body: some View {
+        VStack {
+            Image(colorScheme == .light ? "social-timetable-black" : "social-timetable-white")
+                .resizable()
+                .scaledToFit()
+                .padding(.vertical, 100)
+            GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: colorScheme == .light ? .dark : .light, style: .wide, state: .normal), action: {
+                viewModel.authenticatWithGoogle()
+            })
+            .disabled(viewModel.isLoading)
+            .fixedSize()
+            .padding(.vertical, 100)
+            if (viewModel.isLoading) {
+                ProgressView()
+                    .padding()
+            }
+        }
+        .padding()
+    }
+}
+
 struct OpenView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        Group {
+            SignInView()
+            SignInView()
+                .preferredColorScheme(.dark)
+        }
             .environmentObject(AppViewModel())
     }
 }

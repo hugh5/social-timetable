@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Depreciated
 struct LoginView: View {
     
     @State var studentID: Int?

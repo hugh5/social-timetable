@@ -13,8 +13,6 @@ struct AccountSettingsView: View {
     @State var displayName: String = ""
     @State var color: Color = .accentColor
     
-    @State var passwordResetInfo = ""
-
     var body: some View {
         List {
             if let user = user {
@@ -54,29 +52,6 @@ struct AccountSettingsView: View {
                     displayName = user.displayName
                     color = Color(user.color)
                 }
-                Button(action: {
-                    viewModel.resetPassword(email: user.email) { result in
-                        switch result {
-                        case .success(_):
-                            passwordResetInfo = "Password Reset Email Sent"
-                        case .failure(let error):
-                            passwordResetInfo = error.localizedDescription
-                        }
-                    }
-                }, label: {
-                    Label(title: {
-                        VStack(alignment: .leading) {
-                            Text("Reset Password")
-                            if !passwordResetInfo.isEmpty {
-                                Text(passwordResetInfo)
-                                    .foregroundColor(passwordResetInfo == "Password Reset Email Sent" ? .primary : .red)
-                                    .font(.subheadline)
-                            }
-                        }
-                    }, icon: {
-                        Image(systemName: "lock.rotation")
-                    })
-                })
             }
             Button(action: {
                 viewModel.signOut()
@@ -91,7 +66,7 @@ struct AccountSettingsView: View {
 
 struct AccountSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountSettingsView(user: .constant(User.sampleData), passwordResetInfo: "Password Reset Email Sent")
+        AccountSettingsView(user: .constant(User.sampleData))
             .environmentObject(AppViewModel.sampleData)
         
     }

@@ -104,7 +104,9 @@ struct WeekView: View {
             }
         }
         .onAppear {
-            viewModel.getUserData()
+            withAnimation {
+                viewModel.getUserData()
+            }
         }
     }
     

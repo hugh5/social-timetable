@@ -18,7 +18,9 @@ struct EventDetailView: View {
                 Button(action: {
                     dismiss()
                 }, label: {
-                    Image(systemName: "chevron.down")
+                    RoundedRectangle(cornerRadius: 5)
+                        .frame(width: UIScreen.main.bounds.width / 8, height: 3)
+                        .foregroundColor(.gray)
                 })
                 .padding(.top)
                 List {

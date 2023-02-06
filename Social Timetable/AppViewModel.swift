@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import Firebase
 import FirebaseAuth
 import FirebaseFirestore
+import GoogleSignIn
 
 enum FBError: Error, Identifiable {
     case error(String)
@@ -77,7 +79,66 @@ class AppViewModel: ObservableObject {
         }
     }
     
+    func authenticatWithGoogle() {
+        isLoading = true
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+            
+        // 4
+        guard let presentingVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
+            return
+            
+        }
+        // Start the sign in flow!
+        GIDSignIn.sharedInstance.signIn(withPresenting: presentingVC) { result, error in
+            self.authenticateUser(for: result?.user, with: error)
+        }
+
+    }
+    
+    private func authenticateUser(for user: GIDGoogleUser?, with error: Error?) {
+        // 1
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+
+        // 2
+        guard let accessToken = user?.accessToken, let idToken = user?.idToken else { return }
+
+        let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: accessToken.tokenString)
+
+        // 3
+        auth.signIn(with: credential) { [unowned self] (_, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                self.signedIn = true
+                if let profile = user?.profile {
+                    print(profile.name)
+                    let docRef = db.collection("users").document(profile.email)
+                    docRef.getDocument { (document, error) in
+                        if let document = document {
+                            if document.exists {
+                                
+                            } else {
+                                self.user = User(email: profile.email, name: profile.givenName ?? profile.name)
+                                self.setUserData()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
     func signOut() {
+        // 1
+        GIDSignIn.sharedInstance.signOut()
+      
         isLoading = false
         try? auth.signOut()
         self.user = nil
@@ -125,15 +186,21 @@ class AppViewModel: ObservableObject {
     
     func getUsers() {
         if let user = user {
-            users.removeAll()
-            users.append(user)
             print("getUsers()")
+            if let idx = self.users.firstIndex(where: {$0.email == user.email}) {
+                self.users[idx] = user
+            } else {
+                self.users.insert(user, at: 0)
+                print("insert")
+            }
             for account in user.friends {
                 let docRef = db.collection("users").document(account)
                 docRef.getDocument(as: User.self) { result in
                     switch result {
                     case .success(let data):
-                        if let idx = self.users.firstIndex(where: {data.email < $0.email && $0.email != self.email}) {
+                        if let idx = self.users.firstIndex(where: {$0.email == data.email}) {
+                            self.users[idx] = data
+                        } else if let idx = self.users.firstIndex(where: {data.email < $0.email && $0.email != self.email}) {
                             self.users.insert(data, at: idx)
                         } else {
                             self.users.append(data)
@@ -143,6 +210,7 @@ class AppViewModel: ObservableObject {
                     }
                 }
             }
+            users = users.filter({user.friends.contains($0.email) || $0.email == user.email })
         }
     }
     

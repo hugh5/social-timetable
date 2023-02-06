@@ -36,6 +36,18 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
         self.events = [:]
         self.courses = [:]
     }
+    
+    init(email: String, name: String) {
+        self.id = email
+        self.email = email
+        self.displayName = name
+        self.color = Int.random(in: 0..<Int(pow(2.0, 24)))
+        self.friends = []
+        self.incomingFriendRequests = []
+        self.outgoingFriendRequests = []
+        self.events = [:]
+        self.courses = [:]
+    }
 }
 
 extension User {

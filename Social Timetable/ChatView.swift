@@ -99,9 +99,11 @@ struct ParticipantListView: View {
             Button(action: {
                 dismiss()
             }, label: {
-                Image(systemName: "chevron.down")
+                RoundedRectangle(cornerRadius: 5)
+                    .frame(width: UIScreen.main.bounds.width / 8, height: 3)
+                    .foregroundColor(.gray)
+                    .padding()
             })
-            .padding()
             List {
                 ForEach(participants, id:\.description) { account in
                     PersonView(email: account)
@@ -125,8 +127,7 @@ struct PersonView: View {
                 Text(name)
                 Spacer()
                 Label(title: {
-                    Text(email.prefix(while: {$0 != "@"}).description)
-                        .monospacedDigit()
+                    Text(name)
                 }, icon: {
                     if viewModel.email == email {
                         Text("You")
@@ -155,7 +156,7 @@ struct PersonView: View {
                         .foregroundColor(.accentColor)
                     }
                 })
-                .font(.caption)
+                .labelStyle(.iconOnly)
             }
         }, icon: {
             Image(systemName: "circle.fill")
@@ -182,7 +183,11 @@ struct PersonView: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
+        Group {
         ChatView(user: User.sampleData, course: "CSSE2310_S1")
             .environmentObject(MessagesManager.sampleData)
+            ParticipantListView(participants: .constant([User.sampleData.email]))
+            .environmentObject(AppViewModel.sampleData)
+        }
     }
 }
