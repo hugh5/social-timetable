@@ -102,12 +102,10 @@
 		116C9E99295CD879007EFFFE /* Social Timetable */ = {
 			isa = PBXGroup;
 			children = (
-				1196B04A29910D6C009B97C9 /* Social Timetable.entitlements */,
-				11C73B302990C87F007856A2 /* Social-Timetable-Info.plist */,
 				116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */,
-				11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */,
 				119B366029686FFB00038389 /* AccountSettingsView.swift */,
 				115FAE4529656EEA00F2738A /* AppViewModel.swift */,
+				116C9E9E295CD87A007EFFFE /* Assets.xcassets */,
 				11113BEC29840F88002C9E08 /* ChatBubble.swift */,
 				11113BEA2983C353002C9E08 /* ChatView.swift */,
 				11113BE82983BF02002C9E08 /* ChatViewModel.swift */,
@@ -118,15 +116,17 @@
 				116C9EAC295CE0BF007EFFFE /* EventCardView.swift */,
 				11A7572B297A623900F8787B /* EventDetailView.swift */,
 				11A7572D297A918B00F8787B /* FriendsView.swift */,
+				11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */,
 				114B69FF296813E30020692C /* LoginView.swift */,
 				1156CFC52965EDB200FF9732 /* OpenView.swift */,
+				116C9EA0295CD87A007EFFFE /* Preview Content */,
 				114B6A05296845C40020692C /* SettingsView.swift */,
+				1196B04A29910D6C009B97C9 /* Social Timetable.entitlements */,
+				11C73B302990C87F007856A2 /* Social-Timetable-Info.plist */,
 				116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */,
 				11014C9A296868C700DC9ECF /* UploadTimetableView.swift */,
 				110DD5C7296B1AE500DAB549 /* User.swift */,
 				114B6A032968331C0020692C /* WeekView.swift */,
-				116C9E9E295CD87A007EFFFE /* Assets.xcassets */,
-				116C9EA0295CD87A007EFFFE /* Preview Content */,
 			);
 			path = "Social Timetable";
 			sourceTree = "<group>";
