@@ -88,38 +88,41 @@ struct FriendsView: View {
                                 .tint(.red)
                             }
                     }
-                    Button(action: {
-                        if (email.isEmpty) {
-                            return
-                        }
-                        let temp = email
-                        email = ""
-                        if let user = user {
-                            if (user.email == temp) {
-                                findFriendError = "Can't add yourself as a friend"
-                            } else if (user.friends.contains(temp)) {
-                                findFriendError = "Already friends with this user"
-                            } else {
-                                viewModel.userExists(email: temp) { result in
-                                    switch result {
-                                    case .success(let data):
-                                        findFriendError = nil
-                                        outgoingFriends[data.0] = data.1
-                                        viewModel.setFriendData(key: .outgoingFriend, Array(outgoingFriends.keys))
-                                    case .failure(let error):
-                                        findFriendError = "User Not Found\n" + error.localizedDescription
+                    Label(title: {
+                        TextField("friend@gmail.com", text: $email)
+                            .autocorrectionDisabled(true)
+                            .autocapitalization(.none)
+                            .textContentType(.emailAddress)
+                    }, icon: {
+                        Button(action: {
+                            if (email.isEmpty) {
+                                return
+                            }
+                            let temp = email
+                            email = ""
+                            if let user = user {
+                                if (user.email == temp) {
+                                    findFriendError = "Can't add yourself as a friend"
+                                } else if (user.friends.contains(temp)) {
+                                    findFriendError = "Already friends with this user"
+                                } else if (user.incomingFriendRequests.contains(temp)) {
+                                    findFriendError = "This user has sent you a request"
+                                } else if (user.outgoingFriendRequests.contains(temp)) {
+                                    findFriendError = "Request already sent"
+                                } else {
+                                    viewModel.userExists(email: temp) { result in
+                                        switch result {
+                                        case .success(let data):
+                                            findFriendError = nil
+                                            outgoingFriends[data.0] = data.1
+                                            viewModel.setFriendData(key: .outgoingFriend, Array(outgoingFriends.keys))
+                                        case .failure(let error):
+                                            findFriendError = "User Not Found\n" + error.localizedDescription
+                                        }
                                     }
                                 }
                             }
-                        }
-                    }, label: {
-                        Label(title: {
-                            HStack {
-                                TextField("friend@gmail.com", text: $email)
-                                    .autocorrectionDisabled(true)
-                                    .autocapitalization(.none)
-                            }
-                        },icon: {
+                        }, label: {
                             Image(systemName: "plus")
                                 .foregroundColor(email.isEmpty ? .gray : .accentColor)
                         })

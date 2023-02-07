@@ -10,6 +10,8 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 import GoogleSignIn
+import FacebookLogin
+import CryptoKit
 
 enum FBError: Error, Identifiable {
     case error(String)
@@ -40,7 +42,10 @@ class AppViewModel: ObservableObject {
     
     @Published var user: User? = nil
     @Published var users: [User] = []
-
+    @Published var credentialError: String = ""
+    
+    private var currentNonce: String? = nil
+    private var loginManager = LoginManager()
     
     func signIn(email: String, password: String, completion: @escaping (Result<Bool, FBError>) -> Void) {
         isLoading = true
@@ -81,15 +86,19 @@ class AppViewModel: ObservableObject {
     
     func authenticatWithGoogle() {
         isLoading = true
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        credentialError = ""
+        guard let clientID = FirebaseApp.app()?.options.clientID else {
+            isLoading = false
+            return
+        }
         
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
             
         // 4
         guard let presentingVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
+            isLoading = false
             return
-            
         }
         // Start the sign in flow!
         GIDSignIn.sharedInstance.signIn(withPresenting: presentingVC) { result, error in
@@ -102,17 +111,23 @@ class AppViewModel: ObservableObject {
         // 1
         if let error = error {
             print(error.localizedDescription)
+            isLoading = false
             return
         }
 
         // 2
-        guard let accessToken = user?.accessToken, let idToken = user?.idToken else { return }
+        guard let accessToken = user?.accessToken, let idToken = user?.idToken else {
+            isLoading = false
+            return
+        }
 
         let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: accessToken.tokenString)
 
         // 3
         auth.signIn(with: credential) { [unowned self] (_, error) in
             if let error = error {
+                isLoading = false
+                credentialError = error.localizedDescription
                 print(error.localizedDescription)
             } else {
                 self.signedIn = true
@@ -120,20 +135,67 @@ class AppViewModel: ObservableObject {
                     print(profile.name)
                     let docRef = db.collection("users").document(profile.email)
                     docRef.getDocument { (document, error) in
-                        if let document = document {
-                            if document.exists {
-                                
-                            } else {
-                                self.user = User(email: profile.email, name: profile.givenName ?? profile.name)
-                                self.setUserData()
-                            }
+                        if (document != nil && document!.exists) {
+                            
+                        } else {
+                            self.user = User(email: profile.email, name: profile.givenName ?? profile.name)
+                            self.setUserData()
                         }
                     }
                 }
             }
         }
     }
-
+    
+    func authenticatWithFacebook() {
+        isLoading = true
+        credentialError = ""
+        loginManager.logIn(permissions: ["public_profile", "email"], viewController: nil) { loginResult in
+            switch loginResult {
+            case .failed(let error):
+                self.isLoading = false
+                print(error)
+            case .cancelled:
+                self.isLoading = false
+                print("User cancelled login.")
+            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+                
+                let accessTokenString = accessToken?.tokenString
+                let credential = OAuthProvider.credential(withProviderID: "facebook.com", accessToken: accessTokenString!)
+                Auth.auth().signIn(with: credential) { authResult, error in
+                    self.isLoading = false
+                    if let error = error {
+                        self.credentialError = error.localizedDescription
+                        print(error.localizedDescription)
+                    } else {
+                        self.signedIn = true
+                    }
+                }
+                
+                print("Logged in! \(grantedPermissions) \(declinedPermissions) \(String(describing: accessToken))")
+                GraphRequest(graphPath: "me", parameters: ["fields": "email, name, first_name"]).start(completionHandler: { (connection, result, error) -> Void in
+                    if let fbDetails = result as? NSDictionary {
+                        guard let email = fbDetails.value(forKey: "email") as? String,
+                                let firstName = fbDetails.value(forKey: "first_name") as? String else {
+                            print("Error getting facebook details")
+                            return
+                        }
+                        print(email)
+                        print(firstName)
+                        let docRef = self.db.collection("users").document(email)
+                        docRef.getDocument { (document, error) in
+                            if (document != nil && document!.exists) {
+                                
+                            } else {
+                                self.user = User(email: email, name: firstName)
+                                self.setUserData()
+                            }
+                        }
+                    }
+                })
+            }
+        }
+    }
     
     func signOut() {
         // 1
@@ -191,7 +253,6 @@ class AppViewModel: ObservableObject {
                 self.users[idx] = user
             } else {
                 self.users.insert(user, at: 0)
-                print("insert")
             }
             for account in user.friends {
                 let docRef = db.collection("users").document(account)
@@ -424,6 +485,51 @@ class AppViewModel: ObservableObject {
                 docRef.updateData(["color": hex])
             }
         }
+    }
+    
+    // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
+    private func randomNonceString(length: Int = 32) -> String {
+      precondition(length > 0)
+      let charset: [Character] =
+        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+      var result = ""
+      var remainingLength = length
+
+      while remainingLength > 0 {
+        let randoms: [UInt8] = (0 ..< 16).map { _ in
+          var random: UInt8 = 0
+          let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+          if errorCode != errSecSuccess {
+            fatalError(
+              "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+            )
+          }
+          return random
+        }
+
+        randoms.forEach { random in
+          if remainingLength == 0 {
+            return
+          }
+
+          if random < charset.count {
+            result.append(charset[Int(random)])
+            remainingLength -= 1
+          }
+        }
+      }
+
+      return result
+    }
+    
+    private func sha256(_ input: String) -> String {
+      let inputData = Data(input.utf8)
+      let hashedData = SHA256.hash(data: inputData)
+      let hashString = hashedData.compactMap {
+        String(format: "%02x", $0)
+      }.joined()
+
+      return hashString
     }
 }
 

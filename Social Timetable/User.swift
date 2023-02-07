@@ -26,6 +26,7 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
     var courses: [String:Set<String>]
 
     init(email: String) {
+        print("New User")
         self.id = email
         self.email = email
         self.displayName = email.components(separatedBy: "@")[0]

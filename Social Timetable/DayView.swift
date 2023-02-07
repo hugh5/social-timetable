@@ -115,6 +115,6 @@ extension Color {
 
 struct DayView_Previews: PreviewProvider {
     static var previews: some View {
-        DayView(events: [8:[UserEvent(user: User.sampleData,event: Event.sampleData[0])]])
+        DayView(events: [8:[UserEvent(user: User.sampleData,event: Event.sampleData[0])], 9: [UserEvent(user: User.sampleData,event: Event.sampleData[1])]])
     }
 }

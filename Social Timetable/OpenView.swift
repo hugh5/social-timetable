@@ -7,6 +7,10 @@
 
 import SwiftUI
 import GoogleSignInSwift
+import AuthenticationServices
+import FacebookLogin
+
+import WebKit
 
 struct OpenView: View {
     
@@ -29,27 +33,88 @@ struct OpenView: View {
 
 struct SignInView: View {
     
+    @State var isPresenting = false
+    
     @EnvironmentObject var viewModel: AppViewModel
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack {
+            Spacer()
             Image(colorScheme == .light ? "social-timetable-black" : "social-timetable-white")
                 .resizable()
                 .scaledToFit()
-                .padding(.vertical, 100)
+            Spacer()
             GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: colorScheme == .light ? .dark : .light, style: .wide, state: .normal), action: {
                 viewModel.authenticatWithGoogle()
             })
             .disabled(viewModel.isLoading)
-            .fixedSize()
-            .padding(.vertical, 100)
+            .frame(width: UIScreen.main.bounds.width / 2)
+
+            Button(action: {
+                viewModel.authenticatWithFacebook()
+            }, label: {
+                HStack {
+                    Text("f")
+                        .padding(.horizontal, 8)
+                        .padding(.top, 8)
+                        .font(.title)
+                        .bold(true)
+                        .foregroundColor(colorScheme == .light ? Color(0x0165E1) : .white)
+                        .background(Circle().foregroundColor(colorScheme == .light ? .white : Color(0x0165E1)))
+                    Text("Sign in with Facebook")
+                        .foregroundColor(colorScheme == .light ? .white : .black)
+                        .font(.subheadline)
+                }
+                .foregroundColor(colorScheme == .light ? .white : Color(0x0165E1))
+                .frame(width: UIScreen.main.bounds.width / 2, height: 45)
+                .background(colorScheme == .light ? Color(0x0165E1) : .white)
+                .cornerRadius(7)
+            })
+            .padding()
+
+            SignInWithAppleButton(onRequest: { request in
+                
+            }, onCompletion: { response in
+                
+            })
+            .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
+            .frame(width: UIScreen.main.bounds.width / 2, height: 45)
+            
             if (viewModel.isLoading) {
                 ProgressView()
                     .padding()
+            } else {
+                Text(viewModel.credentialError)
+                    .foregroundColor(.red)
+            }
+            Spacer()
+            Button(action: {
+                isPresenting.toggle()
+            }, label: {
+                Text("Privacy policy")
+            })
+            .sheet(isPresented: $isPresenting) {
+                WebView(url: URL(string:"https://www.freeprivacypolicy.com/live/fdd32691-0e63-4b44-ac7b-75a6fb78be9b")!)
             }
         }
         .padding()
+    }
+}
+ 
+struct WebView: UIViewRepresentable {
+ 
+    var url: URL
+ 
+    func makeUIView(context: Context) -> WKWebView {
+        return WKWebView()
+    }
+ 
+    func updateUIView(_ webView: WKWebView, context: Context) {
+        Task {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
     }
 }
 

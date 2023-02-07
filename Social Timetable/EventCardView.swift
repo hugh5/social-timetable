@@ -23,9 +23,10 @@ struct EventCardView: View {
                 Text(event.activity)
             }
             HStack {
-                Text(event.location.components(separatedBy: " ")[0])
-                    .lineLimit(1, reservesSpace: true)
                 Text(event.getDuration())
+                    .bold()
+                    .lineLimit(1, reservesSpace: true)
+                Text(event.location.components(separatedBy: " ")[0])
                     .lineLimit(1, reservesSpace: true)
             }
             .font(.subheadline)

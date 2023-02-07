@@ -24,6 +24,8 @@
 		116C9EAD295CE0BF007EFFFE /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAC295CE0BF007EFFFE /* EventCardView.swift */; };
 		116C9EAF295CE0DC007EFFFE /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAE295CE0DC007EFFFE /* Event.swift */; };
 		116C9EB1295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */; };
+		1194DBF52992182A00D6ADCD /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1194DBF42992182A00D6ADCD /* FacebookCore */; };
+		1194DBF72992182A00D6ADCD /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 1194DBF62992182A00D6ADCD /* FacebookLogin */; };
 		119B366129686FFB00038389 /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119B366029686FFB00038389 /* AccountSettingsView.swift */; };
 		11A7572C297A623900F8787B /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A7572B297A623900F8787B /* EventDetailView.swift */; };
 		11A7572E297A918B00F8787B /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A7572D297A918B00F8787B /* FriendsView.swift */; };
@@ -71,6 +73,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4AC6A66521DC5BD9FD5D5B1 /* Pods_Social_Timetable.framework in Frameworks */,
+				1194DBF52992182A00D6ADCD /* FacebookCore in Frameworks */,
+				1194DBF72992182A00D6ADCD /* FacebookLogin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,6 +174,10 @@
 			dependencies = (
 			);
 			name = "Social Timetable";
+			packageProductDependencies = (
+				1194DBF42992182A00D6ADCD /* FacebookCore */,
+				1194DBF62992182A00D6ADCD /* FacebookLogin */,
+			);
 			productName = "UQ Social Timetable";
 			productReference = 116C9E97295CD879007EFFFE /* Social Timetable.app */;
 			productType = "com.apple.product-type.application";
@@ -198,6 +206,9 @@
 				Base,
 			);
 			mainGroup = 116C9E8E295CD879007EFFFE;
+			packageReferences = (
+				110BECB1299162340047EC10 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+			);
 			productRefGroup = 116C9E98295CD879007EFFFE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -497,6 +508,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		110BECB1299162340047EC10 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1194DBF42992182A00D6ADCD /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 110BECB1299162340047EC10 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
+		1194DBF62992182A00D6ADCD /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 110BECB1299162340047EC10 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 116C9E8F295CD879007EFFFE /* Project object */;
 }
