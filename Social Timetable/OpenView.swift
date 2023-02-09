@@ -46,13 +46,14 @@ struct SignInView: View {
                 .scaledToFit()
             Spacer()
             GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: colorScheme == .light ? .dark : .light, style: .wide, state: .normal), action: {
-                viewModel.authenticatWithGoogle()
+                viewModel.authenticateWithGoogle()
             })
             .disabled(viewModel.isLoading)
             .frame(width: UIScreen.main.bounds.width / 2)
+            .padding(.bottom)
 
             Button(action: {
-                viewModel.authenticatWithFacebook()
+                viewModel.authenticateWithFacebook()
             }, label: {
                 HStack {
                     Text("f")
@@ -69,9 +70,9 @@ struct SignInView: View {
                 .foregroundColor(colorScheme == .light ? .white : Color(0x0165E1))
                 .frame(width: UIScreen.main.bounds.width / 2, height: 45)
                 .background(colorScheme == .light ? Color(0x0165E1) : .white)
-                .cornerRadius(7)
+                .cornerRadius(6)
             })
-            .padding()
+            .padding(.bottom)
 
             SignInWithAppleButton(onRequest: { request in
                 
@@ -80,6 +81,22 @@ struct SignInView: View {
             })
             .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
             .frame(width: UIScreen.main.bounds.width / 2, height: 45)
+            .padding(.bottom)
+
+            Button(action: {
+                viewModel.authenticateAsTester()
+            }, label: {
+                HStack {
+                    Image(systemName: "list.bullet.clipboard")
+                    Text("Sign in as Tester")
+                }
+                .frame(width: UIScreen.main.bounds.width / 2, height: 45)
+                .foregroundColor(.black)
+                .background(colorScheme == .light ? Color(0xC5C5C5) : .white)
+                .cornerRadius(6)
+            })
+            .buttonStyle(.plain)
+
             
             if (viewModel.isLoading) {
                 ProgressView()
@@ -95,7 +112,23 @@ struct SignInView: View {
                 Text("Privacy policy")
             })
             .sheet(isPresented: $isPresenting) {
-                WebView(url: URL(string:"https://www.freeprivacypolicy.com/live/fdd32691-0e63-4b44-ac7b-75a6fb78be9b")!)
+                ZStack {
+                    WebView(url: URL(string:"https://www.freeprivacypolicy.com/live/fdd32691-0e63-4b44-ac7b-75a6fb78be9b")!)
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                isPresenting.toggle()
+                            }, label: {
+                                Image(systemName: "x.circle")
+                                    .foregroundColor(.red)
+                            })
+                            .buttonStyle(.plain)
+                        }
+                        .padding()
+                        Spacer()
+                    }
+                }
             }
         }
         .padding()
@@ -125,6 +158,6 @@ struct OpenView_Previews: PreviewProvider {
             SignInView()
                 .preferredColorScheme(.dark)
         }
-            .environmentObject(AppViewModel())
+        .environmentObject(AppViewModel())
     }
 }

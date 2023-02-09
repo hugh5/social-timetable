@@ -84,7 +84,7 @@ class AppViewModel: ObservableObject {
         }
     }
     
-    func authenticatWithGoogle() {
+    func authenticateWithGoogle() {
         isLoading = true
         credentialError = ""
         guard let clientID = FirebaseApp.app()?.options.clientID else {
@@ -147,7 +147,7 @@ class AppViewModel: ObservableObject {
         }
     }
     
-    func authenticatWithFacebook() {
+    func authenticateWithFacebook() {
         isLoading = true
         credentialError = ""
         loginManager.logIn(permissions: ["public_profile", "email"], viewController: nil) { loginResult in
@@ -193,6 +193,29 @@ class AppViewModel: ObservableObject {
                         }
                     }
                 })
+            }
+        }
+    }
+    
+    func authenticateAsTester() {
+        isLoading = true
+        let email = "test@gmail.com"
+        auth.signIn(withEmail: email, password: "password") { [weak self] result, error in
+            if let error {
+                self?.credentialError = error.localizedDescription
+                self?.isLoading = false
+            } else {
+                self?.signedIn = true
+                if let docRef = self?.db.collection("users").document(email) {
+                    docRef.getDocument { (document, error) in
+                        if (document != nil && document!.exists) {
+                            
+                        } else {
+                            self?.user = User(email: email, name: email.prefix(4).description)
+                            self?.setUserData()
+                        }
+                    }
+                }
             }
         }
     }
