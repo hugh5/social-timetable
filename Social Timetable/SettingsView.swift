@@ -36,7 +36,6 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

@@ -10,8 +10,8 @@ import SwiftUI
 struct ContentView: View {
     
     @Binding var user: User?
-    let date = convertStringToDate(string: "TZID=Australia/Brisbane:20230301T100000")
-//    let date: Date = .now
+//    let date = convertStringToDate(string: "TZID=Australia/Brisbane:20230301T100000")
+    let date: Date = .now
     
     var body: some View {
         TabView {

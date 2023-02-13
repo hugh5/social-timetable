@@ -22,9 +22,9 @@ struct Provider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let date = Date()
-        
+
         let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: date)!
-        
+
         getFirestoreUser { user in
             let entry = SimpleEntry(date: date, user: user)
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
@@ -59,17 +59,25 @@ struct SimpleEntry: TimelineEntry {
 }
 
 struct TimetableWidgetEntryView : View {
+    @Environment(\.widgetFamily) var widgetFamily
     var entry: Provider.Entry
     
     var body: some View {
         if let user = entry.user {
             if user.courses.keys.count != 0 {
-                ZStack {
-                    Color(user.color)
-                        .ignoresSafeArea()
-                    EventCardView(event: getEvent(user), currentDate: entry.date)
-                        .foregroundColor(Color(user.color).isDarkColor ? .white : .black)
-                        .padding()
+                switch widgetFamily {
+                case .systemSmall:
+                    ZStack(alignment: .leading  ) {
+                        Color(user.color)
+                            .ignoresSafeArea()
+                        EventCardView(data: getEvent(user), currentDate: entry.date, widgetFamily: widgetFamily)
+                            .foregroundColor(Color(user.color).isDarkColor ? .white : .black)
+                            .padding()
+                    }
+                case .accessoryRectangular:
+                    EventCardView(data: getEvent(user), currentDate: entry.date, widgetFamily: widgetFamily)
+                default:
+                    Text("Not Supported")
                 }
             } else {
                 Text("Upload Timetable")
@@ -79,52 +87,87 @@ struct TimetableWidgetEntryView : View {
         }
     }
     
-    func getEvent(_ user: User) -> Event {
-        let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: entry.date) ?? 0
-        var day = dayOfYear
+    func getEvent(_ user: User) -> (event: Event?, error: String?) {
+        var day = Calendar.current.ordinality(of: .day, in: .year, for: entry.date) ?? 0
+        
+        // Event is today
+        if let events = user.events[day] {
+            if events.filter({$0.startTime > entry.date}).isEmpty {
+                day += 1
+            } else {
+                return (events.filter({$0.startTime > entry.date}).sorted(by: {$0.startTime < $1.startTime}).first!, nil)
+            }
+        }
+        
+        // Loop through days of year
         while user.events[day]?.isEmpty ?? true {
             day += 1
             if day > 365 {
-                return (user.events.first?.value.first)!
+                return (nil, "No Classes Found")
             }
         }
         var events = user.events[day]!
-        events = events.filter({$0.startTime > entry.date})
         events.sort(by: {$0.startTime < $1.startTime})
-        return events.first!
+        guard let event = events.first else {
+            return (nil, day.description)
+        }
+        return (event, nil)
     }
 }
 
 struct EventCardView: View {
-    var event: Event
+    var data: (event: Event?, error: String?)
     var currentDate: Date
+    var widgetFamily: WidgetFamily
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(getDay())
-                .bold()
-            Text(getTime())
-                .bold()
-            Text(event.courseCode)
-                .bold()
-                .font(.title3)
+        if let event = data.event {
+            switch widgetFamily {
+            case .systemSmall:
+                VStack(alignment: .leading) {
+                    Text(getDay(event))
+                        .bold()
+                    Text(getTime(event))
+                        .bold()
+                    Text(event.courseCode)
+                        .bold()
+                        .font(.title3)
+                    HStack {
+                        Text(event.classType)
+                            .bold()
+                        Text("-")
+                        Text(event.activity)
+                    }
+                    Text(event.getDuration())
+                        .bold()
+                    Text(event.location.components(separatedBy: " ")[0])
+                    Text("Last Update: " + currentDate.formatted(date: .omitted, time: .shortened))
+                        .font(.caption2)
+                }
                 .lineLimit(1)
-            HStack {
-                Text(event.classType)
+            case .accessoryRectangular:
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(getDay(event))
+                        Text(getTime(event))
+                    }
                     .bold()
-                Text("-")
-                Text(event.activity)
+                    Text(event.courseCode)
+                    HStack {
+                        Text(event.classType)
+                        Text("-")
+                        Text(event.location.components(separatedBy: " ")[0])
+                    }
+                }
+            default:
+                Text("Not Supported")
             }
-            Text(event.getDuration())
-                .bold()
-                .lineLimit(1, reservesSpace: true)
-            Text(event.location.components(separatedBy: " ")[0])
-                .lineLimit(1, reservesSpace: true)
+        } else {
+            Text(data.error ?? "Error")
         }
-        .lineLimit(1)
     }
     
-    func getDay() -> String {
+    func getDay(_ event: Event) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_AU")
         formatter.doesRelativeDateFormatting = true
@@ -133,28 +176,11 @@ struct EventCardView: View {
         return formatter.string(from: event.startTime)
     }
     
-    func getTime() -> String {
+    func getTime(_ event: Event) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
         formatter.timeStyle = .short
         return formatter.string(from: event.startTime)
-    }
-    
-    func timeUntil() -> String {
-//        let formatter = RelativeDateTimeFormatter()
-//        formatter.unitsStyle = .full
-//        formatter.dateTimeStyle = .named
-//        formatter.formattingContext = .beginningOfSentence
-//        return formatter.string(for: event.startTime) ?? ""
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_AU")
-        formatter.doesRelativeDateFormatting = true
-        formatter.dateStyle = .short
-        formatter.timeStyle = .none
-        let day = formatter.string(from: event.startTime)
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        return day + "\n" + formatter.string(from: event.startTime)
     }
 }
 
@@ -174,7 +200,7 @@ struct TimetableWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             TimetableWidgetEntryView(entry: entry)
         }
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemSmall, .accessoryRectangular])
         .configurationDisplayName("Timetable Widget")
         .description("Know when your next class is")
     }
@@ -185,6 +211,8 @@ struct TimetableWidget_Previews: PreviewProvider {
         Group {
             TimetableWidgetEntryView(entry: SimpleEntry(date: Date(), user: User.sampleData))
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
+            TimetableWidgetEntryView(entry: SimpleEntry(date: Date(), user: User.sampleData))
+                .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
         }
     }
 }
