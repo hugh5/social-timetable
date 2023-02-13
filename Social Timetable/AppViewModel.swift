@@ -47,6 +47,14 @@ class AppViewModel: ObservableObject {
     private var currentNonce: String? = nil
     private var loginManager = LoginManager()
     
+    init(){
+        do {
+            try Auth.auth().useUserAccessGroup("group.com.hughdrummond.Social-Timetable")
+        } catch let error as NSError {
+            print("Error changing user access group: %@", error)
+        }
+    }
+    
     func signIn(email: String, password: String, completion: @escaping (Result<Bool, FBError>) -> Void) {
         isLoading = true
         auth.signIn(withEmail: email, password: password) { [weak self] result, error in

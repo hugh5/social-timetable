@@ -24,16 +24,56 @@
 		116C9EAD295CE0BF007EFFFE /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAC295CE0BF007EFFFE /* EventCardView.swift */; };
 		116C9EAF295CE0DC007EFFFE /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAE295CE0DC007EFFFE /* Event.swift */; };
 		116C9EB1295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics in Resources */ = {isa = PBXBuildFile; fileRef = 116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */; };
+		1170BF002994EAFC007A07FD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1170BEFF2994EAFC007A07FD /* FirebaseAnalytics */; };
+		1170BF022994EAFC007A07FD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1170BF012994EAFC007A07FD /* FirebaseAuth */; };
+		1170BF042994EAFC007A07FD /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1170BF032994EAFC007A07FD /* FirebaseFirestore */; };
+		1170BF062994EAFC007A07FD /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1170BF052994EAFC007A07FD /* FirebaseFirestoreSwift */; };
+		1170BF0C2994EF3E007A07FD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 114B2A922994E58000DCE8DC /* WidgetKit.framework */; };
+		1170BF0D2994EF3E007A07FD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 114B2A942994E58000DCE8DC /* SwiftUI.framework */; };
+		1170BF102994EF3E007A07FD /* TimetableWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1170BF0F2994EF3E007A07FD /* TimetableWidgetBundle.swift */; };
+		1170BF122994EF3E007A07FD /* TimetableWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1170BF112994EF3E007A07FD /* TimetableWidget.swift */; };
+		1170BF142994EF3F007A07FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1170BF132994EF3F007A07FD /* Assets.xcassets */; };
+		1170BF182994EF3F007A07FD /* TimetableWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1170BF0B2994EF3E007A07FD /* TimetableWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1170BF1D2994EF81007A07FD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1170BF1C2994EF81007A07FD /* FirebaseAuth */; };
+		1170BF1F2994EF81007A07FD /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1170BF1E2994EF81007A07FD /* FirebaseFirestore */; };
+		1170BF212994EF81007A07FD /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1170BF202994EF81007A07FD /* FirebaseFirestoreSwift */; };
 		1194DBF52992182A00D6ADCD /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1194DBF42992182A00D6ADCD /* FacebookCore */; };
 		1194DBF72992182A00D6ADCD /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 1194DBF62992182A00D6ADCD /* FacebookLogin */; };
 		119B366129686FFB00038389 /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119B366029686FFB00038389 /* AccountSettingsView.swift */; };
 		11A7572C297A623900F8787B /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A7572B297A623900F8787B /* EventDetailView.swift */; };
 		11A7572E297A918B00F8787B /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A7572D297A918B00F8787B /* FriendsView.swift */; };
+		11BC6F5E2994FF6800C38AE4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */; };
+		11BC6F5F2995034400C38AE4 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAE295CE0DC007EFFFE /* Event.swift */; };
+		11BC6F602995034900C38AE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110DD5C7296B1AE500DAB549 /* User.swift */; };
 		11C1E33E2965DE35002DDD44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */; };
 		11F0A313296D347200B35ABE /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0A312296D347200B35ABE /* DayView.swift */; };
 		11F5A4FC29795AED009D87C2 /* CourseChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A4FB29795AED009D87C2 /* CourseChatsView.swift */; };
 		A4AC6A66521DC5BD9FD5D5B1 /* Pods_Social_Timetable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20DCC08494CD2432147FD784 /* Pods_Social_Timetable.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1170BF162994EF3F007A07FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 116C9E8F295CD879007EFFFE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1170BF0A2994EF3E007A07FD;
+			remoteInfo = TimetableWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		114B2AA12994E58200DCE8DC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1170BF182994EF3F007A07FD /* TimetableWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		11014C9A296868C700DC9ECF /* UploadTimetableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTimetableView.swift; sourceTree = "<group>"; };
@@ -41,6 +81,8 @@
 		11113BE82983BF02002C9E08 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		11113BEA2983C353002C9E08 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		11113BEC29840F88002C9E08 /* ChatBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubble.swift; sourceTree = "<group>"; };
+		114B2A922994E58000DCE8DC /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		114B2A942994E58000DCE8DC /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		114B69FF296813E30020692C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		114B6A0129682D380020692C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		114B6A032968331C0020692C /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
@@ -54,6 +96,12 @@
 		116C9EAC295CE0BF007EFFFE /* EventCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardView.swift; sourceTree = "<group>"; };
 		116C9EAE295CE0DC007EFFFE /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		116C9EB0295CE561007EFFFE /* 04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "04ead9dc-5711-4d81-943f-ba9f3bac5c14.ics"; sourceTree = "<group>"; };
+		1170BF0B2994EF3E007A07FD /* TimetableWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimetableWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		1170BF0F2994EF3E007A07FD /* TimetableWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidgetBundle.swift; sourceTree = "<group>"; };
+		1170BF112994EF3E007A07FD /* TimetableWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidget.swift; sourceTree = "<group>"; };
+		1170BF132994EF3F007A07FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1170BF152994EF3F007A07FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1170BF222994F009007A07FD /* TimetableWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimetableWidgetExtension.entitlements; sourceTree = "<group>"; };
 		1196B04A29910D6C009B97C9 /* Social Timetable.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Social Timetable.entitlements"; sourceTree = "<group>"; };
 		119B366029686FFB00038389 /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
 		11A7572B297A623900F8787B /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
@@ -73,8 +121,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4AC6A66521DC5BD9FD5D5B1 /* Pods_Social_Timetable.framework in Frameworks */,
+				1170BF022994EAFC007A07FD /* FirebaseAuth in Frameworks */,
 				1194DBF52992182A00D6ADCD /* FacebookCore in Frameworks */,
+				1170BF062994EAFC007A07FD /* FirebaseFirestoreSwift in Frameworks */,
+				1170BF002994EAFC007A07FD /* FirebaseAnalytics in Frameworks */,
 				1194DBF72992182A00D6ADCD /* FacebookLogin in Frameworks */,
+				1170BF042994EAFC007A07FD /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1170BF082994EF3E007A07FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1170BF212994EF81007A07FD /* FirebaseFirestoreSwift in Frameworks */,
+				1170BF0D2994EF3E007A07FD /* SwiftUI.framework in Frameworks */,
+				1170BF1F2994EF81007A07FD /* FirebaseFirestore in Frameworks */,
+				1170BF1D2994EF81007A07FD /* FirebaseAuth in Frameworks */,
+				1170BF0C2994EF3E007A07FD /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,7 +148,9 @@
 		116C9E8E295CD879007EFFFE = {
 			isa = PBXGroup;
 			children = (
+				1170BF222994F009007A07FD /* TimetableWidgetExtension.entitlements */,
 				116C9E99295CD879007EFFFE /* Social Timetable */,
+				1170BF0E2994EF3E007A07FD /* TimetableWidget */,
 				116C9E98295CD879007EFFFE /* Products */,
 				F97A2C6493C0096D2C65A797 /* Pods */,
 				B9087F35C04022FE28D15321 /* Frameworks */,
@@ -95,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				116C9E97295CD879007EFFFE /* Social Timetable.app */,
+				1170BF0B2994EF3E007A07FD /* TimetableWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -139,10 +206,23 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		1170BF0E2994EF3E007A07FD /* TimetableWidget */ = {
+			isa = PBXGroup;
+			children = (
+				1170BF0F2994EF3E007A07FD /* TimetableWidgetBundle.swift */,
+				1170BF112994EF3E007A07FD /* TimetableWidget.swift */,
+				1170BF132994EF3F007A07FD /* Assets.xcassets */,
+				1170BF152994EF3F007A07FD /* Info.plist */,
+			);
+			path = TimetableWidget;
+			sourceTree = "<group>";
+		};
 		B9087F35C04022FE28D15321 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				20DCC08494CD2432147FD784 /* Pods_Social_Timetable.framework */,
+				114B2A922994E58000DCE8DC /* WidgetKit.framework */,
+				114B2A942994E58000DCE8DC /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -168,19 +248,47 @@
 				116C9E94295CD879007EFFFE /* Frameworks */,
 				116C9E95295CD879007EFFFE /* Resources */,
 				FF51235AF9FDC2A99D5423A5 /* [CP] Embed Pods Frameworks */,
+				114B2AA12994E58200DCE8DC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1170BF172994EF3F007A07FD /* PBXTargetDependency */,
 			);
 			name = "Social Timetable";
 			packageProductDependencies = (
 				1194DBF42992182A00D6ADCD /* FacebookCore */,
 				1194DBF62992182A00D6ADCD /* FacebookLogin */,
+				1170BEFF2994EAFC007A07FD /* FirebaseAnalytics */,
+				1170BF012994EAFC007A07FD /* FirebaseAuth */,
+				1170BF032994EAFC007A07FD /* FirebaseFirestore */,
+				1170BF052994EAFC007A07FD /* FirebaseFirestoreSwift */,
 			);
 			productName = "UQ Social Timetable";
 			productReference = 116C9E97295CD879007EFFFE /* Social Timetable.app */;
 			productType = "com.apple.product-type.application";
+		};
+		1170BF0A2994EF3E007A07FD /* TimetableWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1170BF192994EF3F007A07FD /* Build configuration list for PBXNativeTarget "TimetableWidgetExtension" */;
+			buildPhases = (
+				1170BF072994EF3E007A07FD /* Sources */,
+				1170BF082994EF3E007A07FD /* Frameworks */,
+				1170BF092994EF3E007A07FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TimetableWidgetExtension;
+			packageProductDependencies = (
+				1170BF1C2994EF81007A07FD /* FirebaseAuth */,
+				1170BF1E2994EF81007A07FD /* FirebaseFirestore */,
+				1170BF202994EF81007A07FD /* FirebaseFirestoreSwift */,
+			);
+			productName = TimetableWidgetExtension;
+			productReference = 1170BF0B2994EF3E007A07FD /* TimetableWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -193,6 +301,9 @@
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					116C9E96295CD879007EFFFE = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					1170BF0A2994EF3E007A07FD = {
 						CreatedOnToolsVersion = 14.2;
 					};
 				};
@@ -208,12 +319,14 @@
 			mainGroup = 116C9E8E295CD879007EFFFE;
 			packageReferences = (
 				110BECB1299162340047EC10 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+				1170BEFE2994EAFC007A07FD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 116C9E98295CD879007EFFFE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				116C9E96295CD879007EFFFE /* Social Timetable */,
+				1170BF0A2994EF3E007A07FD /* TimetableWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -227,6 +340,15 @@
 				116C9EA2295CD87A007EFFFE /* Preview Assets.xcassets in Resources */,
 				11C1E33E2965DE35002DDD44 /* GoogleService-Info.plist in Resources */,
 				116C9E9F295CD87A007EFFFE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1170BF092994EF3E007A07FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1170BF142994EF3F007A07FD /* Assets.xcassets in Resources */,
+				11BC6F5E2994FF6800C38AE4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +423,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1170BF072994EF3E007A07FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11BC6F602995034900C38AE4 /* User.swift in Sources */,
+				1170BF102994EF3E007A07FD /* TimetableWidgetBundle.swift in Sources */,
+				11BC6F5F2995034400C38AE4 /* Event.swift in Sources */,
+				1170BF122994EF3E007A07FD /* TimetableWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1170BF172994EF3F007A07FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1170BF0A2994EF3E007A07FD /* TimetableWidgetExtension */;
+			targetProxy = 1170BF162994EF3F007A07FD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		116C9EA3295CD87A007EFFFE /* Debug */ = {
@@ -422,6 +563,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A37AD2143B519C4BD9C6894E /* Pods-Social Timetable.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Social Timetable/Social Timetable.entitlements";
@@ -456,6 +598,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B3E8217265C92A58D47A798B /* Pods-Social Timetable.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Social Timetable/Social Timetable.entitlements";
@@ -486,6 +629,64 @@
 			};
 			name = Release;
 		};
+		1170BF1A2994EF3F007A07FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TimetableWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YCX9JB227S;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TimetableWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TimetableWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hughdrummond.Social-Timetable.TimetableWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1170BF1B2994EF3F007A07FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TimetableWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YCX9JB227S;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TimetableWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TimetableWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hughdrummond.Social-Timetable.TimetableWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -507,6 +708,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		1170BF192994EF3F007A07FD /* Build configuration list for PBXNativeTarget "TimetableWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1170BF1A2994EF3F007A07FD /* Debug */,
+				1170BF1B2994EF3F007A07FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -518,9 +728,52 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		1170BEFE2994EAFC007A07FD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1170BEFF2994EAFC007A07FD /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1170BEFE2994EAFC007A07FD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		1170BF012994EAFC007A07FD /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1170BEFE2994EAFC007A07FD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		1170BF032994EAFC007A07FD /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1170BEFE2994EAFC007A07FD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		1170BF052994EAFC007A07FD /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1170BEFE2994EAFC007A07FD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		1170BF1C2994EF81007A07FD /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1170BEFE2994EAFC007A07FD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		1170BF1E2994EF81007A07FD /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1170BEFE2994EAFC007A07FD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		1170BF202994EF81007A07FD /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1170BEFE2994EAFC007A07FD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		1194DBF42992182A00D6ADCD /* FacebookCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 110BECB1299162340047EC10 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;

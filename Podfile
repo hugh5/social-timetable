@@ -6,10 +6,6 @@ target 'Social Timetable' do
   use_frameworks!
 
   # Pods for Social Timetable
-  pod "Firebase/Core"
-  pod "Firebase/Auth"
-  pod "Firebase/Firestore"
-  pod "FirebaseFirestoreSwift"
   pod 'GoogleSignIn'
   pod 'GoogleSignInSwiftSupport'
 
