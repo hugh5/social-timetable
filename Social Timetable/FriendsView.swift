@@ -92,7 +92,7 @@ struct FriendsView: View {
                         TextField("friend@gmail.com", text: $email)
                             .autocorrectionDisabled(true)
                             .autocapitalization(.none)
-                            .textContentType(.emailAddress)
+                            .keyboardType(.emailAddress)
                     }, icon: {
                         Button(action: {
                             if (email.isEmpty) {

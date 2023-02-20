@@ -23,10 +23,18 @@ struct UploadTimetableView: View {
                 .font(.largeTitle)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
-            Text("1. Navigate to the My Timetable Home page through [UQ Dashboard](https://portal.my.uq.edu.au/#/dashboard)")
+            Text("1. Navigate to your My Timetable **Home** page through **[UQ Dashboard](https://portal.my.uq.edu.au/#/dashboard)**")
                 .font(.title3)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
+                .contextMenu {
+                    Button(action: {
+                        UIPasteboard.general.string = "https://portal.my.uq.edu.au/#/dashboard"
+                    }) {
+                        Text("Copy Link")
+                        Image(systemName: "doc.on.doc")
+                    }
+                }
             Image("HomePageLink")
                 .resizable()
                 .scaledToFit()

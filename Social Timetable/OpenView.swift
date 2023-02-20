@@ -122,6 +122,8 @@ struct SignInView: View {
                             }, label: {
                                 Image(systemName: "x.circle")
                                     .foregroundColor(.red)
+                                    .imageScale(.large)
+                                    .padding()
                             })
                             .buttonStyle(.plain)
                         }

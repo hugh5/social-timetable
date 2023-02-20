@@ -12,11 +12,11 @@ import FirebaseAuth
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), user: User.sampleData)
+        SimpleEntry(date: Date(), user: User.sampleData, debug: "Placeholder")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), user: User.sampleData)
+        let entry = SimpleEntry(date: Date(), user: User.sampleData, debug: "Snapshot")
         completion(entry)
     }
 
@@ -25,18 +25,20 @@ struct Provider: TimelineProvider {
 
         let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: date)!
 
-        getFirestoreUser { user in
-            let entry = SimpleEntry(date: date, user: user)
+        getFirestoreUser { user, debug in
+//            let entry = SimpleEntry(date: date, user: user)
+            let entry = SimpleEntry(date: date, user: user, debug: debug)
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
             completion(timeline)
         }
     
     }
     
-    func getFirestoreUser(completion: @escaping (User?) ->()) {
+    func getFirestoreUser(completion: @escaping (User?, String) ->()) {
 
+        try? Auth.auth().useUserAccessGroup("group.com.hughdrummond.Social-Timetable")
         guard let email = Auth.auth().currentUser?.email else {
-            completion(nil)
+            completion(nil, "Current user not found")
             return
         }
         let db = Firestore.firestore().collection("users").document(email)
@@ -44,9 +46,9 @@ struct Provider: TimelineProvider {
         db.getDocument(as: User.self) { result in
             switch result {
             case .success(let data):
-                completion(data)
+                completion(data, "Success")
             case .failure(_):
-                completion(nil)
+                completion(nil, "Failure")
             }
         }
 
@@ -56,6 +58,7 @@ struct Provider: TimelineProvider {
 struct SimpleEntry: TimelineEntry {
     let date: Date
     var user: User?
+    var debug: String
 }
 
 struct TimetableWidgetEntryView : View {
@@ -80,10 +83,20 @@ struct TimetableWidgetEntryView : View {
                     Text("Not Supported")
                 }
             } else {
-                Text("Upload Timetable")
+                VStack {
+                    Text("Upload Timetable")
+                    Text("Last Update: " + entry.date.formatted(date: .omitted, time: .shortened))
+                        .font(.caption2)
+                    Text(entry.debug)
+                }
             }
         } else {
-            Text("Please login")
+            VStack {
+                Text("Please login")
+                Text(entry.debug)
+                Text("Last Update: " + entry.date.formatted(date: .omitted, time: .shortened))
+                    .font(.caption2)
+            }
         }
     }
     
@@ -148,10 +161,9 @@ struct EventCardView: View {
             case .accessoryRectangular:
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(getDay(event))
+                        Text(getSmallDate(event))
                         Text(getTime(event))
                     }
-                    .bold()
                     Text(event.courseCode)
                     HStack {
                         Text(event.classType)
@@ -182,16 +194,22 @@ struct EventCardView: View {
         formatter.timeStyle = .short
         return formatter.string(from: event.startTime)
     }
+    
+    func getSmallDate(_ event: Event) -> String {
+        if Calendar.current.isDateInToday(event.startTime) {
+            return "Today"
+        } else if Calendar.current.isDateInTomorrow(event.startTime) {
+            return "Tommorow"
+        }
+        let day = Calendar.current.component(.day, from: event.startTime)
+        let month = Calendar.current.component(.month, from: event.startTime)
+        return String(format: "%02d/%02d", day, month)
+    }
 }
 
 struct TimetableWidget: Widget {
     init() {
         FirebaseApp.configure()
-        do {
-            try Auth.auth().useUserAccessGroup("group.com.hughdrummond.Social-Timetable")
-        } catch {
-            print(error.localizedDescription)
-        }
     }
     
     let kind: String = "TimetableWidget"
@@ -209,9 +227,9 @@ struct TimetableWidget: Widget {
 struct TimetableWidget_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TimetableWidgetEntryView(entry: SimpleEntry(date: Date(), user: User.sampleData))
+            TimetableWidgetEntryView(entry: SimpleEntry(date: Date(), user: User.sampleData, debug: "Preview"))
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
-            TimetableWidgetEntryView(entry: SimpleEntry(date: Date(), user: User.sampleData))
+            TimetableWidgetEntryView(entry: SimpleEntry(date: Date(), user: User.sampleData, debug: "Preview"))
                 .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
         }
     }

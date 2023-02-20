@@ -55,6 +55,9 @@ extension User {
     static let sampleData: User = {
         var user = User(email: "s4697741@student.uq.edu.au")
         user.events[50] = Event.sampleData
+        user.events[150] = Event.sampleData
+        user.events[250] = Event.sampleData
+        user.events[350] = Event.sampleData
         user.friends = ["s1234567@student.uq.edu.au", "s2234567@student.uq.edu.au"]
         user.incomingFriendRequests = ["s3234567@student.uq.edu.au", "s4234567@student.uq.edu.au"]
         user.outgoingFriendRequests = ["s5234567@student.uq.edu.au", "s6234567@student.uq.edu.au"]

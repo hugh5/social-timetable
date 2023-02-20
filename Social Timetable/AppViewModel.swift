@@ -475,16 +475,25 @@ class AppViewModel: ObservableObject {
         docRef.getDocument(as: User.self) { result in
             switch result {
             case .success(let data):
-                var arr: [String] = [toAdd]
+                var arr: [String] = []
                 switch key {
                 case .friend:
                     arr.append(contentsOf: data.friends)
+                    if !arr.contains(where: {$0 == toAdd}) {
+                        arr.append(toAdd)
+                    }
                     docRef.updateData([key.description: arr])
                 case .incomingFriend:
                     arr.append(contentsOf: data.incomingFriendRequests)
+                    if !arr.contains(where: {$0 == toAdd}) {
+                        arr.append(toAdd)
+                    }
                     docRef.updateData([key.description: arr])
                 case .outgoingFriend:
                     arr.append(contentsOf: data.outgoingFriendRequests)
+                    if !arr.contains(where: {$0 == toAdd}) {
+                        arr.append(toAdd)
+                    }
                     docRef.updateData([key.description: arr])
                 }
             case .failure(let error):

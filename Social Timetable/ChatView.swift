@@ -63,7 +63,7 @@ struct ChatView: View {
                 Button(action: {
                     isPresenting.toggle()
                 }, label: {
-                    Label("Participants", systemImage: "person.3")
+                    Label("Participants", systemImage: "person.3.sequence")
                 })
                 .sheet(isPresented: $isPresenting, content: {
                     ParticipantListView(participants: $participants)
@@ -130,14 +130,20 @@ struct PersonView: View {
                     Text(name)
                 }, icon: {
                     if viewModel.email == email {
-                        Text("You")
-                            .foregroundColor(.gray)
+                        Text("")
                     } else if (viewModel.user?.friends.contains(where: {$0 == email}) ?? false) {
                         Image(systemName: "person")
                             .foregroundColor(.gray)
                     } else if (viewModel.user?.incomingFriendRequests.contains(where: {$0 == email}) ?? false) {
                         Button(action: {
-                            
+                            guard var incoming = viewModel.user?.incomingFriendRequests, var friends = viewModel.user?.friends else {
+                                return
+                            }
+                            if let idx = incoming.firstIndex(of: email) {
+                                friends.append(incoming.remove(at: idx))
+                                viewModel.setFriendData(key: .incomingFriend, incoming)
+                                viewModel.setFriendData(key: .friend, friends)
+                            }
                         }, label: {
                             Text("Accept")
                         })
@@ -148,7 +154,13 @@ struct PersonView: View {
                             .foregroundColor(.gray)
                     } else {
                         Button(action: {
-                            
+                            guard var outgoing = viewModel.user?.outgoingFriendRequests else {
+                                return
+                            }
+                            if !outgoing.contains(where: {$0 == email}) {
+                                outgoing.append(email)
+                                viewModel.setFriendData(key: .outgoingFriend, outgoing)
+                            }
                         }, label: {
                             Image(systemName: "plus")
                         })

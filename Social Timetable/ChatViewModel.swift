@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct Message: Identifiable, Codable {
     var id: String
@@ -81,13 +82,20 @@ class MessagesManager: ObservableObject {
             }
         }
         do {
-            try courseRef.collection("messages").document().setData(from: newMessage)
+            try courseRef.collection("messages").document(newMessage.id).setData(from: newMessage)
+//            try courseRef.collection("messages").document().setData(from: newMessage)
         } catch {
             // If we run into an error, print the error in the console
             print("Error adding message to Firestore: \(error)")
         }
     }
     
+    func deleteMessage(message: Message) {
+        let ref = db.collection("chat").document(channel).collection("messages").document(message.id)
+        ref.updateData(["text": message.id])
+//        ref.do
+            
+    }
     func getParticipants(key: String, completion: @escaping ([String]) -> Void) {
         let docRef = db.collection("chat").document(key)
         docRef.getDocument() { result, error  in

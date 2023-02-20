@@ -15,6 +15,7 @@ struct ChatBubble: View {
     var sent: Bool
     
     @EnvironmentObject var viewModel: AppViewModel
+    @EnvironmentObject var messageManager: MessagesManager
         
     var body: some View {
         VStack(alignment: .leading) {
@@ -28,15 +29,18 @@ struct ChatBubble: View {
                 Text(getTime(date:message.timestamp))
                     .font(.subheadline)
             }
-            Text(message.text)
+            Text(message.text == message.id ? " ⃠ This message was deleted" : message.text)
                 .font(.callout)
+                .italic(message.text == message.id)
         }
         .padding(8)
         .background(.tertiary)
         .containerShape(RoundedRectangle(cornerRadius: 10))
         .contextMenu {
             Button(action: {
-                UIPasteboard.general.string = message.text
+                if message.text != message.id {
+                    UIPasteboard.general.string = message.text
+                }
             }) {
                 Text("Copy")
                 Image(systemName: "doc.on.doc")
@@ -47,9 +51,9 @@ struct ChatBubble: View {
                 Text("Reply")
                 Image(systemName: "arrowshape.turn.up.left")
             })
-            if (sent) {
+            if (sent && message.text != message.id) {
                 Button(role: .destructive, action: {
-                    
+                    messageManager.deleteMessage(message: message)
                 }, label: {
                     Text("Delete")
                     Image(systemName: "trash")
