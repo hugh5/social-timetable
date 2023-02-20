@@ -41,7 +41,7 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
     init(email: String, name: String) {
         self.id = email
         self.email = email
-        self.displayName = name
+        self.displayName = name.prefix(12).description
         self.color = Int.random(in: 0..<Int(pow(2.0, 24)))
         self.friends = []
         self.incomingFriendRequests = []
@@ -54,9 +54,7 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
 extension User {
     static let sampleData: User = {
         var user = User(email: "s4697741@student.uq.edu.au")
-        user.events[50] = Event.sampleData
-        user.events[150] = Event.sampleData
-        user.events[250] = Event.sampleData
+        user.events[Calendar.current.ordinality(of: .day, in: .year, for: .now) ?? 1] = Event.sampleData
         user.events[350] = Event.sampleData
         user.friends = ["s1234567@student.uq.edu.au", "s2234567@student.uq.edu.au"]
         user.incomingFriendRequests = ["s3234567@student.uq.edu.au", "s4234567@student.uq.edu.au"]

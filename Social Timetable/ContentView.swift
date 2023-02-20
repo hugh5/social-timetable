@@ -8,36 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @Binding var user: User?
-//    let date = convertStringToDate(string: "TZID=Australia/Brisbane:20230301T100000")
-    let date: Date = .now
     
     var body: some View {
         TabView {
-            WeekView(user: $user, date: date, selection: getSelection())
+            TimetableView()
                 .tabItem {
-//                    Text("Week")
-                    Image(systemName: "rectangle.grid.1x2")
+                    Text("Timetable")
+                    Image(systemName: "calendar")
                 }
             CourseChatsView(user: $user)
                 .tabItem {
-//                    Text("Course Chats")
+                    Text("Course Chats")
                     Image(systemName: "message")
                 }
             SettingsView(user: $user)
                 .tabItem {
-//                    Text("Settings")
+                    Text("Settings")
                     Image(systemName: "gearshape")
                 }
         }
-    }
-    
-    func getSelection() -> Int {
-        var selection = Calendar.current.component(.weekday, from: date) - 2
-        selection = selection < 0 ? 0 : selection
-        selection = selection > 4 ? 4 : selection
-        return selection
     }
 }
 

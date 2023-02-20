@@ -40,7 +40,7 @@ extension Event {
     static let sampleData: [Event] =
     [
         Event(course: "Algorithms & Data Structures", courseCode: "COMP3506", semester: "S2", classType: "LEC1", activity: "01", location: "49-200 - Advanced Engineering Building, Learning Theatre (GHD Auditorium)", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20230101T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20230101T120000")),
-        Event(course: "Introduction to Electrical Systems", courseCode: "ENGG1300", semester: "S2", classType: "LEC1", activity: "01", location: "23-101 - Abel Smith Lecture Theatre, Learning Theatre", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T100000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T120000"))
+        Event(course: "Introduction to Electrical Systems", courseCode: "ENGG1300", semester: "S2", classType: "LEC1", activity: "01", location: "23-101 - Abel Smith Lecture Theatre, Learning Theatre", startTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T110000"), endTime: convertStringToDate(string: "TZID=Australia/Brisbane:20221017T130000"))
     ]
 }
 

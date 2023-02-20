@@ -22,6 +22,11 @@ struct AccountSettingsView: View {
                         .padding(5)
                         .background(.tertiary)
                         .containerShape(RoundedRectangle(cornerRadius: 5))
+                        .onChange(of: displayName, perform: { newVal in
+                            if displayName.count > 12 {
+                                displayName = displayName.prefix(12).description
+                            }
+                        })
                         .onDisappear() {
                             if !displayName.isEmpty {
                                 if user.displayName != displayName {

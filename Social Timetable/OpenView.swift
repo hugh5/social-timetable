@@ -120,12 +120,11 @@ struct SignInView: View {
                             Button(action: {
                                 isPresenting.toggle()
                             }, label: {
-                                Image(systemName: "x.circle")
+                                Image(systemName: "x.circle.fill")
                                     .foregroundColor(.red)
                                     .imageScale(.large)
-                                    .padding()
                             })
-                            .buttonStyle(.plain)
+                            .buttonStyle(.bordered)
                         }
                         .padding()
                         Spacer()

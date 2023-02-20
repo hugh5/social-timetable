@@ -12,9 +12,9 @@
 		11113BE92983BF02002C9E08 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11113BE82983BF02002C9E08 /* ChatViewModel.swift */; };
 		11113BEB2983C353002C9E08 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11113BEA2983C353002C9E08 /* ChatView.swift */; };
 		11113BED29840F88002C9E08 /* ChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11113BEC29840F88002C9E08 /* ChatBubble.swift */; };
-		114B6A00296813E30020692C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B69FF296813E30020692C /* LoginView.swift */; };
+		1144CC2129A3554E0077C859 /* InfinityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144CC2029A3554E0077C859 /* InfinityTabView.swift */; };
+		1144CC2329A355CA0077C859 /* TimetableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144CC2229A355CA0077C859 /* TimetableView.swift */; };
 		114B6A0229682D380020692C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B6A0129682D380020692C /* ContentView.swift */; };
-		114B6A042968331C0020692C /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B6A032968331C0020692C /* WeekView.swift */; };
 		114B6A06296845C40020692C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B6A05296845C40020692C /* SettingsView.swift */; };
 		1156CFC62965EDB200FF9732 /* OpenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1156CFC52965EDB200FF9732 /* OpenView.swift */; };
 		115FAE4629656EEA00F2738A /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115FAE4529656EEA00F2738A /* AppViewModel.swift */; };
@@ -81,11 +81,11 @@
 		11113BE82983BF02002C9E08 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		11113BEA2983C353002C9E08 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		11113BEC29840F88002C9E08 /* ChatBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubble.swift; sourceTree = "<group>"; };
+		1144CC2029A3554E0077C859 /* InfinityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfinityTabView.swift; sourceTree = "<group>"; };
+		1144CC2229A355CA0077C859 /* TimetableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableView.swift; sourceTree = "<group>"; };
 		114B2A922994E58000DCE8DC /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		114B2A942994E58000DCE8DC /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		114B69FF296813E30020692C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		114B6A0129682D380020692C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		114B6A032968331C0020692C /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		114B6A05296845C40020692C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1156CFC52965EDB200FF9732 /* OpenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenView.swift; sourceTree = "<group>"; };
 		115FAE4529656EEA00F2738A /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
@@ -185,13 +185,13 @@
 				116C9EAC295CE0BF007EFFFE /* EventCardView.swift */,
 				11A7572B297A623900F8787B /* EventDetailView.swift */,
 				11A7572D297A918B00F8787B /* FriendsView.swift */,
-				114B69FF296813E30020692C /* LoginView.swift */,
+				1144CC2029A3554E0077C859 /* InfinityTabView.swift */,
 				1156CFC52965EDB200FF9732 /* OpenView.swift */,
 				114B6A05296845C40020692C /* SettingsView.swift */,
 				116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */,
+				1144CC2229A355CA0077C859 /* TimetableView.swift */,
 				11014C9A296868C700DC9ECF /* UploadTimetableView.swift */,
 				110DD5C7296B1AE500DAB549 /* User.swift */,
-				114B6A032968331C0020692C /* WeekView.swift */,
 				116C9E9E295CD87A007EFFFE /* Assets.xcassets */,
 				116C9EA0295CD87A007EFFFE /* Preview Content */,
 			);
@@ -402,14 +402,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				11A7572E297A918B00F8787B /* FriendsView.swift in Sources */,
+				1144CC2329A355CA0077C859 /* TimetableView.swift in Sources */,
 				114B6A06296845C40020692C /* SettingsView.swift in Sources */,
 				116C9EAD295CE0BF007EFFFE /* EventCardView.swift in Sources */,
 				115FAE4629656EEA00F2738A /* AppViewModel.swift in Sources */,
 				11113BEB2983C353002C9E08 /* ChatView.swift in Sources */,
 				1156CFC62965EDB200FF9732 /* OpenView.swift in Sources */,
-				114B6A00296813E30020692C /* LoginView.swift in Sources */,
 				11113BE92983BF02002C9E08 /* ChatViewModel.swift in Sources */,
-				114B6A042968331C0020692C /* WeekView.swift in Sources */,
 				11113BED29840F88002C9E08 /* ChatBubble.swift in Sources */,
 				119B366129686FFB00038389 /* AccountSettingsView.swift in Sources */,
 				110DD5C8296B1AE500DAB549 /* User.swift in Sources */,
@@ -417,6 +416,7 @@
 				11014C9B296868C700DC9ECF /* UploadTimetableView.swift in Sources */,
 				11F0A313296D347200B35ABE /* DayView.swift in Sources */,
 				114B6A0229682D380020692C /* ContentView.swift in Sources */,
+				1144CC2129A3554E0077C859 /* InfinityTabView.swift in Sources */,
 				11A7572C297A623900F8787B /* EventDetailView.swift in Sources */,
 				116C9E9B295CD879007EFFFE /* SocialTimetableApp.swift in Sources */,
 				116C9EAF295CE0DC007EFFFE /* Event.swift in Sources */,

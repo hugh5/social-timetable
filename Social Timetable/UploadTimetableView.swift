@@ -78,6 +78,8 @@ struct UploadTimetableView: View {
             }
             .background(.tertiary, in: RoundedRectangle(cornerRadius: 8))
             .padding()
+            Text("You can use any link to your timetable ending with \".ics\"")
+                .font(.caption)
         }
     }
     
@@ -93,7 +95,7 @@ struct UploadTimetableView: View {
                         uploadError = error.localizedDescription
                     case .success(let (events, courses)):
                         if events.isEmpty {
-                            uploadError = "This URL contains no content"
+                            uploadError = "This URL contains no content (must be a link ending with .ics)"
                         } else {
                             presentationMode.wrappedValue.dismiss()
                             viewModel.user?.events = events
