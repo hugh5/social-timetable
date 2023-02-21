@@ -11,6 +11,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import GoogleSignIn
 import FacebookLogin
+import AuthenticationServices
 import CryptoKit
 
 enum FBError: Error, Identifiable {
@@ -201,6 +202,69 @@ class AppViewModel: ObservableObject {
                         }
                     }
                 })
+            }
+        }
+    }
+    
+    func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest) {
+        request.requestedScopes = [.fullName, .email]
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        request.nonce = sha256(nonce)
+    }
+    
+    func handleSignInWithAppleCompletion(_ result: Result<ASAuthorization, Error>) {
+        isLoading = true
+        switch result {
+        case .failure(let error):
+            isLoading = false
+            credentialError = error.localizedDescription
+            print(error)
+        case .success(let success):
+            if let appleIdCredential = success.credential as? ASAuthorizationAppleIDCredential {
+                guard let nonce = currentNonce else {
+                    fatalError("Apple ID sign in: nonce is nil")
+                }
+                guard let appleIDToken = appleIdCredential.identityToken else {
+                    credentialError = "Apple ID sign in: unable to fetch identity token"
+                    return
+                }
+                guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                    credentialError = "Apple ID sign in: unable to serialise token"
+                    return
+                }
+                let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
+                
+                auth.signIn(with: credential) { (authResult, error) in
+                    if let result = authResult {
+                        guard let email = result.user.email else {
+                            self.isLoading = false
+                            self.credentialError = "Email not found"
+                            return
+                        }
+                        self.signedIn = true
+                        self.isLoading = false
+
+                        let docRef = self.db.collection("users").document(email)
+                        docRef.getDocument { (document, error) in
+                            if (document != nil && document!.exists) {
+                                
+                            } else {
+                                if let name = result.user.displayName {
+                                    self.user = User(email: email, name: name)
+                                } else {
+                                    self.user = User(email: email)
+                                }
+                                self.setUserData()
+                            }
+                        }
+                    } else {
+                        self.isLoading = false
+                        self.credentialError = error?.localizedDescription ?? "Nil auth result"
+                        print(error?.localizedDescription ?? "Nil auth result")
+                        return
+                    }
+                }
             }
         }
     }

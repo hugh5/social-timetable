@@ -46,6 +46,7 @@
 		11BC6F5F2995034400C38AE4 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAE295CE0DC007EFFFE /* Event.swift */; };
 		11BC6F602995034900C38AE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110DD5C7296B1AE500DAB549 /* User.swift */; };
 		11C1E33E2965DE35002DDD44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */; };
+		11CF54AC29A4CCD1007EBFAE /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CF54AB29A4CCD1007EBFAE /* SignInView.swift */; };
 		11F0A313296D347200B35ABE /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0A312296D347200B35ABE /* DayView.swift */; };
 		11F5A4FC29795AED009D87C2 /* CourseChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A4FB29795AED009D87C2 /* CourseChatsView.swift */; };
 		A4AC6A66521DC5BD9FD5D5B1 /* Pods_Social_Timetable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20DCC08494CD2432147FD784 /* Pods_Social_Timetable.framework */; };
@@ -108,6 +109,7 @@
 		11A7572D297A918B00F8787B /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		11C73B302990C87F007856A2 /* Social-Timetable-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Social-Timetable-Info.plist"; sourceTree = SOURCE_ROOT; };
+		11CF54AB29A4CCD1007EBFAE /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		11F0A312296D347200B35ABE /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		11F5A4FB29795AED009D87C2 /* CourseChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseChatsView.swift; sourceTree = "<group>"; };
 		20DCC08494CD2432147FD784 /* Pods_Social_Timetable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Social_Timetable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -194,6 +196,7 @@
 				110DD5C7296B1AE500DAB549 /* User.swift */,
 				116C9E9E295CD87A007EFFFE /* Assets.xcassets */,
 				116C9EA0295CD87A007EFFFE /* Preview Content */,
+				11CF54AB29A4CCD1007EBFAE /* SignInView.swift */,
 			);
 			path = "Social Timetable";
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				11F5A4FC29795AED009D87C2 /* CourseChatsView.swift in Sources */,
 				11014C9B296868C700DC9ECF /* UploadTimetableView.swift in Sources */,
 				11F0A313296D347200B35ABE /* DayView.swift in Sources */,
+				11CF54AC29A4CCD1007EBFAE /* SignInView.swift in Sources */,
 				114B6A0229682D380020692C /* ContentView.swift in Sources */,
 				1144CC2129A3554E0077C859 /* InfinityTabView.swift in Sources */,
 				11A7572C297A623900F8787B /* EventDetailView.swift in Sources */,
