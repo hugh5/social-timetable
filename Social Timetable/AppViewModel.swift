@@ -359,6 +359,27 @@ class AppViewModel: ObservableObject {
         }
     }
     
+    func getUserByName(name: String, completion: @escaping (Result<[(email: String, tag: String, name: String, color: Int)], Error>) -> Void) {
+        var queriedUsers = [(String, String, String, Int)]()
+        let query = db.collection("users").whereField("displayName", isGreaterThanOrEqualTo: name).whereField("displayName", isLessThan: "\(name)z")
+        query.getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                completion(.failure(err))
+                print("Error getting user from display name: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    guard let email = data["email"] as? String, let tag = data["tag"] as? String, let name = data["displayName"] as? String, let color = data["color"] as? Int else {
+                        continue
+                    }
+                    print("Found: \(email), \(name)")
+                    queriedUsers.append((email, tag, name, color))
+                }
+                completion(.success(queriedUsers))
+            }
+        }
+    }
+    
     func getFriendData(key: FriendKey, completion: @escaping (Result<(email: String, name: String), Error>) -> Void) {
         if let user = self.user {
             

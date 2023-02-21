@@ -13,6 +13,8 @@ struct AccountSettingsView: View {
     @State var displayName: String = ""
     @State var color: Color = .accentColor
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
         List {
             if let user = user {
@@ -20,7 +22,7 @@ struct AccountSettingsView: View {
                 Label(title: {
                     TextField("Username", text: $displayName)
                         .padding(5)
-                        .background(.tertiary)
+                        .background(colorScheme == .light ? Color(0xD9D9D9) : Color(0x3c3c3c))
                         .containerShape(RoundedRectangle(cornerRadius: 5))
                         .onChange(of: displayName, perform: { newVal in
                             if displayName.count > 12 {
@@ -57,6 +59,12 @@ struct AccountSettingsView: View {
                     displayName = user.displayName
                     color = Color(user.color)
                 }
+                Label(title: {
+                    Text(user.tag)
+                        .foregroundColor(.gray)
+                }, icon: {
+                    Image(systemName: "lanyardcard")
+                })
             }
             Button(action: {
                 viewModel.signOut()

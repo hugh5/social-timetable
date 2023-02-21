@@ -18,6 +18,9 @@ struct FriendsView: View {
     @State var findFriendError: String? = nil
     @State var loading = false
     
+    @State var foundUsers = [(email: String, tag: String, name: String, color: Int)]()
+    @State var testName = ""
+    
     @EnvironmentObject var viewModel: AppViewModel
     
     var body: some View {
@@ -42,7 +45,7 @@ struct FriendsView: View {
                             }
                     }
                 }
-                Section("Friend Requests") {
+                Section("Incoming Requests") {
                     ForEach(Array(incomingFriends.keys.sorted()), id:\.self) { key in
                         Label(title: {
                             Text(incomingFriends[key]!)
@@ -88,45 +91,28 @@ struct FriendsView: View {
                                 .tint(.red)
                             }
                     }
-                    Label(title: {
-                        TextField("friend@gmail.com", text: $email)
-                            .autocorrectionDisabled(true)
-                            .autocapitalization(.none)
-                            .keyboardType(.emailAddress)
-                    }, icon: {
-                        Button(action: {
-                            if (email.isEmpty) {
-                                return
-                            }
-                            let temp = email
-                            email = ""
-                            if let user = user {
-                                if (user.email == temp) {
-                                    findFriendError = "Can't add yourself as a friend"
-                                } else if (user.friends.contains(temp)) {
-                                    findFriendError = "Already friends with this user"
-                                } else if (user.incomingFriendRequests.contains(temp)) {
-                                    findFriendError = "This user has sent you a request"
-                                } else if (user.outgoingFriendRequests.contains(temp)) {
-                                    findFriendError = "Request already sent"
-                                } else {
-                                    viewModel.userExists(email: temp) { result in
-                                        switch result {
-                                        case .success(let data):
-                                            findFriendError = nil
-                                            outgoingFriends[data.0] = data.1
-                                            viewModel.setFriendData(key: .outgoingFriend, Array(outgoingFriends.keys))
-                                        case .failure(let error):
-                                            findFriendError = "User Not Found\n" + error.localizedDescription
+                }
+                Section("Find Friends") {
+                    TextField("Name", text: $testName)
+                        .onSubmit {
+                            findFriendError = nil
+                            if !testName.isEmpty {
+                                viewModel.getUserByName(name: testName) { result in
+                                    switch result {
+                                    case .failure(let error):
+                                        print(error.localizedDescription)
+                                    case .success(let data):
+                                        foundUsers = data
+                                        foundUsers.removeAll(where: {
+                                            $0.email == user?.email
+                                        })
+                                        if foundUsers.isEmpty {
+                                            findFriendError = "No users found"
                                         }
                                     }
                                 }
                             }
-                        }, label: {
-                            Image(systemName: "plus")
-                                .foregroundColor(email.isEmpty ? .gray : .accentColor)
-                        })
-                    })
+                        }
                     if findFriendError != nil {
                         Label(title: {
                             Text(findFriendError!)
@@ -136,6 +122,42 @@ struct FriendsView: View {
                         })
                         .font(.caption)
                         .foregroundColor(.red)
+                    }
+                    ForEach(foundUsers, id: \.email) { account in
+                        HStack {
+                            Label(title: {
+                                Text(account.name)
+                            }, icon: {
+                                Image(systemName: "circle.fill")
+                                    .foregroundColor(Color(account.color))
+                            })
+                            Spacer()
+                            Text(account.tag)
+                                .foregroundColor(.gray)
+                                .font(.caption)
+                        }
+                        .swipeActions {
+                            Button(action: {
+                                if let user = user {
+                                    if (user.email == account.email) {
+                                        findFriendError = "Can't add yourself as a friend"
+                                    } else if (user.friends.contains(account.email)) {
+                                        findFriendError = "Already friends with this user"
+                                    } else if (user.incomingFriendRequests.contains(account.email)) {
+                                        findFriendError = "This user has sent you a request"
+                                    } else if (user.outgoingFriendRequests.contains(account.email)) {
+                                        findFriendError = "Request already sent"
+                                    } else {
+                                        findFriendError = nil
+                                        outgoingFriends[account.email] = account.name
+                                        viewModel.setFriendData(key: .outgoingFriend, Array(outgoingFriends.keys))
+                                    }
+                                }
+                            }, label: {
+                                Text("Add Friend")
+                            })
+                            .tint(.green)
+                        }
                     }
                 }
             }

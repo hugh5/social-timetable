@@ -15,6 +15,7 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
     
         
     @DocumentID var id: String?
+    var tag: String
     var email: String
     var displayName: String
     var color: Int // hex
@@ -28,6 +29,7 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
     init(email: String) {
         print("New User")
         self.id = email
+        self.tag = UUID().uuidString.prefix(8).description
         self.email = email
         self.displayName = email.components(separatedBy: "@")[0]
         self.color = Int.random(in: 0..<Int(pow(2.0, 24)))
@@ -40,6 +42,7 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
     
     init(email: String, name: String) {
         self.id = email
+        self.tag = UUID().uuidString.prefix(8).description
         self.email = email
         self.displayName = name.prefix(12).description
         self.color = Int.random(in: 0..<Int(pow(2.0, 24)))
