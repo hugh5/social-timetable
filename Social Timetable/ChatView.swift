@@ -35,7 +35,11 @@ struct ChatView: View {
                     }
                 }
                 .refreshable {
-                    value.scrollTo(messageManager.lastMessageId)
+                    withAnimation {
+                        messageManager.increaseLimit()
+                        messageManager.getMessages()
+                    }
+//                    value.scrollTo(messageManager.lastMessageId)
                 }
             }
             .padding(.horizontal)

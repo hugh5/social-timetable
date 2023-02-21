@@ -22,6 +22,8 @@ class MessagesManager: ObservableObject {
     @Published private(set) var lastMessageId: String = ""
     
     var channel: String
+    var limit: Int
+    var current: ListenerRegistration?
     
     // Create an instance of our Firestore database
     let db = Firestore.firestore()
@@ -29,12 +31,20 @@ class MessagesManager: ObservableObject {
     // On initialize of the MessagesManager class, get the messages from Firestore
     init(channel: String) {
         self.channel = channel
+        self.limit = 20
         getMessages()
+    }
+    
+    func increaseLimit() {
+        limit += 20
     }
 
     // Read message from Firestore in real-time with the addSnapShotListener
     func getMessages() {
-        db.collection("chat").document(channel).collection("messages").addSnapshotListener { querySnapshot, error in
+        if current != nil {
+            current!.remove()
+        }
+        current = db.collection("chat").document(channel).collection("messages").order(by: "timestamp", descending: true).limit(to: limit).addSnapshotListener { querySnapshot, error in
             
             // If we don't have documents, exit the function
             guard let documents = querySnapshot?.documents else {
