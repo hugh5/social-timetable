@@ -444,7 +444,28 @@ class AppViewModel: ObservableObject {
         }
     }
     
-    func getFriendData(key: FriendKey, completion: @escaping (Result<(email: String, name: String), Error>) -> Void) {
+    func getUserByTag(tag: String, completion: @escaping (Result<[(email: String, tag: String, name: String, color: Int)], Error>) -> Void) {
+        var queriedUsers = [(String, String, String, Int)]()
+        let query = db.collection("users").whereField("tag", isGreaterThanOrEqualTo: tag.uppercased()).whereField("tag", isLessThan: "\(tag.uppercased())z")
+        query.getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                completion(.failure(err))
+                print("Error getting user from tag: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    guard let email = data["email"] as? String, let tag = data["tag"] as? String, let name = data["displayName"] as? String, let color = data["color"] as? Int else {
+                        continue
+                    }
+                    print("Found: \(email), \(name)")
+                    queriedUsers.append((email, tag, name, color))
+                }
+                completion(.success(queriedUsers))
+            }
+        }
+    }
+    
+    func getFriendData(key: FriendKey, completion: @escaping (Result<(email: String, tag: String, name: String, color: Int), Error>) -> Void) {
         if let user = self.user {
             
             var accounts: [String]
@@ -462,7 +483,7 @@ class AppViewModel: ObservableObject {
                 docRef.getDocument(as: User.self) { result in
                     switch result {
                     case .success(let data):
-                        completion(.success((data.email, data.displayName)))
+                        completion(.success((data.email, data.tag, data.displayName, data.color)))
                     case .failure(let error):
                         completion(.failure(error))
                     }

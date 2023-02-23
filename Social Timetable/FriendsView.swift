@@ -10,11 +10,10 @@ import SwiftUI
 struct FriendsView: View {
     
     @Binding var user: User?
-    @State var friends = [String:String]()
-    @State var incomingFriends = [String:String]()
-    @State var outgoingFriends = [String:String]()
+    @State var friends = [String:(tag: String, name: String, color: Int)]()
+    @State var incomingFriends = [String:(tag: String, name: String, color: Int)]()
+    @State var outgoingFriends = [String:(tag: String, name: String, color: Int)]()
 
-    @State var email: String = ""
     @State var findFriendError: String? = nil
     @State var loading = false
     
@@ -28,11 +27,18 @@ struct FriendsView: View {
             List {
                 Section("Friends") {
                     ForEach(Array(friends.keys.sorted()), id:\.self) { key in
-                        Label(title: {
-                            Text(friends[key]!)
-                        }, icon: {
-                            Image(systemName: "person")
-                        })
+                        HStack {
+                            Label(title: {
+                                Text(friends[key]!.name)
+                            }, icon: {
+                                Image(systemName: "circle.fill")
+                                    .foregroundColor(Color(friends[key]!.color))
+                            })
+                            Spacer()
+                            Text(friends[key]!.tag)
+                                .foregroundColor(.gray)
+                                .font(.caption)
+                        }
                             .swipeActions {
                                 Button("Remove Friend") {
                                     withAnimation {
@@ -47,11 +53,18 @@ struct FriendsView: View {
                 }
                 Section("Incoming Requests") {
                     ForEach(Array(incomingFriends.keys.sorted()), id:\.self) { key in
-                        Label(title: {
-                            Text(incomingFriends[key]!)
-                        }, icon: {
-                            Image(systemName: "person")
-                        })
+                        HStack {
+                            Label(title: {
+                                Text(incomingFriends[key]!.name)
+                            }, icon: {
+                                Image(systemName: "circle.fill")
+                                    .foregroundColor(Color(incomingFriends[key]!.color))
+                            })
+                            Spacer()
+                            Text(incomingFriends[key]!.tag)
+                                .foregroundColor(.gray)
+                                .font(.caption)
+                        }
                             .swipeActions {
                                 Button("Decline") {
                                     withAnimation {
@@ -75,11 +88,18 @@ struct FriendsView: View {
                 }
                 Section("Outgoing Requests") {
                     ForEach(Array(outgoingFriends.keys.sorted()), id:\.self) { key in
-                        Label(title: {
-                            Text(outgoingFriends[key]!)
-                        }, icon: {
-                            Image(systemName: "person")
-                        })
+                        HStack {
+                            Label(title: {
+                                Text(outgoingFriends[key]!.name)
+                            }, icon: {
+                                Image(systemName: "circle.fill")
+                                    .foregroundColor(Color(outgoingFriends[key]!.color))
+                            })
+                            Spacer()
+                            Text(outgoingFriends[key]!.tag)
+                                .foregroundColor(.gray)
+                                .font(.caption)
+                        }
                             .swipeActions {
                                 Button("Rescind") {
                                     withAnimation {
@@ -93,22 +113,38 @@ struct FriendsView: View {
                     }
                 }
                 Section("Find Friends") {
-                    TextField("Name", text: $testName)
+                    TextField("Name or Tag", text: $testName)
+                        .autocorrectionDisabled()
+                        .autocapitalization(.none)
+                        .textFieldStyle(.roundedBorder)
                         .onSubmit {
                             findFriendError = nil
                             if !testName.isEmpty {
+                                foundUsers.removeAll()
                                 viewModel.getUserByName(name: testName) { result in
                                     switch result {
                                     case .failure(let error):
                                         print(error.localizedDescription)
                                     case .success(let data):
-                                        foundUsers = data
+                                        foundUsers.append(contentsOf: data)
                                         foundUsers.removeAll(where: {
                                             $0.email == user?.email
                                         })
-                                        if foundUsers.isEmpty {
-                                            findFriendError = "No users found"
+                                    }
+                                }
+                                viewModel.getUserByTag(tag: testName) { result in
+                                    switch result {
+                                    case .failure(let error):
+                                        print(error.localizedDescription)
+                                    case .success(let data):
+                                        for account in data {
+                                            if !foundUsers.contains(where: {$0 == account}) {
+                                                foundUsers.append(account)
+                                            }
                                         }
+                                        foundUsers.removeAll(where: {
+                                            $0.email == user?.email
+                                        })
                                     }
                                 }
                             }
@@ -149,7 +185,7 @@ struct FriendsView: View {
                                         findFriendError = "Request already sent"
                                     } else {
                                         findFriendError = nil
-                                        outgoingFriends[account.email] = account.name
+                                        outgoingFriends[account.email] = (account.tag, account.name, account.color)
                                         viewModel.setFriendData(key: .outgoingFriend, Array(outgoingFriends.keys))
                                     }
                                 }
@@ -182,7 +218,7 @@ struct FriendsView: View {
                 print(error)
             case .success(let data):
                 print(data)
-                friends[data.0] = data.1
+                friends[data.email] = (data.tag, data.name, data.color)
             }
         }
         incomingFriends.removeAll()
@@ -192,7 +228,7 @@ struct FriendsView: View {
                 print(error)
             case .success(let data):
                 print("getFriendData(in)")
-                incomingFriends[data.0] = data.1
+                incomingFriends[data.email] = (data.tag, data.name, data.color)
             }
         }
         outgoingFriends.removeAll()
@@ -202,7 +238,7 @@ struct FriendsView: View {
                 print(error)
             case .success(let data):
                 print("getFriendData(out)")
-                outgoingFriends[data.0] = data.1
+                outgoingFriends[data.email] = (data.tag, data.name, data.color)
             }
         }
         loading = false

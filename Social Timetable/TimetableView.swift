@@ -11,6 +11,7 @@ struct TimetableView: View {
     let daysOfWeek: [String] = Calendar.current.shortWeekdaySymbols
     let calendar = Calendar.current
     
+    @State var date: Date = .now
     @State var page: Int = 0
     @State var hiddenUsers: [User] = []
 
@@ -27,10 +28,22 @@ struct TimetableView: View {
                     })
                     Spacer()
 
-                    Text((calendar.date(byAdding: .day, value: page, to: .now) ?? .now) .formatted(date: .abbreviated, time: .omitted))
+                    DatePicker("", selection: Binding(
+                        get: { calendar.date(byAdding: .day, value: page, to: .now) ?? .now },
+                        set: { newVal in
+                            let new = calendar.startOfDay(for: newVal)
+                            let old = calendar.startOfDay(for: calendar.date(byAdding: .day, value: page, to: .now) ?? .now)
+                            
+                            let numberOfDays = calendar.dateComponents([.day], from: old, to: new).day!
+                            page += numberOfDays
+                        }
+                    ), displayedComponents: [.date])
+                        .datePickerStyle(.compact)
+                        .labelsHidden()
+
                     Spacer()
                     Button(action: {
-                        page += 7
+                            page += 7
                     }, label: {
                         Image(systemName: "chevron.right")
                     })
