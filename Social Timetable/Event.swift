@@ -161,6 +161,112 @@ func convertICSToEvents(from url: URL) async -> Result<([Int: [Event]], [String:
     return .success((events, courses))
 }
 
+enum Semester: String {
+    case S1 = "S1", S2 = "S2", S3 = "S3"
+}
+
+func convertUQPlannerToEvents(contents: String, semester: Semester) -> Result<([Int: [Event]], [String:Set<String>]), Error> {
+    
+    let semester = semester.rawValue
+    let lines = contents.components(separatedBy: "\n")
+
+    let dateFormatter = DateFormatter()
+    dateFormatter.timeZone = TimeZone(abbreviation: "AEST")
+    dateFormatter.dateFormat = "yyyyMMdd'T'HHmmss"
+
+    // Initialize variables for creating events
+    var courses: [String:Set<String>] = [:]
+
+    var events: [Int: [Event]] = [:]
+    var event: Event
+    var eventCode: String?
+    var eventClass: String?
+    var eventActivity: String?
+    var eventLocation: String?
+    var eventStartTime: Date?
+    var eventEndTime: Date?
+
+    // Loop through each line in the .ics file
+    for line in lines {
+
+        // Split the line into key-value pairs
+        let components = line.contains(";") ? line.components(separatedBy: ";") : line.components(separatedBy: ":")
+        if components.count < 2 {
+            continue
+        }
+        let key = components[0]
+        let value = components[1]
+        
+///        ["BEGIN", "VEVENT"]
+///        ["DESCRIPTION", "LEC1"]
+///        ["DTSTART", "VALUE=DATE-TIME:20230221T100000"]
+///        ["DTEND", "VALUE=DATE-TIME:20230221T120000"]
+///        ["LOCATION", "42-115"]
+///        ["SUMMARY", "LANGUAGE=en-us:CSSE3012 LEC101"]
+///        ["END", "VEVENT"]
+
+        switch key {
+        case "BEGIN":
+            if value.contains("VEVENT") {
+                eventCode = nil
+                eventClass = nil
+                eventActivity = nil
+                eventLocation = nil
+                eventStartTime = nil
+                eventEndTime = nil
+            }
+        case "END":
+            if value.contains("VEVENT") {
+                guard let code = eventCode, let classType = eventClass, let activity = eventActivity, let location = eventLocation, let startTime = eventStartTime, let endTime = eventEndTime else {
+                    continue
+                }
+                event = Event(course: "", courseCode: code, semester: semester, classType: classType, activity: activity, location: location, startTime: startTime, endTime: endTime)
+                if (courses[semester] == nil) {
+                    courses[semester] = Set()
+                }
+                courses[semester]?.insert(code)
+                let dayOfYear = getDayOfYear(date: event.startTime)
+                if events[dayOfYear] == nil {
+                    events[dayOfYear] = [event]
+                } else {
+                    events[dayOfYear]?.append(event)
+                }
+            }
+        case "DESCRIPTION":
+            eventClass = value
+        case "LOCATION":
+            eventLocation = value
+        case "SUMMARY":
+            let summaryComponents = value.components(separatedBy: ":")
+            if (summaryComponents.count == 2) {
+                let courseComponents = summaryComponents[1].components(separatedBy: " ")
+                if (courseComponents.count == 2) {
+                    eventCode = courseComponents[0]
+                    eventActivity = summaryComponents[1].suffix(2).description
+                }
+            }
+        case "DTSTART":
+            let timeStampComponents = value.components(separatedBy: ":")
+            if timeStampComponents.count == 2 {
+                if let date = dateFormatter.date(from: timeStampComponents[1]) {
+                    eventStartTime = date
+                }
+            }
+        case "DTEND":
+            let timeStampComponents = value.components(separatedBy: ":")
+            if timeStampComponents.count == 2 {
+                if let date = dateFormatter.date(from: timeStampComponents[1]) {
+                    eventEndTime = date
+                }
+            }
+        default:
+            break
+        }
+    }
+
+    return .success((events, courses))
+}
+
 func convertStringToDate(string: String) -> Date {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyyMMdd'T'HHmmss"
