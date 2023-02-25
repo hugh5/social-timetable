@@ -161,7 +161,7 @@ func convertICSToEvents(from url: URL) async -> Result<([Int: [Event]], [String:
     return .success((events, courses))
 }
 
-enum Semester: String {
+enum Semester: String, CaseIterable {
     case S1 = "S1", S2 = "S2", S3 = "S3"
 }
 

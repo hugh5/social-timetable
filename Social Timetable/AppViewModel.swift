@@ -411,6 +411,28 @@ class AppViewModel: ObservableObject {
         }
     }
     
+    func removeCourses() {
+        if let user = user {
+            let ref = db.collection("chat")
+            for semester in Semester.allCases {
+                for course in user.courses[semester.rawValue] ?? [] {
+                    print("Removing: " + course + "_" + semester.rawValue)
+                    let docRef = ref.document(course + "_" + semester.rawValue)
+                    docRef.getDocument { (document, error) in
+                        if let document = document, document.exists {
+                            let data = document.data()
+                            var participants = data!["participants"]! as? Array<String> ?? []
+                            if let idx = participants.firstIndex(where: {$0 == user.email}) {
+                                participants.remove(at: idx)
+                                docRef.updateData(["participants":participants])
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     func userExists(email: String, completion: @escaping (Result<(email: String, name: String, color: Int), Error>) -> Void) {
         let docRef = db.collection("users").document(email)
         docRef.getDocument(as: User.self) { result in

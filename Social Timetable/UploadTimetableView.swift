@@ -95,9 +95,10 @@ struct UploadTimetableView: View {
                         uploadError = error.localizedDescription
                     case .success(let (events, courses)):
                         if events.isEmpty {
-                            uploadError = "This URL contains no content (data must be in .ics format)"
+                            uploadError = "This URL contains no content (data must be from Allocate+)"
                         } else {
                             presentationMode.wrappedValue.dismiss()
+                            viewModel.removeCourses()
                             viewModel.user?.events = events
                             viewModel.user?.courses = courses
                             viewModel.setUserData()

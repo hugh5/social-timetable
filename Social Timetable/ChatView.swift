@@ -13,7 +13,6 @@ struct ChatView: View {
     var course: String
     @State var messageToSend = ""
     @State var isPresenting = false
-    @State var participants: [String] = []
     
     @EnvironmentObject var messageManager: MessagesManager
     
@@ -59,9 +58,6 @@ struct ChatView: View {
             .cornerRadius(16)
             .padding(.horizontal)
         }
-        .onAppear {
-            getParticipants()
-        }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: {
@@ -70,7 +66,7 @@ struct ChatView: View {
                     Label("Participants", systemImage: "person.3.sequence")
                 })
                 .sheet(isPresented: $isPresenting, content: {
-                    ParticipantListView(participants: $participants)
+                    ParticipantListView()
                         .presentationDetents([.medium])
                 })
             }
@@ -86,17 +82,12 @@ struct ChatView: View {
             messageToSend = ""
         }
     }
-    
-    func getParticipants() {
-        messageManager.getParticipants(key: course) { result in
-            participants = result.sorted()
-        }
-    }
 }
 
 struct ParticipantListView: View {
-    @Binding var participants: [String]
+    @State var participants: [String] = []
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var messageManager: MessagesManager
     
     var body: some View {
         VStack {
@@ -114,6 +105,15 @@ struct ParticipantListView: View {
                 }
             }
         }
+        .onAppear {
+            getParticipants()
+        }
+    }
+    
+    func getParticipants() {
+        messageManager.getParticipants() { result in
+            participants = result.sorted()
+        }
     }
 }
 
@@ -122,6 +122,11 @@ struct PersonView: View {
     var email: String
     @State var name: String = ""
     @State var color: Int? = nil
+    @State var label: any View = EmptyView()
+    
+    @State var friends: [String] = []
+    @State var incoming: [String] = []
+    @State var outgoing: [String] = []
     
     @EnvironmentObject var viewModel: AppViewModel
     
@@ -135,35 +140,37 @@ struct PersonView: View {
                 }, icon: {
                     if viewModel.email == email {
                         Text("")
-                    } else if (viewModel.user?.friends.contains(where: {$0 == email}) ?? false) {
+                    } else if (friends.contains(where: {$0 == email})) {
                         Image(systemName: "person")
                             .foregroundColor(.gray)
-                    } else if (viewModel.user?.incomingFriendRequests.contains(where: {$0 == email}) ?? false) {
+                    } else if (incoming.contains(where: {$0 == email})) {
                         Button(action: {
-                            guard var incoming = viewModel.user?.incomingFriendRequests, var friends = viewModel.user?.friends else {
+                            guard var incomingFriends = viewModel.user?.incomingFriendRequests, var userFriends = viewModel.user?.friends else {
                                 return
                             }
-                            if let idx = incoming.firstIndex(of: email) {
-                                friends.append(incoming.remove(at: idx))
-                                viewModel.setFriendData(key: .incomingFriend, incoming)
-                                viewModel.setFriendData(key: .friend, friends)
+                            if let idx = incomingFriends.firstIndex(of: email) {
+                                userFriends.append(incomingFriends.remove(at: idx))
+                                viewModel.setFriendData(key: .incomingFriend, incomingFriends)
+                                viewModel.setFriendData(key: .friend, userFriends)
+                                getFriends()
                             }
                         }, label: {
                             Text("Accept")
                         })
                         .buttonStyle(.plain)
                         .foregroundColor(.accentColor)
-                    } else if (viewModel.user?.outgoingFriendRequests.contains(where: {$0 == email}) ?? false) {
+                    } else if (outgoing.contains(where: {$0 == email})) {
                         Text("Pending")
                             .foregroundColor(.gray)
                     } else {
                         Button(action: {
-                            guard var outgoing = viewModel.user?.outgoingFriendRequests else {
+                            guard var outgoingFriends = viewModel.user?.outgoingFriendRequests else {
                                 return
                             }
-                            if !outgoing.contains(where: {$0 == email}) {
-                                outgoing.append(email)
-                                viewModel.setFriendData(key: .outgoingFriend, outgoing)
+                            if !outgoingFriends.contains(where: {$0 == email}) {
+                                outgoingFriends.append(email)
+                                viewModel.setFriendData(key: .outgoingFriend, outgoingFriends)
+                                getFriends()
                             }
                         }, label: {
                             Image(systemName: "plus")
@@ -180,7 +187,12 @@ struct PersonView: View {
         })
         .onAppear {
             getData(email: email)
+            getFriends()
         }
+    }
+    
+    func getLabel() {
+        
     }
     
     func getData(email: String) {
@@ -193,17 +205,25 @@ struct PersonView: View {
                 name = email.prefix(while: {$0 != "@"}).description
             }
         }
-        
+    }
+    
+    func getFriends() {
+        withAnimation {
+            friends = viewModel.user?.friends ?? []
+            incoming = viewModel.user?.incomingFriendRequests ?? []
+            outgoing = viewModel.user?.outgoingFriendRequests ?? []
+        }
     }
 }
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-        ChatView(user: User.sampleData, course: "CSSE2310_S1")
-            .environmentObject(MessagesManager.sampleData)
-            ParticipantListView(participants: .constant([User.sampleData.email]))
-            .environmentObject(AppViewModel.sampleData)
+            ChatView(user: User.sampleData, course: "CSSE2310_S1")
+                .environmentObject(MessagesManager.sampleData)
+            ParticipantListView()
+                .environmentObject(AppViewModel.sampleData)
+                .environmentObject(MessagesManager.sampleData)
         }
     }
 }

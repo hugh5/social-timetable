@@ -106,8 +106,8 @@ class MessagesManager: ObservableObject {
 //        ref.do
             
     }
-    func getParticipants(key: String, completion: @escaping ([String]) -> Void) {
-        let docRef = db.collection("chat").document(key)
+    func getParticipants(completion: @escaping ([String]) -> Void) {
+        let docRef = db.collection("chat").document(channel)
         docRef.getDocument() { result, error  in
             if let result = result {
                 if let data = result.get("participants") {
