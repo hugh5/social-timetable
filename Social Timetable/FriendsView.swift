@@ -29,87 +29,91 @@ struct FriendsView: View {
                     ForEach(Array(friends.keys.sorted()), id:\.self) { key in
                         HStack {
                             Label(title: {
-                                Text(friends[key]!.name)
+                                VStack {
+                                    Text(friends[key]!.name)
+                                    Text(friends[key]!.tag)
+                                        .foregroundColor(.gray)
+                                        .font(.caption)
+                                }
                             }, icon: {
                                 Image(systemName: "circle.fill")
                                     .foregroundColor(Color(friends[key]!.color))
                             })
                             Spacer()
-                            Text(friends[key]!.tag)
-                                .foregroundColor(.gray)
-                                .font(.caption)
-                        }
-                            .swipeActions {
-                                Button("Remove Friend") {
-                                    withAnimation {
-                                        friends.removeValue(forKey: key)
-                                        return
-                                    }
-                                    viewModel.setFriendData(key: .friend, Array(friends.keys))
+                            Button("Remove") {
+                                withAnimation {
+                                    friends.removeValue(forKey: key)
+                                    return
                                 }
-                                .tint(.red)
+                                viewModel.setFriendData(key: .friend, Array(friends.keys))
                             }
+                            .font(.caption)
+                            .buttonStyle(.bordered)
+                        }
                     }
                 }
                 Section("Incoming Requests") {
                     ForEach(Array(incomingFriends.keys.sorted()), id:\.self) { key in
                         HStack {
                             Label(title: {
-                                Text(incomingFriends[key]!.name)
+                                VStack {
+                                    Text(incomingFriends[key]!.name)
+                                    Text(incomingFriends[key]!.tag)
+                                        .foregroundColor(.gray)
+                                        .font(.caption)
+                                }
                             }, icon: {
                                 Image(systemName: "circle.fill")
                                     .foregroundColor(Color(incomingFriends[key]!.color))
                             })
                             Spacer()
-                            Text(incomingFriends[key]!.tag)
-                                .foregroundColor(.gray)
-                                .font(.caption)
-                        }
-                            .swipeActions {
-                                Button("Decline") {
-                                    withAnimation {
-                                        incomingFriends.removeValue(forKey: key)
-                                        return
-                                    }
-                                    viewModel.setFriendData(key: .incomingFriend, Array(incomingFriends.keys))
+                            Button("Decline") {
+                                withAnimation {
+                                    incomingFriends.removeValue(forKey: key)
+                                    return
                                 }
-                                .tint(.red)
-                                Button("Accept") {
-                                    withAnimation {
-                                        friends[key] = incomingFriends.removeValue(forKey: key)
-                                        return
-                                    }
-                                    viewModel.setFriendData(key: .incomingFriend, Array(incomingFriends.keys))
-                                    viewModel.setFriendData(key: .friend, Array(friends.keys))
-                                }
-                                .tint(.green)
+                                viewModel.setFriendData(key: .incomingFriend, Array(incomingFriends.keys))
                             }
+                            .font(.caption)
+                            .buttonStyle(.bordered)
+                            Button("Accept") {
+                                withAnimation {
+                                    friends[key] = incomingFriends.removeValue(forKey: key)
+                                    return
+                                }
+                                viewModel.setFriendData(key: .incomingFriend, Array(incomingFriends.keys))
+                                viewModel.setFriendData(key: .friend, Array(friends.keys))
+                            }
+                            .font(.caption)
+                            .buttonStyle(.borderedProminent)
+                        }
                     }
                 }
                 Section("Outgoing Requests") {
                     ForEach(Array(outgoingFriends.keys.sorted()), id:\.self) { key in
                         HStack {
                             Label(title: {
-                                Text(outgoingFriends[key]!.name)
+                                VStack {
+                                    Text(outgoingFriends[key]!.name)
+                                    Text(outgoingFriends[key]!.tag)
+                                        .foregroundColor(.gray)
+                                        .font(.caption)
+                                }
                             }, icon: {
                                 Image(systemName: "circle.fill")
                                     .foregroundColor(Color(outgoingFriends[key]!.color))
                             })
                             Spacer()
-                            Text(outgoingFriends[key]!.tag)
-                                .foregroundColor(.gray)
-                                .font(.caption)
-                        }
-                            .swipeActions {
-                                Button("Rescind") {
-                                    withAnimation {
-                                        outgoingFriends.removeValue(forKey: key)
-                                        return
-                                    }
-                                    viewModel.setFriendData(key: .outgoingFriend, Array(outgoingFriends.keys))
+                            Button("Rescind") {
+                                withAnimation {
+                                    outgoingFriends.removeValue(forKey: key)
+                                    return
                                 }
-                                .tint(.red)
+                                viewModel.setFriendData(key: .outgoingFriend, Array(outgoingFriends.keys))
                             }
+                            .font(.caption)
+                            .buttonStyle(.bordered)
+                        }
                     }
                 }
                 Section("Find Friends") {
@@ -162,17 +166,17 @@ struct FriendsView: View {
                     ForEach(foundUsers, id: \.email) { account in
                         HStack {
                             Label(title: {
-                                Text(account.name)
+                                VStack {
+                                    Text(account.name)
+                                    Text(account.tag)
+                                        .foregroundColor(.gray)
+                                        .font(.caption)
+                                }
                             }, icon: {
                                 Image(systemName: "circle.fill")
                                     .foregroundColor(Color(account.color))
                             })
                             Spacer()
-                            Text(account.tag)
-                                .foregroundColor(.gray)
-                                .font(.caption)
-                        }
-                        .swipeActions {
                             Button(action: {
                                 if let user = user {
                                     if (user.email == account.email) {
@@ -190,9 +194,10 @@ struct FriendsView: View {
                                     }
                                 }
                             }, label: {
-                                Text("Add Friend")
+                                Text("Add")
                             })
-                            .tint(.green)
+                            .font(.caption)
+                            .buttonStyle(.borderedProminent)
                         }
                     }
                 }
