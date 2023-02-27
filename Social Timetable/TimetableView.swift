@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TimetableView: View {
     let daysOfWeek: [String] = Calendar.current.shortWeekdaySymbols
-    let calendar = Calendar.current
+    let calendar = Calendar.brisbane
     
     @State var date: Date = .now
     @State var page: Int = 0
@@ -23,6 +23,11 @@ struct TimetableView: View {
                 HStack {
                     Button(action: {
                         page -= 7
+                    }, label: {
+                        Image(systemName: "chevron.left.2")
+                    })
+                    Button(action: {
+                        page -= 1
                     }, label: {
                         Image(systemName: "chevron.left")
                     })
@@ -43,9 +48,14 @@ struct TimetableView: View {
 
                     Spacer()
                     Button(action: {
-                            page += 7
+                        page += 1
                     }, label: {
                         Image(systemName: "chevron.right")
+                    })
+                    Button(action: {
+                            page += 7
+                    }, label: {
+                        Image(systemName: "chevron.right.2")
                     })
                 }
                 .padding(.top, 5)
@@ -73,7 +83,7 @@ struct TimetableView: View {
                 .padding(.horizontal)
                 
                 InfiniteTabPageView(currentPage: $page, width: geometry.size.width) { curr in
-                    DayView(events: getEvents(day: curr + (Calendar.current.ordinality(of: .day, in: .year, for: .now) ?? 0)))
+                    DayView(rows: getRows(events: getEvents(day: curr + (calendar.ordinality(of: .day, in: .year, for: .now) ?? 0))))
                 }
                 
                 ScrollView(.horizontal) {
@@ -113,22 +123,59 @@ struct TimetableView: View {
         return calendar.component(.weekday, from: calendar.date(byAdding: .day, value: page, to: .now) ?? .now) - 1
     }
     
-    func getEvents(day: Int) -> [Int:[UserEvent]] {
-        var events: [Int:[UserEvent]] = [:]
+    func getEvents(day: Int) -> [UserEvent] {
+        var events: [UserEvent] = []
         for account in viewModel.users {
             if hiddenUsers.contains(account) {
                 continue
             }
             account.events[day]?.forEach { event in
-                let i = Calendar.current.component(.hour, from: event.startTime)
-                if events[i] == nil {
-                    events[i] = [UserEvent(user: account, event: event)]
-                } else {
-                    events[i]?.append(UserEvent(user: account, event: event))
-                }
+                events.append(UserEvent(user: account, event: event))
             }
         }
         return events
+    }
+    
+    func getRows(events: [UserEvent]) -> [Int:[UserEvent?]] {
+        var rows = [Int:[UserEvent?]]()
+        for userEvent in events {
+            let event = userEvent.event
+            let count = Int(event.startTime.distance(to: event.endTime) / (30*60))
+            let key = calendar.ordinality(of: .minute, in: .day, for: event.startTime) ?? 480
+            var current = key
+            var maxIndex = 0
+            for _ in 0..<count {
+                maxIndex = max(maxIndex,rows[current]?.count ?? 0)
+                current += 30
+            }
+            current = key
+            for _ in 0..<count {
+                if rows[current] == nil {
+                    rows[current] = []
+                }
+                while rows[current]!.count < maxIndex {
+                    rows[current]!.append(nil)
+                }
+                if current == key {
+                    rows[current]!.append(userEvent)
+                } else {
+                    rows[current]!.append(nil)
+                }
+                current += 30
+            }
+        }
+        return rows
+    }
+}
+
+extension Calendar {
+    
+    public static var brisbane: Calendar {
+        get {
+            var calendar = Calendar.current
+            calendar.timeZone = TimeZone(secondsFromGMT: 10 * 3600)!
+            return calendar
+        }
     }
 }
 

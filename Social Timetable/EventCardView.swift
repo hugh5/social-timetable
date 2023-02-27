@@ -15,24 +15,20 @@ struct EventCardView: View {
         VStack(alignment: .leading) {
             Text(event.courseCode)
                 .font(.title3)
-                .lineLimit(1)
             HStack {
                 Text(event.classType)
                     .bold()
                 Text("-")
                 Text(event.activity)
             }
-            HStack {
-                Text(event.getDuration())
-                    .bold()
-                    .lineLimit(1, reservesSpace: true)
-                Text(event.location.components(separatedBy: " ")[0])
-                    .lineLimit(1, reservesSpace: true)
-            }
-            .font(.subheadline)
+            Text(event.location.components(separatedBy: " ")[0])
+                .font(.subheadline)
             Text(name)
         }
-        .lineLimit(1)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+        .frame(width: 130, alignment: .leading)
+        .frame(height: CGFloat(event.endTime.timeIntervalSince(event.startTime) / (60*60))*100 - 10, alignment: .top)
     }
 }
 

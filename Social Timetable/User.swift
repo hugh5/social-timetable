@@ -57,6 +57,7 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
 extension User {
     static let sampleData: User = {
         var user = User(email: "s4697741@student.uq.edu.au", name: "Hugh")
+        user.color = 2940464127
         user.events[Calendar.current.ordinality(of: .day, in: .year, for: .now) ?? 1] = Event.sampleData
         user.events[350] = Event.sampleData
         user.friends = ["s1234567@student.uq.edu.au", "s2234567@student.uq.edu.au"]

@@ -154,8 +154,8 @@ struct EventCardView: View {
                     Text(event.getDuration())
                         .bold()
                     Text(event.location.components(separatedBy: " ")[0])
-                    Text("Last Update: " + currentDate.formatted(date: .omitted, time: .shortened))
-                        .font(.caption2)
+//                    Text("Last Update: " + currentDate.formatted(date: .omitted, time: .shortened))
+//                        .font(.caption2)
                 }
                 .lineLimit(1)
             case .accessoryRectangular:

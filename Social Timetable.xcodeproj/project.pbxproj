@@ -18,12 +18,12 @@
 		11113BE92983BF02002C9E08 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11113BE82983BF02002C9E08 /* ChatViewModel.swift */; };
 		11113BEB2983C353002C9E08 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11113BEA2983C353002C9E08 /* ChatView.swift */; };
 		11113BED29840F88002C9E08 /* ChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11113BEC29840F88002C9E08 /* ChatBubble.swift */; };
-		114239A929AB013800DCFCD4 /* DayViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114239A829AB013800DCFCD4 /* DayViewTest.swift */; };
 		1144CC2129A3554E0077C859 /* InfinityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144CC2029A3554E0077C859 /* InfinityTabView.swift */; };
 		1144CC2329A355CA0077C859 /* TimetableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144CC2229A355CA0077C859 /* TimetableView.swift */; };
 		114B6A0229682D380020692C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B6A0129682D380020692C /* ContentView.swift */; };
 		114B6A06296845C40020692C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B6A05296845C40020692C /* SettingsView.swift */; };
 		1156CFC62965EDB200FF9732 /* OpenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1156CFC52965EDB200FF9732 /* OpenView.swift */; };
+		115A21B929ACB05F00F25B7C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115A21B829ACB05F00F25B7C /* LoginView.swift */; };
 		115FAE4629656EEA00F2738A /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115FAE4529656EEA00F2738A /* AppViewModel.swift */; };
 		116C9E9B295CD879007EFFFE /* SocialTimetableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */; };
 		116C9E9F295CD87A007EFFFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 116C9E9E295CD87A007EFFFE /* Assets.xcassets */; };
@@ -48,12 +48,10 @@
 		119B366129686FFB00038389 /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119B366029686FFB00038389 /* AccountSettingsView.swift */; };
 		11A7572C297A623900F8787B /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A7572B297A623900F8787B /* EventDetailView.swift */; };
 		11A7572E297A918B00F8787B /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A7572D297A918B00F8787B /* FriendsView.swift */; };
-		11AC187C29A9C97F00E9103C /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AC187B29A9C97F00E9103C /* TestView.swift */; };
 		11BC6F5E2994FF6800C38AE4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */; };
 		11BC6F5F2995034400C38AE4 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116C9EAE295CE0DC007EFFFE /* Event.swift */; };
 		11BC6F602995034900C38AE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110DD5C7296B1AE500DAB549 /* User.swift */; };
 		11C1E33E2965DE35002DDD44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */; };
-		11C26B1E29AB7A5500FAAFF8 /* EventCardTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C26B1D29AB7A5500FAAFF8 /* EventCardTest.swift */; };
 		11CF54AC29A4CCD1007EBFAE /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CF54AB29A4CCD1007EBFAE /* SignInView.swift */; };
 		11F0A313296D347200B35ABE /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0A312296D347200B35ABE /* DayView.swift */; };
 		11F5A4FC29795AED009D87C2 /* CourseChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A4FB29795AED009D87C2 /* CourseChatsView.swift */; };
@@ -103,7 +101,6 @@
 		11113BE82983BF02002C9E08 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		11113BEA2983C353002C9E08 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		11113BEC29840F88002C9E08 /* ChatBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubble.swift; sourceTree = "<group>"; };
-		114239A829AB013800DCFCD4 /* DayViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewTest.swift; sourceTree = "<group>"; };
 		1144CC2029A3554E0077C859 /* InfinityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfinityTabView.swift; sourceTree = "<group>"; };
 		1144CC2229A355CA0077C859 /* TimetableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableView.swift; sourceTree = "<group>"; };
 		114B2A922994E58000DCE8DC /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -111,6 +108,7 @@
 		114B6A0129682D380020692C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		114B6A05296845C40020692C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1156CFC52965EDB200FF9732 /* OpenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenView.swift; sourceTree = "<group>"; };
+		115A21B829ACB05F00F25B7C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		115FAE4529656EEA00F2738A /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		116C9E97295CD879007EFFFE /* Social Timetable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Timetable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		116C9E9A295CD879007EFFFE /* SocialTimetableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialTimetableApp.swift; sourceTree = "<group>"; };
@@ -128,9 +126,7 @@
 		119B366029686FFB00038389 /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
 		11A7572B297A623900F8787B /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
 		11A7572D297A918B00F8787B /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
-		11AC187B29A9C97F00E9103C /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		11C1E33D2965DE35002DDD44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		11C26B1D29AB7A5500FAAFF8 /* EventCardTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardTest.swift; sourceTree = "<group>"; };
 		11C73B302990C87F007856A2 /* Social-Timetable-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Social-Timetable-Info.plist"; sourceTree = SOURCE_ROOT; };
 		11CF54AB29A4CCD1007EBFAE /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		11F0A312296D347200B35ABE /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
@@ -226,6 +222,7 @@
 				11A7572B297A623900F8787B /* EventDetailView.swift */,
 				11A7572D297A918B00F8787B /* FriendsView.swift */,
 				1144CC2029A3554E0077C859 /* InfinityTabView.swift */,
+				115A21B829ACB05F00F25B7C /* LoginView.swift */,
 				1156CFC52965EDB200FF9732 /* OpenView.swift */,
 				114B6A05296845C40020692C /* SettingsView.swift */,
 				11CF54AB29A4CCD1007EBFAE /* SignInView.swift */,
@@ -235,9 +232,6 @@
 				110DD5C7296B1AE500DAB549 /* User.swift */,
 				116C9E9E295CD87A007EFFFE /* Assets.xcassets */,
 				116C9EA0295CD87A007EFFFE /* Preview Content */,
-				11AC187B29A9C97F00E9103C /* TestView.swift */,
-				114239A829AB013800DCFCD4 /* DayViewTest.swift */,
-				11C26B1D29AB7A5500FAAFF8 /* EventCardTest.swift */,
 			);
 			path = "Social Timetable";
 			sourceTree = "<group>";
@@ -492,12 +486,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11AC187C29A9C97F00E9103C /* TestView.swift in Sources */,
 				11A7572E297A918B00F8787B /* FriendsView.swift in Sources */,
 				1144CC2329A355CA0077C859 /* TimetableView.swift in Sources */,
 				114B6A06296845C40020692C /* SettingsView.swift in Sources */,
 				116C9EAD295CE0BF007EFFFE /* EventCardView.swift in Sources */,
 				115FAE4629656EEA00F2738A /* AppViewModel.swift in Sources */,
+				115A21B929ACB05F00F25B7C /* LoginView.swift in Sources */,
 				11113BEB2983C353002C9E08 /* ChatView.swift in Sources */,
 				1156CFC62965EDB200FF9732 /* OpenView.swift in Sources */,
 				11113BE92983BF02002C9E08 /* ChatViewModel.swift in Sources */,
@@ -507,9 +501,7 @@
 				11F5A4FC29795AED009D87C2 /* CourseChatsView.swift in Sources */,
 				11014C9B296868C700DC9ECF /* UploadTimetableView.swift in Sources */,
 				11F0A313296D347200B35ABE /* DayView.swift in Sources */,
-				114239A929AB013800DCFCD4 /* DayViewTest.swift in Sources */,
 				11CF54AC29A4CCD1007EBFAE /* SignInView.swift in Sources */,
-				11C26B1E29AB7A5500FAAFF8 /* EventCardTest.swift in Sources */,
 				114B6A0229682D380020692C /* ContentView.swift in Sources */,
 				1144CC2129A3554E0077C859 /* InfinityTabView.swift in Sources */,
 				11A7572C297A623900F8787B /* EventDetailView.swift in Sources */,

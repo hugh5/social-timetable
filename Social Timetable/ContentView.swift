@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            TestView()
+            TimetableView()
                 .tabItem {
                     Text("Timetable")
                     Image(systemName: "calendar")
