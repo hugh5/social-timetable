@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Event: Identifiable, Codable {
+struct Event: Identifiable, Codable, CustomStringConvertible {
     let id: UUID
     var course: String
     var courseCode: String
@@ -28,6 +28,10 @@ struct Event: Identifiable, Codable {
         self.location = location
         self.startTime = startTime
         self.endTime = endTime
+    }
+    
+    var description: String {
+        return "\(courseCode) - \(classType)"
     }
     
     public func getDuration() -> String {

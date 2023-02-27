@@ -26,58 +26,75 @@ struct SignInView: View {
                 .resizable()
                 .scaledToFit()
             Spacer()
-            GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: colorScheme == .light ? .dark : .light, style: .wide, state: .normal), action: {
+            Button(action: {
                 viewModel.authenticateWithGoogle()
+            }, label: {
+                HStack {
+                    Image("Google-icon")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                    Text("Continue with Google")
+                        .foregroundColor(.black)
+                        .bold()
+                }
+                .frame(width: UIScreen.main.bounds.width / 1.5, height: 45)
+                .background(.white)
             })
-            .disabled(viewModel.isLoading)
-            .frame(width: UIScreen.main.bounds.width / 2)
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color.black, lineWidth: 1)
+            )
+            .cornerRadius(6)
             .padding(.bottom)
-
+            
             Button(action: {
                 viewModel.authenticateWithFacebook()
             }, label: {
                 HStack {
-                    Text("f")
-                        .padding(.horizontal, 8)
-                        .padding(.top, 8)
-                        .font(.title)
-                        .bold(true)
-                        .foregroundColor(colorScheme == .light ? Color(0x0165E1) : .white)
-                        .background(Circle().foregroundColor(colorScheme == .light ? .white : Color(0x0165E1)))
-                    Text("Sign in with Facebook")
-                        .foregroundColor(colorScheme == .light ? .white : .black)
-                        .font(.subheadline)
+                    Image("Facebook-logo")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                    Text("Continue with Facebook")
+                        .foregroundColor(.black)
+                        .bold()
                 }
-                .foregroundColor(colorScheme == .light ? .white : Color(0x0165E1))
-                .frame(width: UIScreen.main.bounds.width / 2, height: 45)
-                .background(colorScheme == .light ? Color(0x0165E1) : .white)
-                .cornerRadius(6)
+                .frame(width: UIScreen.main.bounds.width / 1.5, height: 45)
+                .background(.white)
             })
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color.black, lineWidth: 1)
+            )
+            .cornerRadius(6)
             .padding(.bottom)
 
-            SignInWithAppleButton(.signIn, onRequest: { request in
+            SignInWithAppleButton(.continue, onRequest: { request in
                 viewModel.handleSignInWithAppleRequest(request)
             }, onCompletion: { response in
                 viewModel.handleSignInWithAppleCompletion(response)
             })
-            .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
-            .frame(width: UIScreen.main.bounds.width / 2, height: 45)
+            .signInWithAppleButtonStyle(.whiteOutline)
+            .frame(width: UIScreen.main.bounds.width / 1.5, height: 45)
             .padding(.bottom)
 
+            
             Button(action: {
                 viewModel.authenticateAsTester()
             }, label: {
                 HStack {
                     Image(systemName: "list.bullet.clipboard")
                     Text("Sign in as Tester")
+                        .bold()
                 }
-                .frame(width: UIScreen.main.bounds.width / 2, height: 45)
                 .foregroundColor(.black)
-                .background(colorScheme == .light ? Color(0xC5C5C5) : .white)
-                .cornerRadius(6)
+                .frame(width: UIScreen.main.bounds.width / 1.5, height: 45)
+                .background(.white)
             })
-            .buttonStyle(.plain)
-
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color.black, lineWidth: 1)
+            )
+            .cornerRadius(6)
             
             if (viewModel.isLoading) {
                 ProgressView()

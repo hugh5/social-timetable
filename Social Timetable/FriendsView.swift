@@ -28,17 +28,14 @@ struct FriendsView: View {
                 Section("Friends") {
                     ForEach(Array(friends.keys.sorted()), id:\.self) { key in
                         HStack {
-                            Label(title: {
-                                VStack {
-                                    Text(friends[key]!.name)
-                                    Text(friends[key]!.tag)
-                                        .foregroundColor(.gray)
-                                        .font(.caption)
-                                }
-                            }, icon: {
-                                Image(systemName: "circle.fill")
-                                    .foregroundColor(Color(friends[key]!.color))
-                            })
+                            Image(systemName: "circle.fill")
+                                .foregroundColor(Color(friends[key]!.color))
+                            VStack(alignment: .leading) {
+                                Text(friends[key]!.name)
+                                Text(friends[key]!.tag)
+                                    .foregroundColor(.gray)
+                                    .font(.caption)
+                            }
                             Spacer()
                             Button("Remove") {
                                 withAnimation {
@@ -55,17 +52,14 @@ struct FriendsView: View {
                 Section("Incoming Requests") {
                     ForEach(Array(incomingFriends.keys.sorted()), id:\.self) { key in
                         HStack {
-                            Label(title: {
-                                VStack {
-                                    Text(incomingFriends[key]!.name)
-                                    Text(incomingFriends[key]!.tag)
-                                        .foregroundColor(.gray)
-                                        .font(.caption)
-                                }
-                            }, icon: {
-                                Image(systemName: "circle.fill")
-                                    .foregroundColor(Color(incomingFriends[key]!.color))
-                            })
+                            Image(systemName: "circle.fill")
+                                .foregroundColor(Color(incomingFriends[key]!.color))
+                            VStack(alignment: .leading) {
+                                Text(incomingFriends[key]!.name)
+                                Text(incomingFriends[key]!.tag)
+                                    .foregroundColor(.gray)
+                                    .font(.caption)
+                            }
                             Spacer()
                             Button("Decline") {
                                 withAnimation {
@@ -92,17 +86,14 @@ struct FriendsView: View {
                 Section("Outgoing Requests") {
                     ForEach(Array(outgoingFriends.keys.sorted()), id:\.self) { key in
                         HStack {
-                            Label(title: {
-                                VStack {
-                                    Text(outgoingFriends[key]!.name)
-                                    Text(outgoingFriends[key]!.tag)
-                                        .foregroundColor(.gray)
-                                        .font(.caption)
-                                }
-                            }, icon: {
-                                Image(systemName: "circle.fill")
-                                    .foregroundColor(Color(outgoingFriends[key]!.color))
-                            })
+                            Image(systemName: "circle.fill")
+                                .foregroundColor(Color(outgoingFriends[key]!.color))
+                            VStack(alignment: .leading) {
+                                Text(outgoingFriends[key]!.name)
+                                Text(outgoingFriends[key]!.tag)
+                                    .foregroundColor(.gray)
+                                    .font(.caption)
+                            }
                             Spacer()
                             Button("Rescind") {
                                 withAnimation {
@@ -165,17 +156,14 @@ struct FriendsView: View {
                     }
                     ForEach(foundUsers, id: \.email) { account in
                         HStack {
-                            Label(title: {
-                                VStack {
-                                    Text(account.name)
-                                    Text(account.tag)
-                                        .foregroundColor(.gray)
-                                        .font(.caption)
-                                }
-                            }, icon: {
-                                Image(systemName: "circle.fill")
-                                    .foregroundColor(Color(account.color))
-                            })
+                            Image(systemName: "circle.fill")
+                                .foregroundColor(Color(account.color))
+                            VStack(alignment: .leading) {
+                                Text(account.name)
+                                Text(account.tag)
+                                    .foregroundColor(.gray)
+                                    .font(.caption)
+                            }
                             Spacer()
                             Button(action: {
                                 if let user = user {

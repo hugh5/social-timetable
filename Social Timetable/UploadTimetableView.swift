@@ -78,8 +78,6 @@ struct UploadTimetableView: View {
             }
             .background(.tertiary, in: RoundedRectangle(cornerRadius: 8))
             .padding()
-            Text("You can use any link to an \".ics\" file")
-                .font(.caption)
         }
     }
     
