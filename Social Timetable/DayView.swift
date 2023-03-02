@@ -68,7 +68,7 @@ struct DayView: View {
                                 }
                             }
                         }
-                        .padding(.trailing, 10)
+                        .padding(.trailing, 20)
                         .sheet(isPresented: $presenting) {
                             EventDetailView(userEvent: $selected)
                                 .presentationDetents([.medium])

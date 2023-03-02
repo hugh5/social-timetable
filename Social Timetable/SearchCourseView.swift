@@ -78,7 +78,7 @@ struct SearchCourseView: View {
                 queryError = error.localizedDescription
             case .success(let data):
                 if data.isEmpty {
-                    queryError = "No course found"
+                    queryError = "No courses found"
                 } else {
                     courses = data
                 }
