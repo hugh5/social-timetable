@@ -27,12 +27,12 @@ struct SettingsView: View {
                     Label("Friends", systemImage: "person.3")
                 }
                 
-                NavigationLink {
-                    UploadTimetableView()
-                        .navigationTitle("Upload Timetable")
-                } label: {
-                    Label("Add Timetable", systemImage: "calendar.badge.plus")
-                }
+//                NavigationLink {
+//                    UploadTimetableView()
+//                        .navigationTitle("Upload Timetable")
+//                } label: {
+//                    Label("Add Timetable", systemImage: "calendar.badge.plus")
+//                }
             }
             .navigationTitle("Settings")
         }

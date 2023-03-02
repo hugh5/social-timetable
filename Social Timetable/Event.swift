@@ -165,8 +165,19 @@ func convertICSToEvents(from url: URL) async -> Result<([Int: [Event]], [String:
     return .success((events, courses))
 }
 
-enum Semester: String, CaseIterable {
+enum Semester: String, CaseIterable {    
     case S1 = "S1", S2 = "S2", S3 = "S3"
+    
+    var description: String {
+        switch self {
+        case .S1:
+            return "Semester 1"
+        case .S2:
+            return "Semester 2"
+        case .S3:
+            return "Summer"
+        }
+    }
 }
 
 func convertUQPlannerToEvents(contents: String, semester: Semester) -> Result<([Int: [Event]], [String:Set<String>]), Error> {

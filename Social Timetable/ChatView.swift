@@ -196,7 +196,7 @@ struct PersonView: View {
     }
     
     func getData(email: String) {
-        viewModel.userExists(email: email) { result in
+        viewModel.getUserByEmail(email: email) { result in
             switch result {
             case .success(let data):
                 name = data.name

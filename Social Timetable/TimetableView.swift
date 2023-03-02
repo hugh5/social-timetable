@@ -115,7 +115,7 @@ struct TimetableView: View {
             }
         }
         .onAppear {
-            viewModel.getUserData()
+            viewModel.getData()
         }
     }
     

@@ -325,7 +325,7 @@ class AppViewModel: ObservableObject {
         }
     }
     
-    func getUserData() {
+    func getData() {
         if let id = email {
             let docRef = db.collection("users").document(id)
             print("getUserData()")
@@ -371,8 +371,8 @@ class AppViewModel: ObservableObject {
     }
     
     func setUserData() {
-        if let id = self.user?.id {
-            let docRef = db.collection("users").document(id)
+        if let user = self.user {
+            let docRef = db.collection("users").document(user.email)
             do {
                 print("setUserData()")
                 try docRef.setData(from: user)
@@ -381,59 +381,149 @@ class AppViewModel: ObservableObject {
                 print("Error setting user data: \(error.localizedDescription)")
             }
         }
-        if let courses = user?.courses {
-            for semester in courses.keys {
-                courses[semester]?.forEach { course in
-                    var participants = [String]()
-                    let docRef = db.collection("chat").document(course + "_" + semester)
-                    
-                    docRef.getDocument() { result, error  in
-                        if let result = result {
-                            if let data = result.get("participants") {
-                                participants.append(contentsOf: data as! [String])
-                            }
-                            if let email = self.email {
-                                if (!participants.contains(where: {$0 == email})) {
-                                    participants.append(email)
-                                }
-                            }
-                            if result.exists {
-                                docRef.updateData(["participants":participants])
-                            } else {
-                                docRef.setData(["participants":participants])
-                            }
-                        } else {
-                            print(error ?? "")
-                        }
-                    }
-                }
+    }
+    
+    func setDisplayName(name: String) {
+        if let user = self.user {
+            if let id = user.id {
+                let docRef = db.collection("users").document(id)
+                print("setDisplayName(\(name)")
+                docRef.updateData(["displayName": name])
             }
         }
     }
     
-    func removeCourses() {
+    func setUserColor(hex: Int) {
+        if let user = self.user {
+            if let id = user.id {
+                let docRef = db.collection("users").document(id)
+                print("setUserColor(#\(String(format:"%06X", hex))")
+                docRef.updateData(["color": hex])
+            }
+        }
+    }
+    
+    func addCourse(code: String, semester: Semester, events: [Event]) -> String {
         if let user = user {
-            let ref = db.collection("chat")
-            for semester in Semester.allCases {
-                for course in user.courses[semester.rawValue] ?? [] {
-                    print("Removing: " + course + "_" + semester.rawValue)
-                    let docRef = ref.document(course + "_" + semester.rawValue)
-                    docRef.getDocument { (document, error) in
-                        if let document = document, document.exists {
-                            let data = document.data()
-                            var participants = data!["participants"]! as? Array<String> ?? []
-                            if let idx = participants.firstIndex(where: {$0 == user.email}) {
-                                participants.remove(at: idx)
-                                docRef.updateData(["participants":participants])
-                            }
+            if user.courses[semester.rawValue]?.contains(code) ?? false {
+                return "Course already added"
+            }
+            let docRef = db.collection("users").document(user.email)
+            docRef.getDocument(as: User.self) { result in
+                switch result {
+                case .success(let user):
+                    // Add events
+                    for event in events {
+                        let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: event.startTime)!
+                        if user.events[dayOfYear] == nil {
+                            user.events[dayOfYear] = [event]
+                        } else {
+                            user.events[dayOfYear]?.append(event)
+                        }
+                    }
+                    
+                    // Add course
+                    if (user.courses[semester.rawValue] == nil) {
+                        user.courses[semester.rawValue] = []
+                    }
+                    if !user.courses[semester.rawValue]!.contains(where: {$0 == code}) {
+                        user.courses[semester.rawValue]!.insert(code)
+                    }
+                    do {
+                        print("Events added: \(events)")
+                        print("Course added: \(code)")
+                        try docRef.setData(from: user)
+                        self.user = user
+                    }
+                    catch {
+                        print("Error setting new data: \(error.localizedDescription)")
+                    }
+                case.failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+            
+            // Add participant
+            let chatRef = db.collection("chat").document(code + "_" + semester.rawValue)
+            chatRef.getDocument() { result, error  in
+                if let result = result {
+                    var participants = [String]()
+                    if let data = result.get("participants") {
+                        participants.append(contentsOf: data as! [String])
+                    }
+                    if let email = self.email {
+                        if (!participants.contains(where: {$0 == email})) {
+                            participants.append(email)
+                        }
+                    }
+                    print("Participant added: \(participants)")
+                    if result.exists {
+                        chatRef.updateData(["participants":participants])
+                    } else {
+                        chatRef.setData(["participants":participants])
+                    }
+                }
+            }
+            return "Course successfully added"
+        }
+        return "Failed to find user"
+    }
+    
+    func removeCourse(code: String, semester: String) {
+        if let user = user {
+            let docRef = db.collection("users").document(user.email)
+            docRef.getDocument(as: User.self) { result in
+                switch result {
+                case .success(let user):
+                    for day in user.events.keys {
+                        user.events[day]!.removeAll(where: {$0.courseCode == code && $0.semester == semester})
+                        if user.events[day]!.isEmpty {
+                            user.events.removeValue(forKey: day)
+                        }
+                    }
+                    
+                    // Remove Course
+                    if user.courses[semester]?.contains(where: {$0 == code}) ?? false {
+                        user.courses[semester]!.remove(code)
+                        if user.courses[semester]?.isEmpty ?? false {
+                            user.courses.removeValue(forKey: semester)
+                        }
+                    }
+                    do {
+                        print("Events added: \(user.events)")
+                        print("Course added: \(user.courses)")
+                        try docRef.setData(from: user)
+                        self.user = user
+                    }
+                    catch {
+                        print("Error setting new data: \(error.localizedDescription)")
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+                
+            }
+                        
+            // Remove chat participant
+            if let course = user.courses[semester]?.first(where: {$0 == code}) {
+                let ref = db.collection("chat").document(course + "_" + semester)
+                ref.getDocument { (document, error) in
+                    if let document = document, document.exists {
+                        let data = document.data()
+                        var participants = data!["participants"]! as? Array<String> ?? []
+                        if let idx = participants.firstIndex(where: {$0 == user.email}) {
+                            participants.remove(at: idx)
+                            print("Participant removed: \(participants)")
+                            ref.updateData(["participants":participants])
                         }
                     }
                 }
             }
         }
+        
     }
     
-    func userExists(email: String, completion: @escaping (Result<(email: String, name: String, color: Int), Error>) -> Void) {
+    func getUserByEmail(email: String, completion: @escaping (Result<(email: String, name: String, color: Int), Error>) -> Void) {
         let docRef = db.collection("users").document(email)
         docRef.getDocument(as: User.self) { result in
             switch result {
@@ -558,16 +648,6 @@ class AppViewModel: ObservableObject {
         }
     }
     
-    func setDisplayName(name: String) {
-        if let user = self.user {
-            if let id = user.id {
-                let docRef = db.collection("users").document(id)
-                print("setDisplayName(\(name)")
-                docRef.updateData(["displayName": name])
-            }
-        }
-    }
-    
     func removeFriendData(email: String, key: FriendKey, toRemove: String) {
         let docRef = db.collection("users").document(email)
         docRef.getDocument(as: User.self) { result in
@@ -630,7 +710,6 @@ class AppViewModel: ObservableObject {
         }
     }
     
-    
     enum FriendKey {
         case friend
         case incomingFriend
@@ -641,16 +720,6 @@ class AppViewModel: ObservableObject {
             case .friend: return "friends"
             case .incomingFriend: return "incomingFriendRequests"
             case .outgoingFriend: return "outgoingFriendRequests"
-            }
-        }
-    }
-
-    func setUserColor(hex: Int) {
-        if let user = self.user {
-            if let id = user.id {
-                let docRef = db.collection("users").document(id)
-                print("setUserColor(#\(String(format:"%06X", hex))")
-                docRef.updateData(["color": hex])
             }
         }
     }

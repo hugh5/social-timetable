@@ -22,10 +22,15 @@ struct ContentView: View {
                     Text("Course Chats")
                     Image(systemName: "message")
                 }
+            ManageCoursesView()
+                .tabItem {
+                    Text("Courses")
+                    Image(systemName: "rectangle.grid.1x2.fill")
+                }
             SettingsView(user: $user)
                 .tabItem {
-                    Text("Settings")
-                    Image(systemName: "gearshape")
+                    Text("Profile")
+                    Image(systemName: "person")
                 }
         }
     }

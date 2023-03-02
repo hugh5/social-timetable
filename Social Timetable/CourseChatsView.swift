@@ -35,13 +35,11 @@ struct CourseChatsView: View {
                     }
                 }
                 if (user?.courses.keys.count ?? 0 == 0) {
-                    Text("Upload your timetable!")
-                        .padding()
                     NavigationLink {
-                        UploadTimetableView()
-                            .navigationTitle("Upload Timetable")
+                        SearchCourseView()
+                            .navigationTitle("Course Search")
                     } label: {
-                        Label("Add Timetable", systemImage: "calendar.badge.plus")
+                        Label("Add Courses", systemImage: "magnifyingglass")
                     }
                 }
             }

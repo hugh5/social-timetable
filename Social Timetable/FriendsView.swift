@@ -203,7 +203,7 @@ struct FriendsView: View {
     
     func fetchData() {
         loading = true
-        viewModel.getUserData()
+        viewModel.getData()
         friends.removeAll()
         viewModel.getFriendData(key: .friend) { result in
             switch result {
