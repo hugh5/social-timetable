@@ -31,6 +31,7 @@ struct TimetableView: View {
                     }, label: {
                         Image(systemName: "chevron.left")
                     })
+                    .padding(.leading, 10)
                     Spacer()
 
                     DatePicker("", selection: Binding(
@@ -52,6 +53,7 @@ struct TimetableView: View {
                     }, label: {
                         Image(systemName: "chevron.right")
                     })
+                    .padding(.trailing, 10)
                     Button(action: {
                             page += 7
                     }, label: {

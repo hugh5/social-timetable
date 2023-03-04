@@ -15,18 +15,41 @@ struct DayView: View {
         
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: AppViewModel
-
+    
+    @State private var location: CGPoint = CGPoint(x: 0, y: 0)
+    @GestureState private var startLocation: CGPoint? = nil
+    
+    private var verticalDrag: some Gesture {
+        DragGesture(minimumDistance: 0)
+            .onChanged { value in
+                var newLocation = startLocation ?? location
+                newLocation.x += value.translation.width
+                newLocation.y += value.translation.height
+                self.location = newLocation
+            }
+            .updating($startLocation) { (value, startLocation, transaction) in
+                startLocation = startLocation ?? location
+            }
+            .onEnded { value in
+                withAnimation(.easeOut(duration: 0.3)) {
+                    location.y += value.predictedEndTranslation.height - value.translation.height
+                    location.y = max(min(location.y, 0), -15 * 100 + UIScreen.main.bounds.height)
+                }
+            }
+    }
     
     var body: some View {
         GeometryReader { geo in
-            ScrollView(.vertical) {
+            VStack {
                 ZStack(alignment: .top) {
+                    Rectangle()
+                        .foregroundColor(Color(uiColor: .systemGray6))
                     ForEach(0..<13) { num in
                         Rectangle()
                             .frame(width: geo.size.width - 20, height: 1)
                             .foregroundColor(colorScheme == .light ? .black : .white)
                             .opacity(0.2)
-                            .offset(y: CGFloat(num * 100))
+                            .offset(y: CGFloat(num * 100) + location.y)
                     }
                     HStack {
                         VStack(spacing: 0) {
@@ -38,6 +61,7 @@ struct DayView: View {
                         }
                         .frame(width: 75)
                         .padding(.leading, 15)
+                        .offset(y: location.y)
                         ScrollView(.horizontal) {
                             ZStack(alignment: .topLeading) {
                                 Rectangle()
@@ -47,20 +71,21 @@ struct DayView: View {
                                     let row = rows[getKey(halfHour)] ?? []
                                     ForEach(Array(row.enumerated()), id: \.0) { i, e in
                                         if let userEvent: UserEvent = e  {
-                                            Button(action: {
-                                                selected = userEvent
-                                                presenting.toggle()
-                                            }, label: {
+//                                            Button(action: {
+//                                                selected = userEvent
+//                                                presenting.toggle()
+//                                            }, label: {
                                                 EventCardView(name: userEvent.user.displayName, event: userEvent.event)
                                                     .foregroundColor(Color(userEvent.user.color).isDarkColor ? .white : .black)
                                                     .background(Color(userEvent.user.color))
                                                     .padding(.vertical, 5)
                                                     .containerShape(RoundedRectangle(cornerRadius: 10))
 
-                                            })
-                                            .buttonStyle(.plain)
-                                            .offset(y: CGFloat((getKey(halfHour)) - 481) * 5 / 3)
+//                                            })
+//                                            .buttonStyle(.plain)
+                                            .offset(y: location.y + CGFloat((getKey(halfHour)) - 481) * 5 / 3)
                                             .offset(x: CGFloat(i * 135))
+                                            .onTapGesture(perform: {    })
                                         } else {
                                             EmptyView()
                                         }
@@ -68,7 +93,7 @@ struct DayView: View {
                                 }
                             }
                         }
-                        .padding(.trailing, 20)
+                        .padding(.trailing, 5)
                         .sheet(isPresented: $presenting) {
                             EventDetailView(userEvent: $selected)
                                 .presentationDetents([.medium])
@@ -76,6 +101,7 @@ struct DayView: View {
                     }
                 }
             }
+            .gesture(verticalDrag)
         }
     }
     

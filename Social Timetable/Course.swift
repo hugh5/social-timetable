@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 enum Campus: String, CaseIterable {
     case gttn = "GTTN", herst = "HERST", stluc = "STLUC"
     
