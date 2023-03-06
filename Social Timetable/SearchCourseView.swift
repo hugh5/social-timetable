@@ -38,6 +38,9 @@ struct SearchCourseView: View {
             .pickerStyle(.segmented)
             TextField("Course", text: $searchTerm)
                 .textFieldStyle(.plain)
+                .keyboardType(.webSearch)
+                .autocorrectionDisabled(true)
+                .textInputAutocapitalization(.characters)
                 .padding()
                 .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 8))
                 .onSubmit {

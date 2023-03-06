@@ -12,6 +12,7 @@ struct DayView: View {
     var rows: [Int:[UserEvent?]]
     @State var presenting = false
     @State var selected: UserEvent? = nil
+    @State var horizontalOffset: CGFloat = .zero
         
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: AppViewModel
@@ -19,26 +20,18 @@ struct DayView: View {
     
     var body: some View {
         GeometryReader { geo in
-            ScrollView(.vertical) {
-                ZStack(alignment: .top) {
-                    ForEach(0..<13) { num in
-                        Rectangle()
-                            .frame(width: geo.size.width - 20, height: 1)
-                            .foregroundColor(colorScheme == .light ? .black : .white)
-                            .opacity(0.2)
-                            .offset(y: CGFloat(num * 100))
-                    }
-                    HStack {
-                        VStack(spacing: 0) {
-                            ForEach(getTimes(), id:\.self) { hour in
-                                Text(hour.formatted(date: .omitted, time: .shortened).description)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .frame(height: 100)
-                            }
+            VStack(alignment: .leading, spacing: 0) {
+                ScrollView(.vertical) {
+                    ZStack(alignment: .topLeading) {
+                        ForEach(0..<13) { num in
+                            Divider()
+//                            Rectangle()
+                                .frame(width: UIScreen.main.bounds.width - 20, height: 1)
+//                                .foregroundColor(colorScheme == .light ? .black : .white)
+//                                .opacity(0.2)
+                                .offset(y: CGFloat(num * 100))
                         }
-                        .frame(width: 75)
-                        .padding(.leading, 15)
-                        ScrollView(.horizontal) {
+                        GeometryReader { _ in
                             ZStack(alignment: .topLeading) {
                                 Rectangle()
                                     .frame(width: getWidth())
@@ -47,20 +40,17 @@ struct DayView: View {
                                     let row = rows[getKey(halfHour)] ?? []
                                     ForEach(Array(row.enumerated()), id: \.0) { i, e in
                                         if let userEvent: UserEvent = e  {
-                                            Button(action: {
-                                                selected = userEvent
-                                                presenting.toggle()
-                                            }, label: {
-                                                EventCardView(name: userEvent.user.displayName, event: userEvent.event)
-                                                    .foregroundColor(Color(userEvent.user.color).isDarkColor ? .white : .black)
-                                                    .background(Color(userEvent.user.color))
-                                                    .padding(.vertical, 5)
-                                                    .containerShape(RoundedRectangle(cornerRadius: 10))
-
-                                            })
-                                            .buttonStyle(.plain)
-                                            .offset(y: CGFloat((getKey(halfHour)) - 481) * 5 / 3)
-                                            .offset(x: CGFloat(i * 135))
+                                            EventCardView(name: userEvent.user.displayName, event: userEvent.event)
+                                                .foregroundColor(Color(userEvent.user.color).isDarkColor ? .white : .black)
+                                                .background(Color(userEvent.user.color))
+                                                .padding(.vertical, 5)
+                                                .containerShape(RoundedRectangle(cornerRadius: 10))
+                                                .offset(y: CGFloat((getKey(halfHour)) - 481) * 5 / 3)
+                                                .offset(x: CGFloat(i * 135) + horizontalOffset + 100)
+                                                .onTapGesture {
+                                                    selected = userEvent
+                                                    presenting.toggle()
+                                                }
                                         } else {
                                             EmptyView()
                                         }
@@ -68,12 +58,29 @@ struct DayView: View {
                                 }
                             }
                         }
-                        .padding(.trailing, 20)
                         .sheet(isPresented: $presenting) {
                             EventDetailView(userEvent: $selected)
                                 .presentationDetents([.medium])
                         }
+                        VStack(spacing: 0) {
+                            ForEach(getTimes(), id:\.self) { hour in
+                                Text("   " + hour.formatted(date: .omitted, time: .shortened).description)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .frame(height: 100)
+                                    .overlay(Divider().offset(y: 0.5).padding(.leading, 15), alignment: .top)
+                            }
+                        }
+                        .frame(width: 90)
+                        .background(
+                            Rectangle()
+                                .fill(colorScheme == .light ? .white : .black)
+                        )
                     }
+                }
+                if getWidth() > geo.size.width - 100 {
+                    ScrollBarView(scrollOffset: $horizontalOffset, contentWidth: getWidth(), screenWidth: geo.size.width, length: getWidth() - geo.size.width + 100)
+                } else {
+                    EmptyView()
                 }
             }
         }
@@ -116,8 +123,64 @@ struct DayView: View {
 
 }
 
-extension UIColor
-{
+struct ScrollBarView: View {
+    @Binding var scrollOffset: CGFloat
+    @State var location: CGPoint = CGPoint(x: 0, y: 0) {
+        didSet {
+            let geoWidth = screenWidth - width - 20
+            if self.location.x < 0 {
+                self.location.x = 0
+            } else if self.location.x > geoWidth {
+                self.location.x = geoWidth
+            }
+            scrollOffset = -location.x / geoWidth * length
+        }
+    }
+    @GestureState private var startLocation: CGPoint? = nil
+    
+    var contentWidth: CGFloat
+    var screenWidth: CGFloat
+    var length: CGFloat
+    @State var width: CGFloat = 30
+    
+    var body: some View {
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 15)
+                    .foregroundColor(Color(uiColor: .systemGray5))
+                    .frame(maxWidth: .infinity)
+                    .onTapGesture { location in
+                        withAnimation {
+                            self.location.x = location.x - width / 2
+                        }
+                    }
+                    RoundedRectangle(cornerRadius: 5)
+                        .frame(width: width, height: 10)
+                        .foregroundColor(Color(uiColor: .systemGray))
+                        .offset(x: CGFloat(location.x))
+                        .simultaneousGesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    var newLocation = startLocation ?? location
+                                    newLocation.x += value.translation.width
+                                    self.location = newLocation
+                                }.updating($startLocation) { (value, startLocation, transaction) in
+                                    startLocation = startLocation ?? location
+                                }
+                        )
+            }
+            .onAppear {
+                width = geo.size.width * geo.size.width / contentWidth
+                location.x = 0
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 15)
+        .padding(.horizontal, 10)
+    }
+}
+
+extension UIColor {
     var isDarkColor: Bool {
         var r, g, b, a: CGFloat
         (r, g, b, a) = (0, 0, 0, 0)
@@ -157,7 +220,13 @@ extension Color {
 
 struct DayView_Previews: PreviewProvider {
     static var previews: some View {
-        DayView(rows: [481: [UserEvent(user: .sampleData, event: .sampleData[0])], 601: [UserEvent(user: .sampleData, event: .sampleData[0])]])
+        DayView(rows:
+                [
+                    481: [UserEvent(user: .sampleData, event: .sampleData[0])],
+                    601: [nil, UserEvent(user: .sampleData, event: .sampleData[1])],
+                    
+                ]
+        )
             .environmentObject(AppViewModel.sampleData)
 
     }

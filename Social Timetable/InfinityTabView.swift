@@ -91,8 +91,7 @@ struct InfiniteTabPageView<Content: View>: View {
         .contentShape(Rectangle())
         .offset(x: translation)
         .offset(x: offset)
-        .simultaneousGesture(dragGesture)
-//        .gesture(dragGesture)
+        .gesture(dragGesture)
         .clipped()
     }
     
