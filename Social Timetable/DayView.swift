@@ -25,10 +25,7 @@ struct DayView: View {
                     ZStack(alignment: .topLeading) {
                         ForEach(0..<13) { num in
                             Divider()
-//                            Rectangle()
                                 .frame(width: UIScreen.main.bounds.width - 20, height: 1)
-//                                .foregroundColor(colorScheme == .light ? .black : .white)
-//                                .opacity(0.2)
                                 .offset(y: CGFloat(num * 100))
                         }
                         GeometryReader { _ in
@@ -83,6 +80,9 @@ struct DayView: View {
                     EmptyView()
                 }
             }
+            .onChange(of: rows, perform: { value in
+                horizontalOffset = 0
+            })
         }
     }
     
@@ -170,9 +170,15 @@ struct ScrollBarView: View {
                         )
             }
             .onAppear {
-                width = geo.size.width * geo.size.width / contentWidth
+                width = (geo.size.width - 100) * (geo.size.width - 100) / contentWidth
                 location.x = 0
             }
+            .onChange(of: scrollOffset, perform: { value in
+                let geoWidth = screenWidth - width - 20
+                if value != -location.x / geoWidth * length {
+                    location.x = value / length * -geoWidth
+                }
+            })
         }
         .frame(maxWidth: .infinity)
         .frame(height: 15)

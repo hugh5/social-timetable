@@ -68,7 +68,11 @@ extension User {
     }()
 }
 
-struct UserEvent: Identifiable {
+struct UserEvent: Identifiable, Equatable{
+    static func == (lhs: UserEvent, rhs: UserEvent) -> Bool {
+        return lhs.user == rhs.user && lhs.event.id == rhs.event.id
+    }
+    
 
     var id: UUID
     let user: User
