@@ -27,7 +27,6 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
     var courses: [String:Set<String>]
 
     init(email: String) {
-        print("New User")
         self.id = email
         self.tag = UUID().uuidString.prefix(8).description
         self.email = email
@@ -56,19 +55,23 @@ class User: Codable, Identifiable, ObservableObject, Equatable {
 
 extension User {
     static let sampleData: User = {
-        var user = User(email: "s4697741@student.uq.edu.au", name: "Hugh")
+        var user = User(email: "user00@gmail.com", name: "Hugh")
         user.color = 2940464127
         user.events[Calendar.current.ordinality(of: .day, in: .year, for: .now) ?? 1] = Event.sampleData
         user.events[350] = Event.sampleData
-        user.friends = ["s1234567@student.uq.edu.au", "s2234567@student.uq.edu.au"]
-        user.incomingFriendRequests = ["s3234567@student.uq.edu.au", "s4234567@student.uq.edu.au"]
-        user.outgoingFriendRequests = ["s5234567@student.uq.edu.au", "s6234567@student.uq.edu.au"]
+        user.friends = ["gh378a@gmail.com", "vvj9t2@gmail.com"]
+        user.incomingFriendRequests = ["bt489t@gmail.com", "kjr784@gmail.com"]
+        user.outgoingFriendRequests = ["q9ew32@gmail.com", "u89jnk@gmail.com"]
         user.courses = ["S1":["CSSE2310", "COMP3506"]]
         return user
     }()
 }
 
-struct UserEvent: Identifiable {
+struct UserEvent: Identifiable, Equatable{
+    static func == (lhs: UserEvent, rhs: UserEvent) -> Bool {
+        return lhs.user == rhs.user && lhs.event.id == rhs.event.id
+    }
+    
 
     var id: UUID
     let user: User

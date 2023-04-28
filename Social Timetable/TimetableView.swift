@@ -19,15 +19,10 @@ struct TimetableView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack {
+            VStack(spacing: 0) {
                 HStack {
                     Button(action: {
                         page -= 7
-                    }, label: {
-                        Image(systemName: "chevron.left.2")
-                    })
-                    Button(action: {
-                        page -= 1
                     }, label: {
                         Image(systemName: "chevron.left")
                     })
@@ -49,7 +44,7 @@ struct TimetableView: View {
 
                     Spacer()
                     Button(action: {
-                        page += 1
+                        page += 7
                     }, label: {
                         Image(systemName: "chevron.right")
                     })
@@ -60,7 +55,7 @@ struct TimetableView: View {
                         Image(systemName: "chevron.right.2")
                     })
                 }
-                .padding(.top, 5)
+                .padding(.vertical, 5)
                 .padding(.horizontal)
                 
                 HStack {
@@ -81,7 +76,7 @@ struct TimetableView: View {
                         })
                     }
                 }
-                .padding(.top, 5)
+                .padding(.vertical, 5)
                 .padding(.horizontal)
                 
                 InfiniteTabPageView(currentPage: $page, width: geometry.size.width) { curr in
@@ -112,8 +107,8 @@ struct TimetableView: View {
                             .buttonStyle(.bordered)
                         }
                     }
-                    .padding()
                 }
+                .padding(10)
             }
         }
         .onAppear {
