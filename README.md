@@ -2,6 +2,7 @@
 Available on the AppStore - https://apps.apple.com/au/app/uq-social-timetable/id1673356306
 
 * Written in Swift
+* USed Firebase Auth for user authentication
 *	Used Firebase Firestore for social networking feature set, allowing users to send, accept, and decline friend requests.
 *	Used Firebase Firestore for real time messaging between users and timetable sharing.
 *	Timetable Data is queried from https://timetable.my.uq.edu.au/odd/timetable/#subjects for timetable personalisation
