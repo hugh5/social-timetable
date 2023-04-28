@@ -49,11 +49,7 @@ struct TimetableView: View {
                         Image(systemName: "chevron.right")
                     })
                     .padding(.trailing, 10)
-                    Button(action: {
-                            page += 7
-                    }, label: {
-                        Image(systemName: "chevron.right.2")
-                    })
+
                 }
                 .padding(.vertical, 5)
                 .padding(.horizontal)
