@@ -1,13 +1,28 @@
 # social-timetable
-Social Timetable app for iOS written using SwiftUI<br>
-Used Firebase Auth for user authentication and Firebase Firestore for storing user data and chat messages
+Available on the AppStore - https://apps.apple.com/au/app/uq-social-timetable/id1673356306
 
-<img src="https://user-images.githubusercontent.com/110031011/215694209-4420a08c-8277-45a3-9996-9c448a24e4ba.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/215981770-691c4abd-8934-45cc-8abc-f80090626a1b.jpg" width="400">
+* Written in Swift
+*	Used Firebase Firestore for social networking feature set, allowing users to send, accept, and decline friend requests.
+*	Used Firebase Firestore for real time messaging between users and timetable sharing.
+*	Timetable Data is queried from https://timetable.my.uq.edu.au/odd/timetable/#subjects for timetable personalisation
+*	Used Swift’s WidgetKit to implement home and lock screen widgets
 
-<img src="https://user-images.githubusercontent.com/110031011/215695695-0e55c691-c489-4bc7-8f73-60ef58571599.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/215696459-77258810-b2f7-4869-b987-d125a59193b3.jpg" width="400">
+|<h3>Authentication and Timetable Screen</h3>|
+|-|
+|<img src="https://user-images.githubusercontent.com/110031011/235163721-871f0069-a53f-4a31-83d4-ec6b5eb43ed3.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/235163397-af6c9424-78ab-419d-9617-dbb037f8109e.jpg" width="400">|
 
-<img src="https://user-images.githubusercontent.com/110031011/215696816-15586261-f31a-440e-beab-8a04b80dfbae.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/215697033-bfb1925d-3d9b-4f3a-83dd-452b0ed5db46.jpg" width="400">
+|<h3>Course Group Chats</h3>|
+|-|
+|<img src="https://user-images.githubusercontent.com/110031011/235163862-9e30d7bc-d10b-4cae-ad57-121bbd5ae2e5.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/235163884-4370afc6-6777-4c94-843a-ea39e7bf1683.jpg" width="400">|
 
-<img src="https://user-images.githubusercontent.com/110031011/215694808-8fb6c59d-12f9-47ba-a4b4-409ded6e6d9b.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/215694867-44d9a744-f909-43f2-94e6-56d0582c6180.jpg" width="400">
+|<h3>Add Friends and Manage Timetable</h3>|
+|-|
+|<img src="https://user-images.githubusercontent.com/110031011/235164281-33a186f7-c6ae-416a-bc3f-52dcd82d33c9.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/235164314-62b19b91-c5e3-408a-8cc8-88a5ebb83c1b.jpg" width="400">|
 
-<img src="https://user-images.githubusercontent.com/110031011/215695096-59d7b9bf-1bc7-4040-a445-5e6bc9cdb06e.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/215695126-9f241698-e6ae-49d7-866a-c8b1653119b3.jpg" width="400">
+|<h3>Search for Courses and Customise Timetable</h3>|
+|-|
+|<img src="https://user-images.githubusercontent.com/110031011/235164631-d0eece2e-3758-4339-9545-30bbb3d569e3.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/235164651-41274f67-dc6c-4997-b88d-3f9438276e3f.jpg" width="400">|
+
+|<h3>Home and Lock Screen Widget</h3>|
+|-|
+|<img src="https://user-images.githubusercontent.com/110031011/235165472-29c4dd73-9912-4ecc-8ff1-65c34a8b545c.jpg" width="400"><img src="https://user-images.githubusercontent.com/110031011/235165482-e5b9a726-69d8-4b4f-bb78-6ab1ebe89b21.jpg" width="400">|
