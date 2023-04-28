@@ -1,2 +1,5 @@
 xcuserdata/
 Pods/
+*.plist
+*.entitlements
+.DS_STORE
